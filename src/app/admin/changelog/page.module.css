@@ -37,6 +37,13 @@
   margin-bottom: 1rem;
 }
 
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .versionBadge {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -44,6 +51,18 @@
   border: 1px solid rgba(150, 222, 235, 0.3);
   border-radius: 6px;
   color: var(--primary);
+  font-size: 0.9rem;
+}
+
+.userBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 6px;
+  color: #10b981;
   font-size: 0.9rem;
 }
 

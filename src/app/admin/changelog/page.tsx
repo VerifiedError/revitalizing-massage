@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { currentUser } from '@clerk/nextjs/server';
 import { changelog, getLatestVersion } from '@/data/changelog';
 import styles from './page.module.css';
 import {
@@ -9,7 +10,8 @@ import {
   RefreshCw,
   Shield,
   AlertTriangle,
-  Rocket
+  Rocket,
+  User
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -27,7 +29,8 @@ const typeConfig = {
   breaking: { icon: AlertTriangle, color: '#dc2626', label: 'Breaking' },
 };
 
-export default function ChangelogPage() {
+export default async function ChangelogPage() {
+  const user = await currentUser();
   const latestVersion = getLatestVersion();
   const reversedChangelog = [...changelog].reverse();
 
@@ -42,8 +45,16 @@ export default function ChangelogPage() {
           <p className={styles.subtitle}>
             Complete version history and project updates
           </p>
-          <div className={styles.versionBadge}>
-            Current Version: <strong>v{latestVersion}</strong>
+          <div className={styles.headerMeta}>
+            <div className={styles.versionBadge}>
+              Current Version: <strong>v{latestVersion}</strong>
+            </div>
+            {user && (
+              <div className={styles.userBadge}>
+                <User size={14} />
+                <span>{user.firstName || user.emailAddresses[0]?.emailAddress}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

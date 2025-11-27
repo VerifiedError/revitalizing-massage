@@ -148,6 +148,21 @@ export const changelog: ChangelogEntry[] = [
       "Deployed to production environment",
       "Configured GitHub integration for continuous deployment"
     ]
+  },
+  {
+    version: "1.1.0",
+    date: "2024-11-27",
+    type: "security",
+    title: "Clerk Authentication Integration",
+    description: "Implemented Clerk authentication to protect admin routes and manage user access.",
+    changes: [
+      "Installed and configured @clerk/nextjs package",
+      "Wrapped application with ClerkProvider in root layout",
+      "Created middleware to protect /admin routes",
+      "Added user display badge to admin changelog page",
+      "Configured environment variables for Clerk API keys",
+      "Updated Next.js to version 14.2.25 for Clerk compatibility"
+    ]
   }
 ];
 
