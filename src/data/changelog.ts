@@ -213,6 +213,26 @@ export const changelog: ChangelogEntry[] = [
       "Integrated Clerk API for user data and metadata management",
       "Styled admin interface with consistent design language"
     ]
+  },
+  {
+    version: "1.4.0",
+    date: "2024-11-27",
+    type: "feature",
+    title: "Appointments Management System",
+    description: "Built comprehensive appointment tracking and management system for admin panel with customer notes.",
+    changes: [
+      "Created appointments data model with TypeScript interfaces",
+      "Built appointments API routes for full CRUD operations",
+      "Implemented admin appointments page with list view and filtering",
+      "Added appointment creation and editing modal with service selection",
+      "Integrated add-on services selection in appointment form",
+      "Implemented appointment status management (scheduled, confirmed, completed, cancelled, no-show)",
+      "Created customer notes system for tracking client information",
+      "Added notes modal for viewing and adding customer notes",
+      "Built search and filter functionality by name, email, status, and date",
+      "Added appointments link to admin sidebar navigation",
+      "Implemented JSON file-based data persistence for appointments and notes"
+    ]
   }
 ];
 
