@@ -390,6 +390,25 @@ export const changelog: ChangelogEntry[] = [
       "Clean UI with background highlight for toggle section",
       "Helps admin manage which packages are visible to customers"
     ]
+  },
+  {
+    version: "1.7.3",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Fixed Appointments Creation Error",
+    description: "Resolved 500 error when manually creating appointments by migrating from static services data to database packages.",
+    changes: [
+      "Fixed critical 500 error in /api/admin/appointments when creating appointments",
+      "Migrated appointments page from static services import to database packages",
+      "Updated appointments page to fetch packages and addons from database on mount",
+      "Changed service selection dropdown to use database packages instead of hardcoded services",
+      "Updated add-ons selection to use database addons with isActive filtering",
+      "Fixed price calculations to use currentPrice from database packages",
+      "Replaced service.title references with pkg.name throughout appointments modal",
+      "Ensured appointments data structure matches API expectations",
+      "Added proper error handling for package/addon fetching",
+      "Resolved data structure mismatch between frontend and backend"
+    ]
   }
 ];
 

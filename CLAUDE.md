@@ -501,9 +501,10 @@ git push origin master
 
 ## Current Version
 
-**v1.7.2** - Show/Hide Hidden Packages Toggle
+**v1.7.3** - Fixed Appointments Creation Error
 
 ### Recent Updates
+- v1.7.3: Fixed appointments creation 500 error by migrating to database packages
 - v1.7.2: Show/hide hidden packages toggle in admin panel
 - v1.7.1: Mobile-friendly appointments date filtering with quick buttons
 - v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
@@ -542,4 +543,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.7.2*
+*Current Version: 1.7.3*
