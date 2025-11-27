@@ -17,7 +17,7 @@ import {
   RefreshCw,
   Filter,
 } from 'lucide-react';
-import { services, addons as addonsList } from '@/data/services';
+import { Package, AddOnService } from '@/types/packages';
 import styles from './page.module.css';
 
 interface Appointment {
@@ -66,6 +66,8 @@ type DateFilterType = 'today' | 'tomorrow' | 'yesterday' | 'week' | 'month' | 'a
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [addons, setAddons] = useState<AddOnService[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -93,10 +95,29 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     fetchAppointments();
+    fetchPackagesAndAddons();
     // Set today's date as default filter
     const today = new Date().toISOString().split('T')[0];
     setDateFilter(today);
   }, []);
+
+  async function fetchPackagesAndAddons() {
+    try {
+      const [packagesRes, addonsRes] = await Promise.all([
+        fetch('/api/packages'),
+        fetch('/api/admin/addons')
+      ]);
+
+      if (packagesRes.ok && addonsRes.ok) {
+        const packagesData = await packagesRes.json();
+        const addonsData = await addonsRes.json();
+        setPackages(packagesData);
+        setAddons(addonsData);
+      }
+    } catch (error) {
+      console.error('Failed to fetch packages/addons:', error);
+    }
+  }
 
   // Helper function to get date range based on quick filter
   function getDateRange(filterType: DateFilterType): { start: string; end: string } | null {
@@ -193,8 +214,8 @@ export default function AppointmentsPage() {
   }
 
   async function handleSaveAppointment() {
-    const selectedService = services.find(s => s.id === formData.serviceId);
-    if (!selectedService) {
+    const selectedPackage = packages.find(p => p.id === formData.serviceId);
+    if (!selectedPackage) {
       alert('Please select a service');
       return;
     }
@@ -203,9 +224,9 @@ export default function AppointmentsPage() {
 
     const appointmentData = {
       ...formData,
-      serviceName: selectedService.title,
-      servicePrice: selectedService.price,
-      duration: parseInt(selectedService.duration),
+      serviceName: selectedPackage.name,
+      servicePrice: selectedPackage.currentPrice,
+      duration: parseInt(selectedPackage.duration),
       addonsTotal,
     };
 
@@ -386,7 +407,7 @@ export default function AppointmentsPage() {
     });
   };
 
-  const selectedService = services.find(s => s.id === formData.serviceId);
+  const selectedPackage = packages.find(p => p.id === formData.serviceId);
 
   return (
     <div className={styles.appointmentsPage}>
@@ -644,19 +665,19 @@ export default function AppointmentsPage() {
                     onChange={(e) => setFormData({ ...formData, serviceId: e.target.value })}
                   >
                     <option value="">Select a service</option>
-                    {services.map((service) => (
-                      <option key={service.id} value={service.id}>
-                        {service.title} - ${service.price} ({service.duration})
+                    {packages.map((pkg) => (
+                      <option key={pkg.id} value={pkg.id}>
+                        {pkg.name} - ${pkg.currentPrice.toFixed(2)} ({pkg.duration})
                       </option>
                     ))}
                   </select>
                 </div>
 
-                {selectedService?.hasAddons && (
+                {selectedPackage?.hasAddons && (
                   <div className={styles.formGroup}>
                     <label>Add-ons (+$10 each)</label>
                     <div className={styles.addonsGrid}>
-                      {addonsList.map((addon) => (
+                      {addons.filter(a => a.isActive).map((addon) => (
                         <label key={addon.id} className={styles.addonCheckbox}>
                           <input
                             type="checkbox"
@@ -728,11 +749,11 @@ export default function AppointmentsPage() {
                 </div>
               </div>
 
-              {selectedService && (
+              {selectedPackage && (
                 <div className={styles.priceSummary}>
                   <div className={styles.priceRow}>
                     <span>Service:</span>
-                    <span>${selectedService.price}</span>
+                    <span>${selectedPackage.currentPrice.toFixed(2)}</span>
                   </div>
                   {formData.addons.length > 0 && (
                     <div className={styles.priceRow}>
@@ -742,7 +763,7 @@ export default function AppointmentsPage() {
                   )}
                   <div className={`${styles.priceRow} ${styles.total}`}>
                     <span>Total:</span>
-                    <span>${selectedService.price + (formData.addons.length * 10)}</span>
+                    <span>${selectedPackage.currentPrice + (formData.addons.length * 10)}</span>
                   </div>
                 </div>
               )}
