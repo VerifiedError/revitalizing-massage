@@ -1,70 +1,110 @@
 import Link from 'next/link';
 import Hero from '@/components/Hero';
-import { services, businessInfo } from '@/data/services';
+import { businessInfo } from '@/data/services';
+import { getAllPackages } from '@/lib/packages';
 import styles from './page.module.css';
-import { Clock, Award, Heart, CheckCircle, DollarSign } from 'lucide-react';
-
-const featuredServices = services.slice(0, 3);
+import { Clock, Award, Heart, CheckCircle, Phone, MapPin, Star } from 'lucide-react';
 
 const benefits = [
   {
     icon: Clock,
     title: 'Flexible Scheduling',
-    description: 'Book appointments that fit your busy lifestyle. By appointment only for your convenience.',
+    description: 'Book appointments that fit your busy lifestyle',
   },
   {
     icon: Award,
     title: 'Licensed Therapist',
-    description: 'Professional, licensed massage therapist with years of experience and training.',
+    description: 'Professional with years of experience',
   },
   {
     icon: Heart,
     title: 'Personalized Care',
-    description: 'Every session is tailored to your specific needs, areas of concern, and preferences.',
+    description: 'Every session tailored to your needs',
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const allPackages = await getAllPackages();
+  const activePackages = allPackages.filter(pkg => pkg.isActive);
+  const featuredPackages = activePackages.slice(0, 3);
+
   return (
     <>
       <Hero
         title="Relax. Restore. Revitalize."
-        subtitle="Experience the healing power of professional massage therapy in Topeka, KS. Let us help you release tension, reduce stress, and restore balance to your body and mind."
+        subtitle="Experience professional massage therapy in Topeka, KS. Release tension, reduce stress, and restore balance."
       />
 
-      {/* Services Section */}
+      {/* Quick Contact Strip - Mobile Optimized */}
+      <section className={styles.quickContact}>
+        <div className={styles.contactStrip}>
+          <a href="tel:+17852504599" className={styles.quickContactBtn}>
+            <Phone size={20} />
+            <div>
+              <span className={styles.quickLabel}>Call Now</span>
+              <span className={styles.quickValue}>(785) 250-4599</span>
+            </div>
+          </a>
+          <Link href="/book" className={styles.quickContactBtn}>
+            <Calendar size={20} />
+            <div>
+              <span className={styles.quickLabel}>Book</span>
+              <span className={styles.quickValue}>Appointment</span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured Services - Mobile First */}
       <section className={styles.services}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Our Services</h2>
-          <p className={styles.sectionSubtitle}>
-            Choose from our range of therapeutic massage services designed to meet your wellness needs.
-          </p>
+          <div className={styles.sectionHeader}>
+            <h2>Popular Services</h2>
+            <p>Choose from our most requested massage services</p>
+          </div>
+
           <div className={styles.servicesGrid}>
-            {featuredServices.map((service) => (
-              <div key={service.id} className={styles.serviceCard}>
-                <div className={styles.serviceContent}>
-                  <h3 className={styles.serviceTitle}>{service.title}</h3>
-                  <p className={styles.serviceDescription}>
-                    {service.description.substring(0, 150)}...
-                  </p>
-                  <div className={styles.serviceDetails}>
-                    <span className={styles.detail}>
+            {featuredPackages.map((pkg) => (
+              <div key={pkg.id} className={styles.serviceCard}>
+                {pkg.discountPercentage > 0 && (
+                  <div className={styles.discountBadge}>
+                    {pkg.discountPercentage}% OFF
+                  </div>
+                )}
+                <div className={styles.serviceHeader}>
+                  <h3>{pkg.name}</h3>
+                  <div className={styles.serviceMeta}>
+                    <span className={styles.duration}>
                       <Clock size={16} />
-                      {service.duration}
-                    </span>
-                    <span className={styles.detail}>
-                      <DollarSign size={16} />
-                      ${service.price}
+                      {pkg.duration}
                     </span>
                   </div>
                 </div>
-                <Link href={`/book?service=${service.id}`} className={styles.serviceBtn}>
-                  Book Now
-                </Link>
+                <p className={styles.serviceDescription}>
+                  {pkg.description.length > 120
+                    ? `${pkg.description.substring(0, 120)}...`
+                    : pkg.description}
+                </p>
+                <div className={styles.serviceFooter}>
+                  <div className={styles.priceSection}>
+                    {pkg.discountPercentage > 0 ? (
+                      <>
+                        <span className={styles.originalPrice}>${pkg.basePrice.toFixed(2)}</span>
+                        <span className={styles.currentPrice}>${pkg.currentPrice.toFixed(2)}</span>
+                      </>
+                    ) : (
+                      <span className={styles.price}>${pkg.currentPrice.toFixed(2)}</span>
+                    )}
+                  </div>
+                  <Link href={`/book?service=${pkg.id}`} className={styles.bookNowBtn}>
+                    Book Now
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
-          <div className={styles.viewAll}>
+
+          <div className={styles.viewAllSection}>
             <Link href="/services" className={styles.viewAllBtn}>
               View All Services
             </Link>
@@ -72,96 +112,112 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Benefits - Simplified for Mobile */}
       <section className={styles.benefits}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Why Choose Us</h2>
+          <div className={styles.sectionHeader}>
+            <h2>Why Choose Us</h2>
+          </div>
           <div className={styles.benefitsGrid}>
             {benefits.map((benefit) => (
               <div key={benefit.title} className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>
-                  <benefit.icon size={32} />
+                  <benefit.icon size={28} />
                 </div>
-                <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-                <p className={styles.benefitDescription}>{benefit.description}</p>
+                <div className={styles.benefitContent}>
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Preview Section */}
-      <section className={styles.aboutPreview}>
+      {/* Testimonial Section - Mobile Friendly */}
+      <section className={styles.testimonial}>
         <div className={styles.container}>
-          <div className={styles.aboutContent}>
-            <div className={styles.aboutText}>
-              <h2 className={styles.sectionTitle}>Your Wellness Journey Starts Here</h2>
-              <p className={styles.aboutDescription}>
-                At Revitalizing Massage, we believe everyone deserves to feel their best. Located in Topeka, KS, we provide professional massage therapy services in a clean, relaxing environment designed to help you escape the stresses of daily life.
-              </p>
-              <ul className={styles.aboutList}>
-                <li>
-                  <CheckCircle size={20} />
-                  <span>Customized treatments for your needs</span>
-                </li>
-                <li>
-                  <CheckCircle size={20} />
-                  <span>Clean, relaxing environment</span>
-                </li>
-                <li>
-                  <CheckCircle size={20} />
-                  <span>Add-on services available (Essential Oils, CBD, Hot Stones)</span>
-                </li>
-                <li>
-                  <CheckCircle size={20} />
-                  <span>Convenient location in Topeka</span>
-                </li>
-              </ul>
-              <Link href="/about" className={styles.aboutBtn}>
-                Learn More About Us
-              </Link>
+          <div className={styles.testimonialCard}>
+            <div className={styles.stars}>
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={20} fill="var(--primary)" stroke="var(--primary)" />
+              ))}
             </div>
-            <div className={styles.aboutImage}>
-              <div className={styles.imagePlaceholder}>
-                <span>Relaxing Massage Environment</span>
+            <p className={styles.testimonialText}>
+              "Alannah provides the best massage experience in Topeka. Professional, relaxing, and exactly what I needed!"
+            </p>
+            <p className={styles.testimonialAuthor}>- Satisfied Client</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Location - Mobile Optimized */}
+      <section className={styles.location}>
+        <div className={styles.container}>
+          <div className={styles.locationContent}>
+            <div className={styles.locationInfo}>
+              <h2>Visit Us</h2>
+              <div className={styles.locationDetails}>
+                <div className={styles.locationItem}>
+                  <MapPin size={20} />
+                  <div>
+                    <strong>Address</strong>
+                    <p>{businessInfo.address.full}</p>
+                  </div>
+                </div>
+                <div className={styles.locationItem}>
+                  <Clock size={20} />
+                  <div>
+                    <strong>Hours</strong>
+                    <p>By Appointment</p>
+                    <p className={styles.closedDay}>Closed Sundays</p>
+                  </div>
+                </div>
+                <div className={styles.locationItem}>
+                  <Phone size={20} />
+                  <div>
+                    <strong>Phone</strong>
+                    <p>
+                      <a href={`tel:${businessInfo.phone.replace(/\D/g, '')}`} className={styles.phoneNumber}>
+                        {businessInfo.phone}
+                      </a>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Location Section */}
-      <section className={styles.location}>
+      {/* Final CTA - Mobile First */}
+      <section className={styles.finalCta}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Visit Us</h2>
-          <div className={styles.locationContent}>
-            <div className={styles.locationInfo}>
-              <p className={styles.locationAddress}>
-                <strong>{businessInfo.name}</strong><br />
-                {businessInfo.address.street}<br />
-                {businessInfo.address.city}, {businessInfo.address.state} {businessInfo.address.zip}
-              </p>
-              <p className={styles.locationContact}>
-                <a href={`tel:${businessInfo.phone.replace(/\s/g, '')}`}>{businessInfo.phoneDisplay}</a><br />
-                <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
-              </p>
+          <div className={styles.ctaContent}>
+            <h2>Ready to Feel Better?</h2>
+            <p>Book your appointment today and start your journey to wellness</p>
+            <div className={styles.ctaButtons}>
+              <Link href="/book" className={styles.ctaPrimary}>
+                Book Appointment
+              </Link>
+              <Link href="/services" className={styles.ctaSecondary}>
+                View Services
+              </Link>
             </div>
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className={styles.cta}>
-        <div className={styles.container}>
-          <h2 className={styles.ctaTitle}>Ready to Feel Your Best?</h2>
-          <p className={styles.ctaText}>
-            Book your massage appointment today and start your journey to relaxation and wellness.
-          </p>
-          <Link href="/book" className={styles.ctaBtn}>
-            Book Your Appointment
-          </Link>
-        </div>
-      </section>
     </>
+  );
+}
+
+function Calendar({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
   );
 }

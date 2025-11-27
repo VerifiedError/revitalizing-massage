@@ -29,14 +29,48 @@ export default function Header() {
           <Link href="/contact" className={styles.navLink} onClick={() => setIsMenuOpen(false)}>
             Contact
           </Link>
+
+          {/* Mobile Auth Buttons - Only show in mobile menu */}
+          <div className={styles.mobileAuth}>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className={styles.mobileSignInBtn} onClick={() => setIsMenuOpen(false)}>
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className={styles.mobileRegisterBtn} onClick={() => setIsMenuOpen(false)}>
+                  Register
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <div className={styles.mobileUserSection}>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: {
+                        width: 40,
+                        height: 40
+                      }
+                    }
+                  }}
+                />
+                <span className={styles.accountLabel}>My Account</span>
+              </div>
+            </SignedIn>
+          </div>
+
           <Link href="/book" className={`${styles.navLink} ${styles.bookBtn}`} onClick={() => setIsMenuOpen(false)}>
             Book Now
           </Link>
         </nav>
 
         <div className={styles.headerActions}>
+          {/* Desktop Auth Buttons */}
           <SignedOut>
-            <div className={styles.authButtons}>
+            <div className={styles.desktopAuthButtons}>
               <SignInButton mode="modal">
                 <button className={styles.signInBtn}>Sign In</button>
               </SignInButton>
@@ -46,17 +80,19 @@ export default function Header() {
             </div>
           </SignedOut>
           <SignedIn>
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  avatarBox: {
-                    width: 36,
-                    height: 36
+            <div className={styles.desktopUser}>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: {
+                      width: 36,
+                      height: 36
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </div>
           </SignedIn>
           <a href="tel:+17852504599" className={styles.phoneLink} title="(785) 250-4599">
             <Phone size={20} />

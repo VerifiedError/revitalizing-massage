@@ -9,6 +9,32 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.8.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Mobile-First Redesign",
+    description: "Complete mobile-first redesign of the homepage and navigation with extreme mobile optimization. Implemented responsive design patterns with mobile as the primary target, adding progressive enhancements for tablet and desktop.",
+    changes: [
+      "Redesigned Header component with mobile-first approach",
+      "Added authentication buttons to mobile navigation menu",
+      "Separated mobile and desktop authentication UI",
+      "Complete homepage redesign with mobile-first layout",
+      "Integrated database packages for homepage service cards",
+      "Added Quick Contact Strip with Call/Book buttons",
+      "Implemented discount badges on service cards",
+      "Added testimonial section with 5-star rating display",
+      "Redesigned benefits section for mobile touch targets",
+      "Added location section with business details",
+      "Created Final CTA section with dual action buttons",
+      "Rewrote all CSS with mobile-first media queries (768px, 1024px breakpoints)",
+      "Implemented :active states for touch feedback on mobile",
+      "Moved :hover effects to desktop-only breakpoints",
+      "Optimized grid layouts to scale from single column to multi-column",
+      "Enhanced touch target sizes for mobile usability",
+      "Changed homepage to async component for database integration"
+    ]
+  },
+  {
     version: "1.0.0",
     date: "2024-11-27",
     type: "initial",

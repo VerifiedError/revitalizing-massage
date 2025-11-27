@@ -1,3 +1,4 @@
+/* Mobile-first approach */
 .header {
   position: fixed;
   top: 0;
@@ -12,7 +13,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,107 +23,135 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  z-index: 1001;
 }
 
 .logoText {
   font-family: var(--font-primary);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--secondary);
 }
 
+/* Mobile navigation */
 .nav {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
   display: flex;
-  align-items: center;
-  gap: 2rem;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  gap: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.navOpen {
+  transform: translateX(0);
 }
 
 .navLink {
+  width: 100%;
+  padding: 1rem 1.5rem;
   font-family: var(--font-secondary);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--text);
-  transition: color 0.3s ease;
-  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
 }
 
-.navLink:hover {
-  color: var(--accent);
-}
-
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary);
-  transition: width 0.3s ease;
-}
-
-.navLink:hover::after {
-  width: 100%;
+.navLink:active {
+  background-color: #f8f8f8;
 }
 
 .bookBtn {
+  margin: 1rem 1rem 0.5rem 1rem;
+  width: calc(100% - 2rem);
+  text-align: center;
   background: var(--primary);
-  padding: 0.625rem 1.25rem;
-  border-radius: 4px;
   color: var(--secondary);
+  border-radius: 8px;
+  border-bottom: none;
+  font-weight: 600;
+  padding: 1rem;
 }
 
-.bookBtn:hover {
+.bookBtn:active {
   background: var(--primary-dark);
 }
 
-.bookBtn::after {
+/* Mobile auth section */
+.mobileAuth {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobileSignInBtn,
+.mobileRegisterBtn {
+  width: 100%;
+  padding: 0.875rem;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.mobileSignInBtn {
+  background: white;
+  color: var(--secondary);
+  border: 2px solid var(--primary);
+}
+
+.mobileSignInBtn:active {
+  background: #f8f8f8;
+}
+
+.mobileRegisterBtn {
+  background: var(--primary);
+  color: var(--secondary);
+}
+
+.mobileRegisterBtn:active {
+  background: var(--primary-dark);
+}
+
+.mobileUserSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.accountLabel {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+/* Desktop auth - hidden on mobile */
+.desktopAuthButtons,
+.desktopUser {
   display: none;
 }
 
 .headerActions {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.authButtons {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.signInBtn {
-  padding: 0.5rem 1rem;
-  font-family: var(--font-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.signInBtn:hover {
-  color: var(--accent);
-}
-
-.registerBtn {
-  padding: 0.5rem 1rem;
-  font-family: var(--font-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--secondary);
-  background: var(--primary);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.registerBtn:hover {
-  background: var(--primary-dark);
+  gap: 0.75rem;
+  z-index: 1001;
 }
 
 .phoneLink {
@@ -137,77 +166,153 @@
   transition: all 0.3s ease;
 }
 
-.phoneLink:hover {
+.phoneLink:active {
   background: var(--primary);
+  transform: scale(0.95);
 }
 
 .menuToggle {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
   color: var(--secondary);
+  padding: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 768px) {
-  .nav {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    gap: 0;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
+.menuToggle:active {
+  opacity: 0.7;
+}
+
+/* Tablet breakpoint */
+@media (min-width: 768px) {
+  .container {
+    padding: 1rem 1.5rem;
   }
 
-  .navOpen {
-    transform: translateX(0);
+  .logoText {
+    font-size: 1.35rem;
+  }
+
+  .nav {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    background: transparent;
+    gap: 1.5rem;
+    padding: 0;
+    overflow-y: visible;
   }
 
   .navLink {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #eee;
+    width: auto;
+    padding: 0;
+    font-size: 0.95rem;
+    border-bottom: none;
+    position: relative;
   }
 
   .navLink::after {
-    display: none;
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+  }
+
+  .navLink:hover {
+    color: var(--accent);
+  }
+
+  .navLink:hover::after {
+    width: 100%;
   }
 
   .bookBtn {
-    margin: 1.5rem;
-    width: calc(100% - 3rem);
-    text-align: center;
-    border-bottom: none;
+    width: auto;
+    margin: 0;
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
   }
 
-  .menuToggle {
-    display: block;
+  .bookBtn::after {
+    display: none;
   }
 
-  .authButtons {
-    gap: 0.25rem;
+  .bookBtn:hover {
+    background: var(--primary-dark);
+  }
+
+  .mobileAuth {
+    display: none;
+  }
+
+  .desktopAuthButtons,
+  .desktopUser {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .signInBtn {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .signInBtn:hover {
+    color: var(--accent);
   }
 
   .registerBtn {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary);
+    background: var(--primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .registerBtn:hover {
+    background: var(--primary-dark);
+  }
+
+  .menuToggle {
+    display: none;
+  }
+
+  .headerActions {
+    gap: 1rem;
   }
 }
 
-@media (max-width: 480px) {
-  .authButtons {
-    display: none;
+/* Desktop breakpoint */
+@media (min-width: 1024px) {
+  .logoText {
+    font-size: 1.5rem;
+  }
+
+  .nav {
+    gap: 2rem;
+  }
+
+  .navLink {
+    font-size: 1rem;
   }
 }
