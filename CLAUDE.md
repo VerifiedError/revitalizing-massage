@@ -46,10 +46,23 @@ Discounts are prominently displayed on the website:
 #### Database Stack
 - **Database**: Neon PostgreSQL (serverless PostgreSQL on AWS)
 - **ORM**: Drizzle ORM with `@neondatabase/serverless`
-- **Schema**: `src/db/schema.ts` (packages and addons tables)
+- **Schema**: `src/db/schema.ts` (packages and addons tables with indexes)
 - **Client**: `src/db/index.ts`
 - **Migrations**: Drizzle Kit (`npm run db:push`)
-- **Seed Data**: `src/db/seed.ts` (`npm run db:seed`)
+- **Seed Data**: `src/db/seed-complete.ts` (`npm run db:seed`)
+- **Documentation**: `DATABASE.md` (complete schema reference)
+
+#### Database Performance
+- **Indexes**: Strategic indexes on isActive, sortOrder, category
+- **Composite Index**: (isActive, sortOrder) for optimal query performance
+- **Query Optimization**: All common queries use indexed columns
+- **Connection Pooling**: Neon serverless with automatic scaling
+
+#### Current Database Contents
+- **10 Massage Packages**: 8 standard + 2 specialty
+- **4 Add-on Services**: Essential Oils, CBD Oil, Exfoliation, Hot Stones
+- **Organized Structure**: Logical sort ordering (gaps of 10)
+- **Semantic IDs**: pkg_60min, addon_cbd_oil (descriptive naming)
 
 ### For Future Development
 When adding ANY new feature, ask:
