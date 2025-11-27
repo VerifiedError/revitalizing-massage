@@ -99,6 +99,28 @@ export default function PackagesManagement() {
     }
   }
 
+  async function unhideAllPackages() {
+    if (!confirm('Are you sure you want to make all packages visible on the website?')) return;
+
+    try {
+      // Update all packages to be active
+      const updatePromises = packages.map(pkg =>
+        fetch('/api/admin/packages', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: pkg.id, isActive: true }),
+        })
+      );
+
+      await Promise.all(updatePromises);
+      await fetchData();
+      alert('All packages are now visible on the website!');
+    } catch (error) {
+      console.error('Failed to unhide all packages:', error);
+      alert('Failed to unhide all packages');
+    }
+  }
+
   async function handleUpdateAddon(id: string, updates: Partial<AddOnService>) {
     try {
       const response = await fetch('/api/admin/addons', {
@@ -132,13 +154,22 @@ export default function PackagesManagement() {
           <h1>Package Management</h1>
           <p>Manage all massage packages, pricing, and discounts</p>
         </div>
-        <button
-          onClick={() => setIsCreating(true)}
-          className={styles.btnPrimary}
-        >
-          <Plus size={20} />
-          Add New Package
-        </button>
+        <div className={styles.headerButtons}>
+          <button
+            onClick={unhideAllPackages}
+            className={styles.btnWarning}
+          >
+            <Eye size={20} />
+            Unhide All Packages
+          </button>
+          <button
+            onClick={() => setIsCreating(true)}
+            className={styles.btnPrimary}
+          >
+            <Plus size={20} />
+            Add New Package
+          </button>
+        </div>
       </div>
 
       {/* Filter Tabs */}

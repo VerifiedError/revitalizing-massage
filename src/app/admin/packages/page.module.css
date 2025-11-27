@@ -22,6 +22,12 @@
   color: #666;
 }
 
+.headerButtons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .loading {
   text-align: center;
   padding: 3rem;
@@ -294,6 +300,24 @@
 
 .btnPrimary:hover {
   background-color: var(--accent);
+}
+
+.btnWarning {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnWarning:hover {
+  background-color: #d97706;
 }
 
 .btnSecondary {
