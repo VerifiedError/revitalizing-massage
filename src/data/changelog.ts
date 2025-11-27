@@ -407,7 +407,9 @@ export const changelog: ChangelogEntry[] = [
       "Replaced service.title references with pkg.name throughout appointments modal",
       "Ensured appointments data structure matches API expectations",
       "Added proper error handling for package/addon fetching",
-      "Resolved data structure mismatch between frontend and backend"
+      "Resolved data structure mismatch between frontend and backend",
+      "Fixed 'v.find is not a function' error by using /api/admin/packages endpoint",
+      "Added missing await keywords in /api/packages route for database calls"
     ]
   }
 ];
