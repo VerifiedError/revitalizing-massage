@@ -12,7 +12,6 @@ export default function PackagesManagement() {
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [filter, setFilter] = useState<'all' | 'standard' | 'specialty'>('all');
-  const [showHidden, setShowHidden] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -86,40 +85,6 @@ export default function PackagesManagement() {
     }
   }
 
-  async function togglePackageStatus(id: string, isActive: boolean) {
-    try {
-      await fetch('/api/admin/packages', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, isActive: !isActive }),
-      });
-      await fetchData();
-    } catch (error) {
-      console.error('Failed to toggle package status:', error);
-    }
-  }
-
-  async function unhideAllPackages() {
-    if (!confirm('Are you sure you want to make all packages visible on the website?')) return;
-
-    try {
-      // Update all packages to be active
-      const updatePromises = packages.map(pkg =>
-        fetch('/api/admin/packages', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: pkg.id, isActive: true }),
-        })
-      );
-
-      await Promise.all(updatePromises);
-      await fetchData();
-      alert('All packages are now visible on the website!');
-    } catch (error) {
-      console.error('Failed to unhide all packages:', error);
-      alert('Failed to unhide all packages');
-    }
-  }
 
   async function handleUpdateAddon(id: string, updates: Partial<AddOnService>) {
     try {
@@ -138,9 +103,7 @@ export default function PackagesManagement() {
   }
 
   const filteredPackages = packages.filter(pkg => {
-    const matchesFilter = filter === 'all' || pkg.category === filter;
-    const matchesVisibility = showHidden || pkg.isActive;
-    return matchesFilter && matchesVisibility;
+    return filter === 'all' || pkg.category === filter;
   });
 
   if (loading) {
@@ -154,22 +117,13 @@ export default function PackagesManagement() {
           <h1>Package Management</h1>
           <p>Manage all massage packages, pricing, and discounts</p>
         </div>
-        <div className={styles.headerButtons}>
-          <button
-            onClick={unhideAllPackages}
-            className={styles.btnWarning}
-          >
-            <Eye size={20} />
-            Unhide All Packages
-          </button>
-          <button
-            onClick={() => setIsCreating(true)}
-            className={styles.btnPrimary}
-          >
-            <Plus size={20} />
-            Add New Package
-          </button>
-        </div>
+        <button
+          onClick={() => setIsCreating(true)}
+          className={styles.btnPrimary}
+        >
+          <Plus size={20} />
+          Add New Package
+        </button>
       </div>
 
       {/* Filter Tabs */}
@@ -194,18 +148,6 @@ export default function PackagesManagement() {
         </button>
       </div>
 
-      {/* Show/Hide Hidden Toggle */}
-      <div className={styles.visibilityToggle}>
-        <label className={styles.checkboxLabel}>
-          <input
-            type="checkbox"
-            checked={showHidden}
-            onChange={(e) => setShowHidden(e.target.checked)}
-          />
-          <span>Show hidden packages ({packages.filter(p => !p.isActive).length} hidden)</span>
-        </label>
-      </div>
-
       {/* Packages List */}
       <div className={styles.packagesList}>
         {filteredPackages.map(pkg => (
@@ -214,7 +156,6 @@ export default function PackagesManagement() {
             package={pkg}
             onEdit={() => setEditingPackage(pkg)}
             onDelete={() => handleDeletePackage(pkg.id)}
-            onToggle={() => togglePackageStatus(pkg.id, pkg.isActive)}
           />
         ))}
       </div>
@@ -268,13 +209,11 @@ export default function PackagesManagement() {
 function PackageCard({
   package: pkg,
   onEdit,
-  onDelete,
-  onToggle
+  onDelete
 }: {
   package: Package;
   onEdit: () => void;
   onDelete: () => void;
-  onToggle: () => void;
 }) {
   const hasDiscount = pkg.discountPercentage > 0;
 
@@ -286,9 +225,6 @@ function PackageCard({
           <span className={styles.categoryBadge}>{pkg.category}</span>
         </div>
         <div className={styles.packageActions}>
-          <button onClick={onToggle} className={styles.btnIcon} title={pkg.isActive ? 'Hide' : 'Show'}>
-            {pkg.isActive ? <Eye size={18} /> : <EyeOff size={18} />}
-          </button>
           <button onClick={onEdit} className={styles.btnIcon} title="Edit">
             <Edit2 size={18} />
           </button>

@@ -411,6 +411,24 @@ export const changelog: ChangelogEntry[] = [
       "Fixed 'v.find is not a function' error by using /api/admin/packages endpoint",
       "Added missing await keywords in /api/packages route for database calls"
     ]
+  },
+  {
+    version: "1.7.4",
+    date: "2025-11-27",
+    type: "update",
+    title: "Simplified Package Management UI",
+    description: "Removed temporary visibility controls from package management to prevent accidental hiding of packages.",
+    changes: [
+      "Removed 'Unhide All Packages' button (temporary feature no longer needed)",
+      "Removed 'Show hidden packages' checkbox toggle from packages page",
+      "Removed Eye/EyeOff hide button from individual package cards",
+      "Removed togglePackageStatus and unhideAllPackages functions",
+      "Simplified filteredPackages logic to only filter by category",
+      "Packages now always visible in admin panel regardless of isActive status",
+      "Add-ons section still retains visibility toggle for proper management",
+      "Cleaner UI with only Edit and Delete actions on package cards",
+      "Prevents accidental hiding of packages that would require manual database fix"
+    ]
   }
 ];
 

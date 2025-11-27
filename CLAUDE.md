@@ -501,15 +501,15 @@ git push origin master
 
 ## Current Version
 
-**v1.7.3** - Fixed Appointments Creation Error
+**v1.7.4** - Simplified Package Management UI
 
 ### Recent Updates
+- v1.7.4: Removed temporary visibility controls from package management
 - v1.7.3: Fixed appointments creation 500 error by migrating to database packages
 - v1.7.2: Show/hide hidden packages toggle in admin panel
 - v1.7.1: Mobile-friendly appointments date filtering with quick buttons
 - v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
 - v1.6.1: Database optimization & comprehensive package seed
-- v1.6.0: PostgreSQL database integration with Neon
 
 ---
 
@@ -543,4 +543,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.7.3*
+*Current Version: 1.7.4*
