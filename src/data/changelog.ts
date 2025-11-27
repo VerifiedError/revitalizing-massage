@@ -320,6 +320,33 @@ export const changelog: ChangelogEntry[] = [
       "Included performance optimization notes and query patterns",
       "Documented naming conventions and data integrity rules"
     ]
+  },
+  {
+    version: "1.7.0",
+    date: "2025-11-27",
+    type: "update",
+    title: "Next.js 16 Upgrade with Turbopack & Build Fixes",
+    description: "Successfully upgraded to Next.js 16 with Turbopack, resolved all TypeScript compilation errors, and deployed to production.",
+    changes: [
+      "Upgraded Next.js from 14.2.25 to 16.0.5 (latest version)",
+      "Upgraded React and React-DOM to latest versions",
+      "Migrated to Turbopack build system (Next.js 16 default)",
+      "Renamed middleware.ts to proxy.ts (Next.js 16 requirement)",
+      "Updated next.config.js for Turbopack compatibility",
+      "Migrated from images.domains to images.remotePatterns",
+      "Added empty turbopack config to acknowledge new build system",
+      "Fixed missing await keywords in API route handlers",
+      "Added await to getAllPackages(), createPackage(), updatePackage(), deletePackage() calls",
+      "Added await to getAllAddons() and updateAddon() calls",
+      "Converted services page to async server component",
+      "Fixed TypeScript category type casting in package functions",
+      "Added category type assertion: 'standard' | 'specialty' | 'addon'",
+      "Fixed currentPrice string conversion for database inserts",
+      "Resolved all Windows symlink build errors",
+      "Successfully compiled with zero TypeScript errors",
+      "Deployed to Vercel production using Vercel CLI",
+      "Verified production build at revitalizing-massage-86gk58twx-verifiederrors-projects.vercel.app"
+    ]
   }
 ];
 

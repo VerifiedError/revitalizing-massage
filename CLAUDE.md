@@ -501,14 +501,14 @@ git push origin master
 
 ## Current Version
 
-**v1.4.0** - Appointments Management System
+**v1.7.0** - Next.js 16 Upgrade with Turbopack
 
 ### Recent Updates
+- v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
+- v1.6.1: Database optimization & comprehensive package seed
+- v1.6.0: PostgreSQL database integration with Neon
+- v1.5.0: Complete package management system with discounts
 - v1.4.0: Appointments management with customer notes
-- v1.3.0: Admin dashboard & user management
-- v1.2.0: Real business information integration
-- v1.1.1: User authentication UI
-- v1.1.0: Clerk authentication integration
 
 ---
 
@@ -541,5 +541,5 @@ git push origin master
 
 ---
 
-*Last Updated: 2024-11-27*
-*Current Version: 1.4.0*
+*Last Updated: 2025-11-27*
+*Current Version: 1.7.0*
