@@ -196,6 +196,23 @@ export const changelog: ChangelogEntry[] = [
       "Added location section to home page with contact details",
       "Updated services page with detailed descriptions from Square site"
     ]
+  },
+  {
+    version: "1.3.0",
+    date: "2024-11-27",
+    type: "feature",
+    title: "Admin Dashboard & User Management",
+    description: "Implemented comprehensive admin dashboard with user management and role-based access control.",
+    changes: [
+      "Created admin dashboard layout with responsive sidebar navigation",
+      "Built admin dashboard page with user statistics and quick actions",
+      "Implemented user management page with search and filtering",
+      "Added role management system (customer/admin roles)",
+      "Created API routes for fetching users and updating roles",
+      "Added role-based access control to protect admin routes",
+      "Integrated Clerk API for user data and metadata management",
+      "Styled admin interface with consistent design language"
+    ]
   }
 ];
 
