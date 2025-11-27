@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { businessInfo } from '@/data/services';
 import styles from './page.module.css';
 
 export default function ContactPage() {
@@ -28,7 +29,7 @@ export default function ContactPage() {
         <div className={styles.heroContent}>
           <h1 className={styles.title}>Contact Us</h1>
           <p className={styles.subtitle}>
-            Have questions? We'd love to hear from you. Reach out and we'll respond as soon as we can.
+            Have questions? We&apos;d love to hear from you. Reach out and we&apos;ll respond as soon as we can.
           </p>
         </div>
       </section>
@@ -39,7 +40,7 @@ export default function ContactPage() {
             <div className={styles.info}>
               <h2>Get in Touch</h2>
               <p className={styles.infoText}>
-                Whether you have a question about our services, need to reschedule an appointment, or want to share feedback, we're here to help.
+                Whether you have a question about our services, need to reschedule an appointment, or want to share feedback, we&apos;re here to help.
               </p>
 
               <div className={styles.infoCards}>
@@ -49,7 +50,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Phone</h3>
-                    <a href="tel:+1234567890">(123) 456-7890</a>
+                    <a href={`tel:${businessInfo.phone.replace(/\s/g, '')}`}>{businessInfo.phoneDisplay}</a>
                   </div>
                 </div>
 
@@ -59,7 +60,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Email</h3>
-                    <a href="mailto:info@revitalizingmassage.com">info@revitalizingmassage.com</a>
+                    <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
                   </div>
                 </div>
 
@@ -69,7 +70,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Location</h3>
-                    <p>123 Wellness Street<br />Your City, State 12345</p>
+                    <p>{businessInfo.address.street}<br />{businessInfo.address.city}, {businessInfo.address.state} {businessInfo.address.zip}</p>
                   </div>
                 </div>
 
@@ -79,7 +80,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Hours</h3>
-                    <p>Mon - Fri: 9:00 AM - 7:00 PM<br />Sat: 10:00 AM - 5:00 PM<br />Sun: Closed</p>
+                    <p>By Appointment Only<br />Please call or book online</p>
                   </div>
                 </div>
               </div>
@@ -174,7 +175,7 @@ export default function ContactPage() {
         <div className={styles.mapPlaceholder}>
           <MapPin size={48} />
           <p>Map will be displayed here</p>
-          <span>123 Wellness Street, Your City, State 12345</span>
+          <span>{businessInfo.address.full}</span>
         </div>
       </section>
     </div>

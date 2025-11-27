@@ -178,6 +178,24 @@ export const changelog: ChangelogEntry[] = [
       "Styled auth buttons with brand colors and responsive design",
       "Auth buttons hide on mobile (480px) for cleaner navigation"
     ]
+  },
+  {
+    version: "1.2.0",
+    date: "2024-11-27",
+    type: "update",
+    title: "Real Business Information Integration",
+    description: "Updated entire website with actual Revitalizing Massage business information, services, and pricing from Square site.",
+    changes: [
+      "Created centralized services data file with all 10 massage services",
+      "Added real pricing: 30min ($45), 60min ($70), 75min ($85), 90min ($100), Prenatal ($75), Chair ($20)",
+      "Implemented add-on services: Essential Oils, CBD Oil, Exfoliation, Hot Stones (+$10 each)",
+      "Updated business contact: (785) 250-4599, alannahsrevitalizingmassage@gmail.com",
+      "Added real address: 2900 SW Atwood, Topeka, KS 66614",
+      "Updated all pages to use centralized business info",
+      "Enhanced booking form with add-on selection for applicable services",
+      "Added location section to home page with contact details",
+      "Updated services page with detailed descriptions from Square site"
+    ]
   }
 ];
 

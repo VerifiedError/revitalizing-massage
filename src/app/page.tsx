@@ -1,48 +1,26 @@
 import Link from 'next/link';
 import Hero from '@/components/Hero';
-import ServiceCard from '@/components/ServiceCard';
+import { services, businessInfo } from '@/data/services';
 import styles from './page.module.css';
-import { Clock, Award, Heart, CheckCircle } from 'lucide-react';
+import { Clock, Award, Heart, CheckCircle, DollarSign } from 'lucide-react';
 
-const featuredServices = [
-  {
-    title: 'Swedish Massage',
-    description: 'A gentle, relaxing massage using long strokes to ease tension and promote overall relaxation.',
-    duration: '60 min',
-    price: '$85',
-    slug: 'swedish-massage',
-  },
-  {
-    title: 'Deep Tissue Massage',
-    description: 'Targeted pressure to relieve chronic muscle tension and break up knots in deeper muscle layers.',
-    duration: '60 min',
-    price: '$95',
-    slug: 'deep-tissue',
-  },
-  {
-    title: 'Hot Stone Massage',
-    description: 'Heated stones placed on key points to melt away tension and promote deep relaxation.',
-    duration: '75 min',
-    price: '$110',
-    slug: 'hot-stone',
-  },
-];
+const featuredServices = services.slice(0, 3);
 
 const benefits = [
   {
     icon: Clock,
     title: 'Flexible Scheduling',
-    description: 'Book appointments that fit your busy lifestyle with our easy online booking.',
+    description: 'Book appointments that fit your busy lifestyle. By appointment only for your convenience.',
   },
   {
     icon: Award,
-    title: 'Licensed Therapists',
-    description: 'All our massage therapists are fully licensed and experienced professionals.',
+    title: 'Licensed Therapist',
+    description: 'Professional, licensed massage therapist with years of experience and training.',
   },
   {
     icon: Heart,
     title: 'Personalized Care',
-    description: 'Every session is tailored to your specific needs and preferences.',
+    description: 'Every session is tailored to your specific needs, areas of concern, and preferences.',
   },
 ];
 
@@ -51,7 +29,7 @@ export default function Home() {
     <>
       <Hero
         title="Relax. Restore. Revitalize."
-        subtitle="Experience the healing power of professional massage therapy. Let us help you release tension, reduce stress, and restore balance to your body and mind."
+        subtitle="Experience the healing power of professional massage therapy in Topeka, KS. Let us help you release tension, reduce stress, and restore balance to your body and mind."
       />
 
       {/* Services Section */}
@@ -63,7 +41,27 @@ export default function Home() {
           </p>
           <div className={styles.servicesGrid}>
             {featuredServices.map((service) => (
-              <ServiceCard key={service.slug} {...service} />
+              <div key={service.id} className={styles.serviceCard}>
+                <div className={styles.serviceContent}>
+                  <h3 className={styles.serviceTitle}>{service.title}</h3>
+                  <p className={styles.serviceDescription}>
+                    {service.description.substring(0, 150)}...
+                  </p>
+                  <div className={styles.serviceDetails}>
+                    <span className={styles.detail}>
+                      <Clock size={16} />
+                      {service.duration}
+                    </span>
+                    <span className={styles.detail}>
+                      <DollarSign size={16} />
+                      ${service.price}
+                    </span>
+                  </div>
+                </div>
+                <Link href={`/book?service=${service.id}`} className={styles.serviceBtn}>
+                  Book Now
+                </Link>
+              </div>
             ))}
           </div>
           <div className={styles.viewAll}>
@@ -99,7 +97,7 @@ export default function Home() {
             <div className={styles.aboutText}>
               <h2 className={styles.sectionTitle}>Your Wellness Journey Starts Here</h2>
               <p className={styles.aboutDescription}>
-                At Revitalizing Massage, we believe everyone deserves to feel their best. Our skilled therapists combine years of experience with a genuine passion for healing to provide you with exceptional massage therapy services.
+                At Revitalizing Massage, we believe everyone deserves to feel their best. Located in Topeka, KS, we provide professional massage therapy services in a clean, relaxing environment designed to help you escape the stresses of daily life.
               </p>
               <ul className={styles.aboutList}>
                 <li>
@@ -112,11 +110,11 @@ export default function Home() {
                 </li>
                 <li>
                   <CheckCircle size={20} />
-                  <span>Premium oils and products</span>
+                  <span>Add-on services available (Essential Oils, CBD, Hot Stones)</span>
                 </li>
                 <li>
                   <CheckCircle size={20} />
-                  <span>Convenient online booking</span>
+                  <span>Convenient location in Topeka</span>
                 </li>
               </ul>
               <Link href="/about" className={styles.aboutBtn}>
@@ -125,8 +123,28 @@ export default function Home() {
             </div>
             <div className={styles.aboutImage}>
               <div className={styles.imagePlaceholder}>
-                <span>Relaxing Spa Environment</span>
+                <span>Relaxing Massage Environment</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Location Section */}
+      <section className={styles.location}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Visit Us</h2>
+          <div className={styles.locationContent}>
+            <div className={styles.locationInfo}>
+              <p className={styles.locationAddress}>
+                <strong>{businessInfo.name}</strong><br />
+                {businessInfo.address.street}<br />
+                {businessInfo.address.city}, {businessInfo.address.state} {businessInfo.address.zip}
+              </p>
+              <p className={styles.locationContact}>
+                <a href={`tel:${businessInfo.phone.replace(/\s/g, '')}`}>{businessInfo.phoneDisplay}</a><br />
+                <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
+              </p>
             </div>
           </div>
         </div>

@@ -96,6 +96,63 @@
   color: var(--text-light);
 }
 
+.hasAddons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.sectionNote {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.addonsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.addonOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addonOption:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.addonOption.selected {
+  border-color: var(--accent);
+  background: var(--primary-light);
+}
+
+.checkboxInput {
+  display: none;
+}
+
+.addonName {
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.addonPrice {
+  font-size: 0.875rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 .dateTimeGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -166,13 +223,40 @@
   margin-bottom: 1rem;
 }
 
-.summaryDetails p {
-  color: var(--text-light);
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 0.25rem;
 }
 
-.summaryDetails p:first-child {
+.summaryRow span:first-child {
   color: var(--secondary);
+  font-weight: 500;
+}
+
+.summaryRow span:last-child {
+  color: var(--text);
+}
+
+.summaryDuration {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.summaryAddons {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.summaryDate {
+  color: var(--text-light);
+  margin-top: 0.75rem;
+}
+
+.summaryTime {
+  color: var(--text-light);
 }
 
 .summaryTotal {
@@ -214,7 +298,8 @@
 @media (max-width: 600px) {
   .serviceGrid,
   .dateTimeGrid,
-  .infoGrid {
+  .infoGrid,
+  .addonsGrid {
     grid-template-columns: 1fr;
   }
 

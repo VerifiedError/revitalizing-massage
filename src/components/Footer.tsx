@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import { businessInfo } from '@/data/services';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -10,7 +11,7 @@ export default function Footer() {
           <div className={styles.column}>
             <h3 className={styles.logo}>Revitalizing Massage</h3>
             <p className={styles.description}>
-              Professional massage therapy services to help you relax, recover, and rejuvenate.
+              Professional massage therapy services in Topeka, KS. Helping you relax, recover, and revitalize.
             </p>
             <div className={styles.social}>
               <a href="#" aria-label="Instagram" className={styles.socialLink}>
@@ -36,28 +37,28 @@ export default function Footer() {
           <div className={styles.column}>
             <h4 className={styles.columnTitle}>Services</h4>
             <nav className={styles.links}>
-              <Link href="/services#swedish">Swedish Massage</Link>
-              <Link href="/services#deep-tissue">Deep Tissue</Link>
-              <Link href="/services#hot-stone">Hot Stone Massage</Link>
+              <Link href="/services#30-minute">30 Minute Massage</Link>
+              <Link href="/services#60-minute">60 Minute Massage</Link>
+              <Link href="/services#90-minute">90 Minute Massage</Link>
               <Link href="/services#prenatal">Prenatal Massage</Link>
-              <Link href="/services#sports">Sports Massage</Link>
+              <Link href="/services#chair">Chair Massage</Link>
             </nav>
           </div>
 
           <div className={styles.column}>
             <h4 className={styles.columnTitle}>Contact</h4>
             <div className={styles.contactInfo}>
-              <a href="tel:+1234567890" className={styles.contactItem}>
+              <a href={`tel:${businessInfo.phone.replace(/\s/g, '')}`} className={styles.contactItem}>
                 <Phone size={16} />
-                <span>(123) 456-7890</span>
+                <span>{businessInfo.phoneDisplay}</span>
               </a>
-              <a href="mailto:info@revitalizingmassage.com" className={styles.contactItem}>
+              <a href={`mailto:${businessInfo.email}`} className={styles.contactItem}>
                 <Mail size={16} />
-                <span>info@revitalizingmassage.com</span>
+                <span>{businessInfo.email}</span>
               </a>
               <div className={styles.contactItem}>
                 <MapPin size={16} />
-                <span>123 Wellness Street<br />Your City, State 12345</span>
+                <span>{businessInfo.address.street}<br />{businessInfo.address.city}, {businessInfo.address.state} {businessInfo.address.zip}</span>
               </div>
             </div>
           </div>

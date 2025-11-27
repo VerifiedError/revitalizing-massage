@@ -58,7 +58,7 @@ export default function Header() {
               }}
             />
           </SignedIn>
-          <a href="tel:+1234567890" className={styles.phoneLink}>
+          <a href="tel:+17852504599" className={styles.phoneLink} title="(785) 250-4599">
             <Phone size={20} />
           </a>
           <button
