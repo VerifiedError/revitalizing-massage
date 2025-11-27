@@ -501,14 +501,14 @@ git push origin master
 
 ## Current Version
 
-**v1.7.1** - Mobile-Friendly Appointments Date Filtering
+**v1.7.2** - Show/Hide Hidden Packages Toggle
 
 ### Recent Updates
+- v1.7.2: Show/hide hidden packages toggle in admin panel
 - v1.7.1: Mobile-friendly appointments date filtering with quick buttons
 - v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
 - v1.6.1: Database optimization & comprehensive package seed
 - v1.6.0: PostgreSQL database integration with Neon
-- v1.5.0: Complete package management system with discounts
 
 ---
 
@@ -542,4 +542,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.7.1*
+*Current Version: 1.7.2*

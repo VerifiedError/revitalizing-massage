@@ -371,6 +371,25 @@ export const changelog: ChangelogEntry[] = [
       "Added TypeScript type for date filter options (DateFilterType)",
       "Mobile-first design with touch-friendly button sizes"
     ]
+  },
+  {
+    version: "1.7.2",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Show/Hide Hidden Packages Toggle",
+    description: "Added checkbox toggle to show or hide inactive packages in the admin packages management page.",
+    changes: [
+      "Added 'Show hidden packages' checkbox toggle in packages page",
+      "Displays count of hidden packages (e.g., '3 hidden')",
+      "Checkbox defaults to checked (shows all packages including hidden)",
+      "Unchecking hides inactive packages from the list",
+      "Filtering logic works with category filters (All, Standard, Specialty)",
+      "Visual indication: inactive packages have reduced opacity and gray background",
+      "Eye/EyeOff icons on each package card to toggle visibility",
+      "Styled checkbox with accent color matching brand theme",
+      "Clean UI with background highlight for toggle section",
+      "Helps admin manage which packages are visible to customers"
+    ]
   }
 ];
 

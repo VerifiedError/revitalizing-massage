@@ -12,6 +12,7 @@ export default function PackagesManagement() {
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [filter, setFilter] = useState<'all' | 'standard' | 'specialty'>('all');
+  const [showHidden, setShowHidden] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -114,9 +115,11 @@ export default function PackagesManagement() {
     }
   }
 
-  const filteredPackages = packages.filter(pkg =>
-    filter === 'all' || pkg.category === filter
-  );
+  const filteredPackages = packages.filter(pkg => {
+    const matchesFilter = filter === 'all' || pkg.category === filter;
+    const matchesVisibility = showHidden || pkg.isActive;
+    return matchesFilter && matchesVisibility;
+  });
 
   if (loading) {
     return <div className={styles.loading}>Loading packages...</div>;
@@ -158,6 +161,18 @@ export default function PackagesManagement() {
         >
           Specialty ({packages.filter(p => p.category === 'specialty').length})
         </button>
+      </div>
+
+      {/* Show/Hide Hidden Toggle */}
+      <div className={styles.visibilityToggle}>
+        <label className={styles.checkboxLabel}>
+          <input
+            type="checkbox"
+            checked={showHidden}
+            onChange={(e) => setShowHidden(e.target.checked)}
+          />
+          <span>Show hidden packages ({packages.filter(p => !p.isActive).length} hidden)</span>
+        </label>
       </div>
 
       {/* Packages List */}
