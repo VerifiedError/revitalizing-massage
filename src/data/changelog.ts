@@ -296,6 +296,30 @@ export const changelog: ChangelogEntry[] = [
       "Updated CLAUDE.md with complete database stack documentation",
       "Prepared for Vercel deployment with database integration"
     ]
+  },
+  {
+    version: "1.6.1",
+    date: "2025-11-27",
+    type: "update",
+    title: "Database Optimization & Comprehensive Package Seed",
+    description: "Optimized database schema with strategic indexes and seeded all massage packages with proper organization and structure.",
+    changes: [
+      "Added strategic database indexes for optimal query performance",
+      "Created composite index on (isActive, sortOrder) for common query pattern",
+      "Added individual indexes on isActive, sortOrder, and category columns",
+      "Optimized packages table for fast filtering and ordering",
+      "Optimized addons table with performance indexes",
+      "Created comprehensive seed script with all 10 massage packages",
+      "Organized packages by category (8 standard, 2 specialty)",
+      "Implemented logical sort ordering system (gaps of 10 for flexibility)",
+      "Used semantic ID naming convention (pkg_60min, addon_cbd_oil)",
+      "Added detailed descriptions for all add-on services",
+      "Created DATABASE.md with complete schema documentation",
+      "Documented all tables, columns, indexes, and constraints",
+      "Added database management guide with NPM scripts",
+      "Included performance optimization notes and query patterns",
+      "Documented naming conventions and data integrity rules"
+    ]
   }
 ];
 
