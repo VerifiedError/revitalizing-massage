@@ -233,6 +233,19 @@ export const changelog: ChangelogEntry[] = [
       "Added appointments link to admin sidebar navigation",
       "Implemented JSON file-based data persistence for appointments and notes"
     ]
+  },
+  {
+    version: "1.4.1",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Server Component Serialization Fix",
+    description: "Fixed critical error in admin layout where non-serializable Clerk user object was passed to client component.",
+    changes: [
+      "Resolved Server Components render error in admin panel",
+      "Extracted only serializable user data (firstName, lastName, emailAddresses) before passing to AdminSidebar",
+      "Prevented hydration errors caused by complex Clerk user object serialization",
+      "Ensured admin panel loads correctly without console errors"
+    ]
   }
 ];
 

@@ -21,9 +21,18 @@ export default async function AdminLayout({
     redirect('/?error=unauthorized');
   }
 
+  // Extract only serializable user data
+  const userData = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    emailAddresses: user.emailAddresses.map(email => ({
+      emailAddress: email.emailAddress
+    }))
+  };
+
   return (
     <div className={styles.adminLayout}>
-      <AdminSidebar user={user} />
+      <AdminSidebar user={userData} />
       <main className={styles.adminMain}>
         {children}
       </main>
