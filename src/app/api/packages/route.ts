@@ -4,8 +4,8 @@ import { getActivePackages, getActiveAddons } from '@/lib/packages';
 // GET /api/packages - Public endpoint for active packages
 export async function GET() {
   try {
-    const packages = getActivePackages();
-    const addons = getActiveAddons();
+    const packages = await getActivePackages();
+    const addons = await getActiveAddons();
 
     return NextResponse.json({ packages, addons });
   } catch (error) {

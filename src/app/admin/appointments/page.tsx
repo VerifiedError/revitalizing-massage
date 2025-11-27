@@ -104,7 +104,7 @@ export default function AppointmentsPage() {
   async function fetchPackagesAndAddons() {
     try {
       const [packagesRes, addonsRes] = await Promise.all([
-        fetch('/api/packages'),
+        fetch('/api/admin/packages'),
         fetch('/api/admin/addons')
       ]);
 
