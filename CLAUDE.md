@@ -1,15 +1,16 @@
 # Revitalizing Massage - Project Documentation
 
 ## Project Overview
-A modern Next.js website for Revitalizing Massage, a professional massage therapy business. This project replicates and enhances the functionality of the original Square site (https://revitalizing-massage.square.site/).
+A modern Next.js website for Revitalizing Massage, a professional massage therapy business located in Topeka, KS. This project replicates and enhances the functionality of the original Square site (https://revitalizing-massage.square.site/).
 
 ## Tech Stack
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 14.2.25 (App Router)
 - **Language**: TypeScript
 - **Styling**: CSS Modules
 - **Icons**: Lucide React
-- **Deployment**: Vercel
-- **Repository**: GitHub
+- **Authentication**: Clerk (@clerk/nextjs)
+- **Deployment**: Vercel (auto-deploy from GitHub)
+- **Repository**: GitHub (VerifiedError/revitalizing-massage)
 
 ## Color Scheme
 ```css
@@ -30,20 +31,43 @@ A modern Next.js website for Revitalizing Massage, a professional massage therap
 
 ```
 revitalizing-massage/
+├── data/                          # Local data storage (gitignored)
+│   ├── appointments.json          # Appointments data
+│   └── customer-notes.json        # Customer notes data
 ├── public/
 │   └── images/                    # Static images
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx             # Root layout (Header, Footer, fonts)
+│   │   ├── layout.tsx             # Root layout (ClerkProvider, Header, Footer)
 │   │   ├── page.tsx               # Home page
 │   │   ├── page.module.css
 │   │   ├── about/
 │   │   │   ├── page.tsx           # About page
 │   │   │   └── page.module.css
 │   │   ├── admin/
-│   │   │   └── changelog/
-│   │   │       ├── page.tsx       # Admin changelog page
+│   │   │   ├── layout.tsx         # Admin layout (role-protected)
+│   │   │   ├── layout.module.css
+│   │   │   ├── page.tsx           # Admin dashboard
+│   │   │   ├── page.module.css
+│   │   │   ├── appointments/
+│   │   │   │   ├── page.tsx       # Appointments management
+│   │   │   │   └── page.module.css
+│   │   │   ├── changelog/
+│   │   │   │   ├── page.tsx       # Changelog viewer
+│   │   │   │   └── page.module.css
+│   │   │   ├── settings/
+│   │   │   │   └── page.tsx       # Admin settings
+│   │   │   └── users/
+│   │   │       ├── page.tsx       # User management
 │   │   │       └── page.module.css
+│   │   ├── api/
+│   │   │   └── admin/
+│   │   │       ├── appointments/
+│   │   │       │   └── route.ts   # Appointments CRUD API
+│   │   │       ├── notes/
+│   │   │       │   └── route.ts   # Customer notes API
+│   │   │       └── users/
+│   │   │           └── route.ts   # User management API
 │   │   ├── book/
 │   │   │   ├── page.tsx           # Booking form page
 │   │   │   └── page.module.css
@@ -54,7 +78,7 @@ revitalizing-massage/
 │   │       ├── page.tsx           # Services listing
 │   │       └── page.module.css
 │   ├── components/
-│   │   ├── Header.tsx             # Navigation header
+│   │   ├── Header.tsx             # Navigation header with auth
 │   │   ├── Header.module.css
 │   │   ├── Footer.tsx             # Site footer
 │   │   ├── Footer.module.css
@@ -62,12 +86,21 @@ revitalizing-massage/
 │   │   ├── Hero.module.css
 │   │   ├── ServiceCard.tsx        # Service display card
 │   │   ├── ServiceCard.module.css
-│   │   └── index.ts               # Component exports
+│   │   ├── index.ts               # Component exports
+│   │   └── admin/
+│   │       ├── AdminSidebar.tsx   # Admin navigation sidebar
+│   │       └── AdminSidebar.module.css
 │   ├── data/
-│   │   └── changelog.ts           # Changelog data
+│   │   ├── changelog.ts           # Changelog data
+│   │   └── services.ts            # Services & business info
+│   ├── lib/
+│   │   └── appointments.ts        # Appointments data management
+│   ├── types/
+│   │   └── appointments.ts        # TypeScript types
 │   └── styles/
 │       └── globals.css            # Global styles & CSS variables
 ├── CLAUDE.md                      # This file
+├── middleware.ts                  # Clerk auth middleware
 ├── package.json
 ├── tsconfig.json
 ├── next.config.js
@@ -78,40 +111,66 @@ revitalizing-massage/
 
 ## Pages
 
-### Home (`/`)
+### Public Pages
+
+#### Home (`/`)
 - Hero section with CTA buttons
 - Featured services grid (3 services)
 - Benefits section (3 cards)
 - About preview with checklist
+- Location section with contact details
 - Bottom CTA section
 
-### Services (`/services`)
+#### Services (`/services`)
 - Hero header
 - Full services grid (10 services)
+- Add-ons section
 - Info cards (First Time, Custom Sessions, Gift Cards)
 
-### Book (`/book`)
+#### Book (`/book`)
 - Service selection (radio buttons)
+- Add-on selection for applicable services
 - Date/time picker
 - Contact information form
-- Booking summary with pricing
+- Booking summary with dynamic pricing
 - Form validation
 
-### About (`/about`)
+#### About (`/about`)
 - Company story section
 - Values grid (3 values)
 - Commitment checklist
 - CTA section
 
-### Contact (`/contact`)
+#### Contact (`/contact`)
 - Contact information cards (Phone, Email, Location, Hours)
 - Contact form with subject dropdown
 - Map placeholder section
 
-### Admin Changelog (`/admin/changelog`)
-- Protected admin-only page
-- Full project changelog with dates and details
-- Version history tracking
+### Admin Pages (Role-Protected)
+
+#### Admin Dashboard (`/admin`)
+- Statistics cards (Total Users, Admin Users, Customers)
+- Quick action links
+- Overview of system status
+
+#### Appointments (`/admin/appointments`)
+- Full appointments list with filtering
+- Search by name, email, or service
+- Filter by status and date
+- Create/Edit appointment modal
+- Status management (Scheduled, Confirmed, Completed, Cancelled, No-Show)
+- Customer notes integration
+- Price calculation with add-ons
+
+#### User Management (`/admin/users`)
+- User list with search
+- Role management (customer/admin)
+- User details display
+
+#### Changelog (`/admin/changelog`)
+- Full project version history
+- Color-coded change types
+- Detailed change lists
 
 ---
 
@@ -122,6 +181,7 @@ revitalizing-massage/
 - Logo text
 - Navigation links (Home, Services, About, Contact, Book Now)
 - Mobile hamburger menu
+- Clerk authentication (Sign In/Register buttons, User avatar)
 - Phone icon link
 
 ### Footer
@@ -145,19 +205,145 @@ revitalizing-massage/
 - Duration and price with icons
 - Book Now button
 
+### AdminSidebar
+- Responsive sidebar navigation
+- Dashboard, Appointments, Users, Changelog, Settings links
+- User info display
+- Back to site link
+
 ---
 
 ## Services Offered
-1. Swedish Massage - 60 min - $85
-2. Deep Tissue Massage - 60 min - $95
-3. Hot Stone Massage - 75 min - $110
-4. Prenatal Massage - 60 min - $90
-5. Sports Massage - 60 min - $100
-6. Aromatherapy Massage - 60 min - $95
-7. Couples Massage - 60 min - $170
-8. Reflexology - 45 min - $65
-9. Chair Massage - 30 min - $45
-10. Lymphatic Drainage - 60 min - $95
+
+### Standard Massages
+1. **30 Minute Massage** - 45 mins total - $45
+   - Focused on area of complaint, not full body
+   - Perfect for limited time or targeted work
+   - Common focus: upper back, neck, shoulders
+
+2. **30 Minute Massage with Add-on** - 45 mins total - $55
+   - Same as above with add-on enhancement
+
+3. **60 Minute Massage** - 1 hr 15 mins total - $70
+   - Full body work
+   - ~20 mins back/neck, 7-8 mins each limb, 10 mins scalp/face
+   - Time varies based on areas of complaint
+
+4. **60 Minute Massage with Add-on** - 1 hr 15 mins total - $80
+   - Same as above with add-on enhancement
+
+5. **75 Minute Massage** - 1 hr 15 mins total - $85
+   - Extra time beyond 60 min for problem areas
+   - Full body coverage with more thorough work
+
+6. **75 Minute Massage with Add-on** - 1 hr 15 mins total - $85
+   - Same as above with add-on enhancement
+
+7. **90 Minute Massage** - 1 hr 45 mins total - $100
+   - Extended full body session
+   - ~45 mins back/neck area
+   - Extra time for focus/deep tissue work
+   - Ideal for relaxation and therapeutic benefits
+
+8. **90 Minute Massage with Add-on** - 1 hr 45 mins total - $110
+   - Same as above with add-on enhancement
+
+### Specialty Massages
+9. **Prenatal Massage** - 1 hr 15 mins total - $75
+   - Full body with comfort pillows
+   - Light to light-medium pressure only
+   - No deep tissue
+
+10. **15-Minute Chair Massage** - 15 mins - $20
+    - Quick stress relief
+    - Available in-office or on-site (travel fee applies)
+
+### Add-on Services (+$10 each)
+- Essential Oils
+- CBD Oil
+- Exfoliation
+- Hot Stones
+
+---
+
+## Authentication & Roles
+
+### Clerk Integration
+- ClerkProvider wraps the entire application
+- SignInButton and SignUpButton in header (modal mode)
+- UserButton for signed-in users
+- Middleware protects checkout routes
+
+### User Roles
+- **customer** (default): Standard website access
+- **admin**: Full admin panel access
+
+### Setting Admin Role
+1. Go to Clerk Dashboard → Users
+2. Select user account
+3. Under "Public metadata", add: `{"role": "admin"}`
+4. Save changes
+
+---
+
+## API Routes
+
+### `/api/admin/users`
+- **GET**: Fetch all users (admin only)
+- **PATCH**: Update user role (admin only)
+
+### `/api/admin/appointments`
+- **GET**: Fetch appointments (with optional filters)
+- **POST**: Create new appointment
+- **PATCH**: Update appointment
+- **DELETE**: Delete appointment
+
+### `/api/admin/notes`
+- **GET**: Fetch customer notes
+- **POST**: Create new note
+- **DELETE**: Delete note
+
+---
+
+## Data Storage
+
+### Local JSON Storage (Development)
+Appointments and notes are stored in `/data` folder:
+- `appointments.json` - All appointment records
+- `customer-notes.json` - Customer notes
+
+**Note**: This folder is gitignored. For production, integrate a database.
+
+### Recommended Production Databases
+- Supabase (PostgreSQL)
+- PlanetScale (MySQL)
+- MongoDB Atlas
+- Vercel Postgres
+
+---
+
+## Environment Variables
+
+### Required (Clerk)
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+```
+
+### Future Integrations
+```env
+# Square Integration
+SQUARE_ACCESS_TOKEN=
+SQUARE_LOCATION_ID=
+
+# Email Service
+SMTP_HOST=
+SMTP_USER=
+SMTP_PASS=
+
+# Analytics
+NEXT_PUBLIC_GA_ID=
+```
 
 ---
 
@@ -184,10 +370,10 @@ npm run lint
 
 ## Deployment
 
-### Vercel (Recommended)
-1. Push to GitHub repository
-2. Connect repository to Vercel
-3. Deploy automatically on push
+### Vercel (Auto-Deploy)
+1. Push to GitHub repository (master branch)
+2. Vercel automatically deploys
+3. Environment variables configured in Vercel dashboard
 
 ### Manual Deployment
 ```bash
@@ -211,7 +397,7 @@ vercel
 # After making changes:
 git add .
 git commit -m "descriptive commit message"
-git push origin main
+git push origin master
 ```
 
 ### Commit Message Guidelines
@@ -227,9 +413,9 @@ git push origin main
 ### Changelog Entry Format
 ```typescript
 {
-  version: "1.0.X",
+  version: "1.X.X",
   date: "YYYY-MM-DD",
-  type: "feature" | "fix" | "update" | "security" | "breaking",
+  type: "feature" | "fix" | "update" | "security" | "breaking" | "initial",
   title: "Brief title",
   description: "Detailed description of what changed",
   changes: [
@@ -241,24 +427,25 @@ git push origin main
 
 ---
 
-## Environment Variables (Future)
-```env
-# Square Integration (when implemented)
-SQUARE_ACCESS_TOKEN=
-SQUARE_LOCATION_ID=
+## Current Version
 
-# Email Service (when implemented)
-SMTP_HOST=
-SMTP_USER=
-SMTP_PASS=
+**v1.4.0** - Appointments Management System
 
-# Analytics (when implemented)
-NEXT_PUBLIC_GA_ID=
-```
+### Recent Updates
+- v1.4.0: Appointments management with customer notes
+- v1.3.0: Admin dashboard & user management
+- v1.2.0: Real business information integration
+- v1.1.1: User authentication UI
+- v1.1.0: Clerk authentication integration
 
 ---
 
 ## Future Enhancements
+- [x] Clerk authentication
+- [x] Admin dashboard
+- [x] User management
+- [x] Appointments management
+- [x] Customer notes system
 - [ ] Square booking integration
 - [ ] Payment processing
 - [ ] Email notifications
@@ -267,17 +454,20 @@ NEXT_PUBLIC_GA_ID=
 - [ ] Image gallery
 - [ ] Gift card purchasing
 - [ ] Newsletter signup
-- [ ] Admin authentication
+- [ ] Database integration (Supabase/PlanetScale)
 - [ ] Analytics dashboard
 
 ---
 
-## Contact Information (Placeholder)
-- **Phone**: (123) 456-7890
-- **Email**: info@revitalizingmassage.com
-- **Address**: 123 Wellness Street, Your City, State 12345
-- **Hours**: Mon-Fri 9AM-7PM, Sat 10AM-5PM, Sun Closed
+## Business Information
+
+- **Business Name**: Revitalizing Massage
+- **Phone**: (785) 250-4599
+- **Email**: alannahsrevitalizingmassage@gmail.com
+- **Address**: 2900 SW Atwood, Topeka, KS 66614
+- **Hours**: By Appointment (Closed Sundays)
 
 ---
 
 *Last Updated: 2024-11-27*
+*Current Version: 1.4.0*
