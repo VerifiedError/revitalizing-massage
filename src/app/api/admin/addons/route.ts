@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    const addons = getAllAddons();
+    const addons = await getAllAddons();
     return NextResponse.json(addons);
   } catch (error) {
     console.error('Error fetching addons:', error);
@@ -34,7 +34,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Addon ID is required' }, { status: 400 });
     }
 
-    const updatedAddon = updateAddon(id, updates);
+    const updatedAddon = await updateAddon(id, updates);
 
     if (!updatedAddon) {
       return NextResponse.json({ error: 'Addon not found' }, { status: 404 });

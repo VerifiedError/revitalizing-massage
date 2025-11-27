@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    const packages = getAllPackages();
+    const packages = await getAllPackages();
     return NextResponse.json(packages);
   } catch (error) {
     console.error('Error fetching packages:', error);
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const newPackage = createPackage(body);
+    const newPackage = await createPackage(body);
     return NextResponse.json(newPackage, { status: 201 });
   } catch (error) {
     console.error('Error creating package:', error);
@@ -52,7 +52,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Package ID is required' }, { status: 400 });
     }
 
-    const updatedPackage = updatePackage(id, updates);
+    const updatedPackage = await updatePackage(id, updates);
 
     if (!updatedPackage) {
       return NextResponse.json({ error: 'Package not found' }, { status: 404 });
@@ -81,7 +81,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Package ID is required' }, { status: 400 });
     }
 
-    const success = deletePackage(id);
+    const success = await deletePackage(id);
 
     if (!success) {
       return NextResponse.json({ error: 'Package not found' }, { status: 404 });

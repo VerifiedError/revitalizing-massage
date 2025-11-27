@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 // Force dynamic rendering to get fresh data
 export const dynamic = 'force-dynamic';
 
-export default function ServicesPage() {
-  const packages = getActivePackages();
-  const addons = getActiveAddons();
+export default async function ServicesPage() {
+  const packages = await getActivePackages();
+  const addons = await getActiveAddons();
 
   return (
     <div className={styles.page}>

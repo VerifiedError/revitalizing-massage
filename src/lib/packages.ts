@@ -16,6 +16,7 @@ export async function getAllPackages(): Promise<Package[]> {
     currentPrice: parseFloat(pkg.currentPrice),
     discountPercentage: parseFloat(pkg.discountPercentage),
     discountLabel: pkg.discountLabel || undefined,
+    category: pkg.category as 'standard' | 'specialty' | 'addon',
     createdAt: pkg.createdAt.toISOString(),
     updatedAt: pkg.updatedAt.toISOString(),
   }));
@@ -34,6 +35,7 @@ export async function getActivePackages(): Promise<Package[]> {
     currentPrice: parseFloat(pkg.currentPrice),
     discountPercentage: parseFloat(pkg.discountPercentage),
     discountLabel: pkg.discountLabel || undefined,
+    category: pkg.category as 'standard' | 'specialty' | 'addon',
     createdAt: pkg.createdAt.toISOString(),
     updatedAt: pkg.updatedAt.toISOString(),
   }));
@@ -55,6 +57,7 @@ export async function getPackageById(id: string): Promise<Package | null> {
     currentPrice: parseFloat(pkg.currentPrice),
     discountPercentage: parseFloat(pkg.discountPercentage),
     discountLabel: pkg.discountLabel || undefined,
+    category: pkg.category as 'standard' | 'specialty' | 'addon',
     createdAt: pkg.createdAt.toISOString(),
     updatedAt: pkg.updatedAt.toISOString(),
   };
@@ -66,7 +69,7 @@ export async function createPackage(packageData: Omit<Package, 'id' | 'createdAt
   const newPackage = {
     id: `pkg_${Date.now()}`,
     ...packageData,
-    currentPrice,
+    currentPrice: currentPrice.toString(),
     basePrice: packageData.basePrice.toString(),
     discountPercentage: packageData.discountPercentage.toString(),
   };
@@ -79,6 +82,7 @@ export async function createPackage(packageData: Omit<Package, 'id' | 'createdAt
     currentPrice: parseFloat(newPackage.currentPrice.toString()),
     discountPercentage: parseFloat(newPackage.discountPercentage),
     discountLabel: newPackage.discountLabel || undefined,
+    category: newPackage.category as 'standard' | 'specialty' | 'addon',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };

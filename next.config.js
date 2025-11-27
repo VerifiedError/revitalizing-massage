@@ -1,8 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.squarespace-cdn.com', 'square-web-production-f.squarecdn.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.squarespace-cdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'square-web-production-f.squarecdn.com',
+      },
+    ],
   },
+  // Empty turbopack config to acknowledge Turbopack usage
+  turbopack: {},
 }
 
 module.exports = nextConfig
