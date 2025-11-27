@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Users, FileText, Settings, TrendingUp } from 'lucide-react';
+import { Users, FileText, Settings, TrendingUp, Package } from 'lucide-react';
 import styles from './page.module.css';
 
 interface DashboardStats {
@@ -87,6 +87,10 @@ export default function AdminDashboard() {
       <div className={styles.quickLinks}>
         <h2>Quick Actions</h2>
         <div className={styles.linksGrid}>
+          <a href="/admin/packages" className={styles.linkCard}>
+            <Package size={20} />
+            <span>Manage Packages</span>
+          </a>
           <a href="/admin/users" className={styles.linkCard}>
             <Users size={20} />
             <span>Manage Users</span>

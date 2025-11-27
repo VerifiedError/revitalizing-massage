@@ -1,15 +1,21 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { services, addons } from '@/data/services';
+import { getActivePackages, getActiveAddons } from '@/lib/packages';
 import styles from './page.module.css';
-import { Clock, DollarSign, Sparkles } from 'lucide-react';
+import { Clock, DollarSign, Sparkles, Tag } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Services | Revitalizing Massage',
   description: 'Explore our massage therapy services in Topeka, KS. From 30-minute focused sessions to 90-minute full body massage, prenatal massage, and chair massage.',
 };
 
+// Force dynamic rendering to get fresh data
+export const dynamic = 'force-dynamic';
+
 export default function ServicesPage() {
+  const packages = getActivePackages();
+  const addons = getActiveAddons();
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -24,76 +30,121 @@ export default function ServicesPage() {
       <section className={styles.services}>
         <div className={styles.container}>
           <div className={styles.grid}>
-            {services.map((service) => (
-              <div key={service.id} className={styles.card}>
-                <div className={styles.cardContent}>
-                  <h3 className={styles.cardTitle}>{service.title}</h3>
-                  <p className={styles.cardDescription}>{service.description}</p>
+            {packages.map((pkg) => {
+              const hasDiscount = pkg.discountPercentage > 0;
 
-                  {service.hasAddons && service.addons && (
-                    <div className={styles.addonsInfo}>
-                      <Sparkles size={16} />
-                      <span>Add-on options: {service.addons.join(', ')}</span>
+              return (
+                <div key={pkg.id} className={styles.card}>
+                  {hasDiscount && (
+                    <div className={styles.discountBadge}>
+                      <Tag size={14} />
+                      <span>{pkg.discountPercentage}% OFF</span>
                     </div>
                   )}
 
-                  <div className={styles.cardDetails}>
-                    <span className={styles.detail}>
-                      <Clock size={16} />
-                      {service.duration}
-                    </span>
-                    <span className={styles.detail}>
-                      <DollarSign size={16} />
-                      ${service.price}.00
-                    </span>
+                  <div className={styles.cardContent}>
+                    <h3 className={styles.cardTitle}>{pkg.name}</h3>
+                    <p className={styles.cardDescription}>{pkg.description}</p>
+
+                    {hasDiscount && pkg.discountLabel && (
+                      <div className={styles.discountLabel}>
+                        {pkg.discountLabel}
+                      </div>
+                    )}
+
+                    {pkg.hasAddons && (
+                      <div className={styles.addonsInfo}>
+                        <Sparkles size={16} />
+                        <span>
+                          Add-on options: {addons.map(a => a.name).join(', ')}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className={styles.cardDetails}>
+                      <span className={styles.detail}>
+                        <Clock size={16} />
+                        {pkg.duration}
+                      </span>
+                      <span className={styles.detail}>
+                        <DollarSign size={16} />
+                        {hasDiscount ? (
+                          <span className={styles.pricing}>
+                            <span className={styles.originalPrice}>${pkg.basePrice.toFixed(2)}</span>
+                            <span className={styles.currentPrice}>${pkg.currentPrice.toFixed(2)}</span>
+                          </span>
+                        ) : (
+                          <span>${pkg.currentPrice.toFixed(2)}</span>
+                        )}
+                      </span>
+                    </div>
                   </div>
+
+                  <Link href={`/book?service=${pkg.id}`} className={styles.bookBtn}>
+                    Book Now
+                  </Link>
                 </div>
-                <Link href={`/book?service=${service.id}`} className={styles.bookBtn}>
-                  Book Now
-                </Link>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className={styles.addons}>
+      <section className={styles.addonsSection}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Add-On Services</h2>
-          <p className={styles.sectionSubtitle}>
-            Enhance your massage experience with our add-on services. Each add-on is $10.
+          <p className={styles.sectionDescription}>
+            Enhance your massage experience with our premium add-on services
           </p>
+
           <div className={styles.addonsGrid}>
             {addons.map((addon) => (
               <div key={addon.id} className={styles.addonCard}>
-                <h3>{addon.name}</h3>
-                <span className={styles.addonPrice}>+${addon.price}</span>
+                <Sparkles className={styles.addonIcon} />
+                <h4>{addon.name}</h4>
+                {addon.description && <p>{addon.description}</p>}
+                <span className={styles.addonPrice}>+${addon.price.toFixed(2)}</span>
               </div>
             ))}
           </div>
+
+          <p className={styles.addonNote}>
+            * Available with select massage packages. Comment your choice when booking.
+          </p>
         </div>
       </section>
 
-      <section className={styles.info}>
+      <section className={styles.infoCards}>
         <div className={styles.container}>
           <div className={styles.infoGrid}>
             <div className={styles.infoCard}>
-              <h3>First Visit?</h3>
+              <h3>First Time Visit?</h3>
               <p>
-                Please arrive 5-10 minutes early to complete any paperwork and discuss your needs with your therapist.
+                Welcome! We recommend starting with a 60 or 90-minute massage to experience the full benefits of our therapeutic approach.
               </p>
+              <Link href="/book" className={styles.infoLink}>
+                Schedule Your First Visit →
+              </Link>
             </div>
+
             <div className={styles.infoCard}>
-              <h3>Cancellation Policy</h3>
+              <h3>Custom Sessions</h3>
               <p>
-                Please provide at least 24 hours notice for cancellations to avoid being charged for the session.
+                Not sure which service is right for you? We can customize any session to focus on your specific needs and problem areas.
               </p>
+              <Link href="/contact" className={styles.infoLink}>
+                Contact Us →
+              </Link>
             </div>
+
             <div className={styles.infoCard}>
-              <h3>Gift Cards</h3>
+              <h3>Gift Certificates</h3>
               <p>
-                Give the gift of relaxation! Gift cards are available in any amount and can be purchased online.
+                Give the gift of relaxation! Gift certificates are available for any service and make the perfect present.
               </p>
+              <Link href="/contact" className={styles.infoLink}>
+                Inquire About Gifts →
+              </Link>
             </div>
           </div>
         </div>

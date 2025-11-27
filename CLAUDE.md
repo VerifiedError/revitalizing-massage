@@ -1,5 +1,56 @@
 # Revitalizing Massage - Project Documentation
 
+## **⚠️ CRITICAL: ADMIN-CENTRIC DESIGN PHILOSOPHY**
+
+**THIS IS THE MOST IMPORTANT SECTION OF THIS DOCUMENT. READ THIS FIRST.**
+
+### Non-Technical Admin User
+The admin user for this website **DOES NOT CODE** and **HAS NO TECHNICAL KNOWLEDGE**. All website content, pricing, and settings MUST be manageable through the admin panel UI.
+
+### Global Settings & Content Management
+**EVERYTHING on the website must be editable by the admin without touching code:**
+
+1. **Package Management** (`/admin/packages`)
+   - Create, edit, delete massage packages
+   - Set base prices and discounts
+   - Add discount labels (e.g., "Holiday Special", "Limited Time")
+   - Toggle packages active/inactive (hide from website)
+   - Manage add-on services and pricing
+   - Control sort order of packages
+
+2. **Future Global Settings** (to be implemented at `/admin/settings`)
+   - Business information (name, phone, email, address, hours)
+   - Homepage content (hero text, about section, benefits)
+   - Social media links
+   - Footer content
+   - Email templates
+   - Booking form settings
+   - Cancellation policies
+   - Terms and conditions
+
+### Discount System
+Discounts are prominently displayed on the website:
+- Red discount badges show percentage off
+- Strikethrough original price
+- Green current price
+- Optional discount labels for marketing campaigns
+- All managed from admin panel - zero code changes needed
+
+### Data Management Philosophy
+- **ALL content is stored in JSON files in `/data` directory** (gitignored)
+- JSON files act as a simple database for development
+- Admin panel provides full CRUD operations
+- NO hardcoded content in components
+- Production should migrate to real database (Supabase/PlanetScale)
+
+### For Future Development
+When adding ANY new feature, ask:
+1. "Does this need to be editable by admin?"
+2. "Can admin change this without developer help?"
+3. If yes to either → Build admin UI for it
+
+---
+
 ## Project Overview
 A modern Next.js website for Revitalizing Massage, a professional massage therapy business located in Topeka, KS. This project replicates and enhances the functionality of the original Square site (https://revitalizing-massage.square.site/).
 

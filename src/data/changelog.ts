@@ -246,6 +246,33 @@ export const changelog: ChangelogEntry[] = [
       "Prevented hydration errors caused by complex Clerk user object serialization",
       "Ensured admin panel loads correctly without console errors"
     ]
+  },
+  {
+    version: "1.5.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Complete Package Management System with Discounts",
+    description: "Built comprehensive admin-controlled package management system allowing non-technical admin to manage all services, pricing, and discounts without touching code.",
+    changes: [
+      "Created Package and AddOnService TypeScript interfaces with discount support",
+      "Built packages data management library with CRUD operations",
+      "Implemented admin packages management page at /admin/packages",
+      "Added full CRUD UI for creating, editing, deleting packages",
+      "Implemented dynamic discount system with percentage-based pricing",
+      "Added discount badge and label display on packages",
+      "Created add-on services management interface",
+      "Updated ServiceCard component to display discounts with strikethrough original price",
+      "Migrated services page to use dynamic packages from JSON database",
+      "Added packages link to admin sidebar and dashboard",
+      "Implemented sort order control for package display",
+      "Added active/inactive toggle to hide packages from website",
+      "Created packages.json and addons.json data files (gitignored)",
+      "Built API routes for packages and addons (GET, POST, PATCH, DELETE)",
+      "Added prominent discount badges (red with percentage)",
+      "Implemented discount labels for marketing campaigns (e.g., 'Holiday Special')",
+      "Updated CLAUDE.md with critical admin-centric design philosophy section",
+      "Documented non-technical admin requirement and future global settings roadmap"
+    ]
   }
 ];
 
