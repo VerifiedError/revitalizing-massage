@@ -1,0 +1,235 @@
+.page {
+  padding-top: 70px;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-size: 3rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  text-align: center;
+  color: var(--secondary);
+  margin-bottom: 3rem;
+}
+
+/* Story Section */
+.story {
+  padding: 5rem 0;
+}
+
+.storyContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.storyText h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+.storyText p {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.storyImage {
+  position: relative;
+}
+
+.imagePlaceholder {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.125rem;
+}
+
+/* Values Section */
+.values {
+  padding: 5rem 0;
+  background: #f9fafb;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.valueCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.valueIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+.valueCard h3 {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  color: var(--secondary);
+  margin-bottom: 0.75rem;
+}
+
+.valueCard p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Commitment Section */
+.commitment {
+  padding: 5rem 0;
+}
+
+.commitmentContent {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.commitmentContent h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: var(--secondary);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.commitmentList {
+  list-style: none;
+}
+
+.commitmentList li {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.commitmentList li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.commitmentList li svg {
+  flex-shrink: 0;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.commitmentList li strong {
+  display: block;
+  color: var(--secondary);
+  margin-bottom: 0.25rem;
+}
+
+.commitmentList li p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* CTA Section */
+.cta {
+  padding: 5rem 0;
+  background: var(--secondary);
+  text-align: center;
+}
+
+.cta h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--primary);
+  color: var(--secondary);
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.ctaBtn:hover {
+  background: var(--primary-dark);
+}
+
+@media (max-width: 900px) {
+  .storyContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+}

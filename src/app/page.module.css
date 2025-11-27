@@ -1,0 +1,245 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+}
+
+.sectionSubtitle {
+  text-align: center;
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+/* Services Section */
+.services {
+  padding: 6rem 0;
+  background: #f9fafb;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.viewAll {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.viewAllBtn {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.viewAllBtn:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 6rem 0;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.benefitCard {
+  text-align: center;
+  padding: 2rem;
+}
+
+.benefitIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+.benefitTitle {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--secondary);
+}
+
+.benefitDescription {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* About Preview Section */
+.aboutPreview {
+  padding: 6rem 0;
+  background: var(--primary-light);
+}
+
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.aboutText .sectionTitle {
+  text-align: left;
+}
+
+.aboutDescription {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.aboutList {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.aboutList li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.aboutList li svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.aboutBtn {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background: var(--secondary);
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.aboutBtn:hover {
+  background: #333;
+}
+
+.aboutImage {
+  position: relative;
+}
+
+.imagePlaceholder {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.125rem;
+}
+
+/* CTA Section */
+.cta {
+  padding: 6rem 0;
+  background: var(--secondary);
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.ctaText {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.125rem;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--primary);
+  color: var(--secondary);
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.ctaBtn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .servicesGrid,
+  .benefitsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .aboutContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .aboutText .sectionTitle {
+    text-align: center;
+  }
+
+  .aboutDescription,
+  .aboutList {
+    text-align: center;
+  }
+
+  .aboutList li {
+    justify-content: center;
+  }
+
+  .aboutText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .servicesGrid,
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaTitle {
+    font-size: 2rem;
+  }
+}
