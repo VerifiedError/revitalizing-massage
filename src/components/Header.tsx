@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X, Phone } from 'lucide-react';
 import styles from './Header.module.css';
 
@@ -34,6 +35,29 @@ export default function Header() {
         </nav>
 
         <div className={styles.headerActions}>
+          <SignedOut>
+            <div className={styles.authButtons}>
+              <SignInButton mode="modal">
+                <button className={styles.signInBtn}>Sign In</button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className={styles.registerBtn}>Register</button>
+              </SignUpButton>
+            </div>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: {
+                    width: 36,
+                    height: 36
+                  }
+                }
+              }}
+            />
+          </SignedIn>
           <a href="tel:+1234567890" className={styles.phoneLink}>
             <Phone size={20} />
           </a>

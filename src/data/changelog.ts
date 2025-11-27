@@ -163,6 +163,21 @@ export const changelog: ChangelogEntry[] = [
       "Configured environment variables for Clerk API keys",
       "Updated Next.js to version 14.2.25 for Clerk compatibility"
     ]
+  },
+  {
+    version: "1.1.1",
+    date: "2024-11-27",
+    type: "feature",
+    title: "User Authentication UI",
+    description: "Added Sign In and Register buttons to the header navigation with user profile dropdown.",
+    changes: [
+      "Added Sign In and Register buttons to header navigation",
+      "Integrated Clerk SignInButton and SignUpButton components with modal mode",
+      "Added UserButton component for signed-in users with avatar",
+      "Updated middleware to only protect checkout/payment routes",
+      "Styled auth buttons with brand colors and responsive design",
+      "Auth buttons hide on mobile (480px) for cleaner navigation"
+    ]
   }
 ];
 
