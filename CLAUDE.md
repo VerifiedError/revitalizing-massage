@@ -37,11 +37,19 @@ Discounts are prominently displayed on the website:
 - All managed from admin panel - zero code changes needed
 
 ### Data Management Philosophy
-- **ALL content is stored in JSON files in `/data` directory** (gitignored)
-- JSON files act as a simple database for development
+- **ALL content is stored in Neon PostgreSQL database**
+- Using Drizzle ORM for type-safe database operations
 - Admin panel provides full CRUD operations
 - NO hardcoded content in components
-- Production should migrate to real database (Supabase/PlanetScale)
+- Database credentials stored in `.env.local` (gitignored)
+
+#### Database Stack
+- **Database**: Neon PostgreSQL (serverless PostgreSQL on AWS)
+- **ORM**: Drizzle ORM with `@neondatabase/serverless`
+- **Schema**: `src/db/schema.ts` (packages and addons tables)
+- **Client**: `src/db/index.ts`
+- **Migrations**: Drizzle Kit (`npm run db:push`)
+- **Seed Data**: `src/db/seed.ts` (`npm run db:seed`)
 
 ### For Future Development
 When adding ANY new feature, ask:

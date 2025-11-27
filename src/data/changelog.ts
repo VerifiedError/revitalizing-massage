@@ -273,6 +273,29 @@ export const changelog: ChangelogEntry[] = [
       "Updated CLAUDE.md with critical admin-centric design philosophy section",
       "Documented non-technical admin requirement and future global settings roadmap"
     ]
+  },
+  {
+    version: "1.6.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "PostgreSQL Database Integration with Neon",
+    description: "Migrated package management from JSON files to production-ready Neon PostgreSQL database with Drizzle ORM for scalability and reliability.",
+    changes: [
+      "Integrated Neon serverless PostgreSQL database",
+      "Implemented Drizzle ORM for type-safe database operations",
+      "Created database schema for packages and addons tables",
+      "Built database client with environment variable configuration",
+      "Configured Drizzle Kit for schema management and migrations",
+      "Created seed script to populate database with initial 10 packages and 4 add-ons",
+      "Updated all package management functions to use database queries",
+      "Migrated from JSON file storage to PostgreSQL for production readiness",
+      "Added database scripts: db:push, db:generate, db:studio, db:seed",
+      "Configured DATABASE_URL and POSTGRES_URL environment variables",
+      "Implemented decimal precision for pricing (10,2) and discounts (5,2)",
+      "Added timestamps (createdAt, updatedAt) with automatic now() defaults",
+      "Updated CLAUDE.md with complete database stack documentation",
+      "Prepared for Vercel deployment with database integration"
+    ]
   }
 ];
 
