@@ -347,6 +347,30 @@ export const changelog: ChangelogEntry[] = [
       "Deployed to Vercel production using Vercel CLI",
       "Verified production build at revitalizing-massage-86gk58twx-verifiederrors-projects.vercel.app"
     ]
+  },
+  {
+    version: "1.7.1",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Mobile-Friendly Appointments Date Filtering",
+    description: "Implemented quick date filter buttons in appointments page with auto-population of today's appointments and extremely mobile-friendly design.",
+    changes: [
+      "Added quick date filter buttons: Yesterday, Today, Tomorrow, This Week, This Month, All",
+      "Auto-populates today's appointments on page load (defaults to 'Today' filter)",
+      "Implemented date range filtering for 'This Week' and 'This Month'",
+      "Created getDateRange() helper function for calculating date ranges",
+      "Added horizontal scrolling for date filter buttons on mobile",
+      "Implemented smooth scrolling with touch support (-webkit-overflow-scrolling)",
+      "Hidden scrollbar for cleaner mobile UI (scrollbar-width: none)",
+      "Active state highlighting for selected date filter",
+      "Pill-shaped buttons with rounded borders (border-radius: 20px)",
+      "Responsive button sizing for mobile (smaller padding and font-size)",
+      "Full-width layout on mobile devices",
+      "Maintained existing search and status filter functionality",
+      "Optimized filtering logic to handle week/month date ranges",
+      "Added TypeScript type for date filter options (DateFilterType)",
+      "Mobile-first design with touch-friendly button sizes"
+    ]
   }
 ];
 

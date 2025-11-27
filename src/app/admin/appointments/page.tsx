@@ -62,12 +62,15 @@ const timeSlots = [
   '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM',
 ];
 
+type DateFilterType = 'today' | 'tomorrow' | 'yesterday' | 'week' | 'month' | 'all' | 'custom';
+
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('');
+  const [quickDateFilter, setQuickDateFilter] = useState<DateFilterType>('today');
   const [showModal, setShowModal] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState<Appointment | null>(null);
   const [showNotesModal, setShowNotesModal] = useState(false);
@@ -90,7 +93,77 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     fetchAppointments();
+    // Set today's date as default filter
+    const today = new Date().toISOString().split('T')[0];
+    setDateFilter(today);
   }, []);
+
+  // Helper function to get date range based on quick filter
+  function getDateRange(filterType: DateFilterType): { start: string; end: string } | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    switch (filterType) {
+      case 'today': {
+        const dateStr = today.toISOString().split('T')[0];
+        return { start: dateStr, end: dateStr };
+      }
+      case 'tomorrow': {
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const dateStr = tomorrow.toISOString().split('T')[0];
+        return { start: dateStr, end: dateStr };
+      }
+      case 'yesterday': {
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const dateStr = yesterday.toISOString().split('T')[0];
+        return { start: dateStr, end: dateStr };
+      }
+      case 'week': {
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        return {
+          start: startOfWeek.toISOString().split('T')[0],
+          end: endOfWeek.toISOString().split('T')[0],
+        };
+      }
+      case 'month': {
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        return {
+          start: startOfMonth.toISOString().split('T')[0],
+          end: endOfMonth.toISOString().split('T')[0],
+        };
+      }
+      default:
+        return null;
+    }
+  }
+
+  // Handle quick date filter clicks
+  function handleQuickDateFilter(filterType: DateFilterType) {
+    setQuickDateFilter(filterType);
+
+    if (filterType === 'all') {
+      setDateFilter('');
+    } else if (filterType === 'custom') {
+      // Keep current dateFilter value for custom
+    } else {
+      const range = getDateRange(filterType);
+      if (range) {
+        // For single day filters, set the exact date
+        if (filterType === 'today' || filterType === 'tomorrow' || filterType === 'yesterday') {
+          setDateFilter(range.start);
+        } else {
+          // For week/month, we'll use the start date but filter by range
+          setDateFilter(range.start);
+        }
+      }
+    }
+  }
 
   async function fetchAppointments() {
     setLoading(true);
@@ -286,7 +359,20 @@ export default function AppointmentsPage() {
       appointment.serviceName.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus = statusFilter === 'all' || appointment.status === statusFilter;
-    const matchesDate = !dateFilter || appointment.date === dateFilter;
+
+    // Handle date filtering based on quick filter type
+    let matchesDate = true;
+    if (quickDateFilter !== 'all') {
+      const range = getDateRange(quickDateFilter);
+      if (range) {
+        const appointmentDate = appointment.date;
+        if (quickDateFilter === 'week' || quickDateFilter === 'month') {
+          matchesDate = appointmentDate >= range.start && appointmentDate <= range.end;
+        } else {
+          matchesDate = appointmentDate === range.start;
+        }
+      }
+    }
 
     return matchesSearch && matchesStatus && matchesDate;
   });
@@ -347,14 +433,47 @@ export default function AppointmentsPage() {
               <option value="no-show">No Show</option>
             </select>
           </div>
-
-          <input
-            type="date"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            className={styles.dateFilter}
-          />
         </div>
+      </div>
+
+      {/* Quick Date Filters */}
+      <div className={styles.quickDateFilters}>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'yesterday' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('yesterday')}
+        >
+          Yesterday
+        </button>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'today' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('today')}
+        >
+          Today
+        </button>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'tomorrow' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('tomorrow')}
+        >
+          Tomorrow
+        </button>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'week' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('week')}
+        >
+          This Week
+        </button>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'month' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('month')}
+        >
+          This Month
+        </button>
+        <button
+          className={`${styles.quickFilterBtn} ${quickDateFilter === 'all' ? styles.active : ''}`}
+          onClick={() => handleQuickDateFilter('all')}
+        >
+          All
+        </button>
       </div>
 
       <div className={styles.stats}>

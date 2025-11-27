@@ -133,6 +133,49 @@
   cursor: pointer;
 }
 
+/* Quick Date Filters */
+.quickDateFilters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding-bottom: 0.25rem;
+}
+
+.quickDateFilters::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.quickFilterBtn {
+  flex-shrink: 0;
+  padding: 0.625rem 1.25rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.quickFilterBtn:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--accent);
+}
+
+.quickFilterBtn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #1e293b;
+  font-weight: 600;
+}
+
 .stats {
   color: #64748b;
   font-size: 0.875rem;
@@ -622,6 +665,15 @@
     font-size: 1.5rem;
   }
 
+  .headerActions {
+    width: 100%;
+  }
+
+  .createBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .toolbar {
     flex-direction: column;
   }
@@ -634,6 +686,20 @@
   .filters {
     width: 100%;
     flex-wrap: wrap;
+  }
+
+  .filterSelect {
+    width: 100%;
+  }
+
+  .quickDateFilters {
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .quickFilterBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
   }
 
   .cardHeader {
