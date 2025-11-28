@@ -1,5 +1,10 @@
+/* MOBILE-FIRST DESIGN - Base styles for 375px */
+/* Touch targets: minimum 48-52px */
+/* Font sizes: minimum 16px to prevent iOS zoom */
+
 .container {
-  max-width: 1000px;
+  padding: 1rem;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -9,113 +14,515 @@
 
 .header h1 {
   font-family: var(--font-primary);
-  font-size: 2rem;
+  font-size: 1.75rem;
   color: #1e293b;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
 }
 
 .header p {
   color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
 }
 
-.content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+.loading {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #64748b;
+  font-size: 1rem;
 }
+
+/* ===== SECTION LAYOUT ===== */
 
 .section {
   background: white;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.sectionTitle {
-  font-size: 1.25rem;
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  color: var(--primary-dark);
+  flex-shrink: 0;
+}
+
+.sectionHeader h2 {
+  font-size: 1.5rem;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 1.5rem;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.formGroup {
-  margin-bottom: 1.5rem;
-}
-
-.label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
+.sectionDesc {
   color: #64748b;
-  margin-bottom: 0.5rem;
-}
-
-.input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
   font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
 }
 
-.button {
-  background: var(--primary);
-  color: var(--secondary);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-}
+/* ===== WEEKLY SCHEDULE ===== */
 
-.list {
+.weeklyGrid {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.empty {
-  text-align: center;
-  color: #94a3b8;
-  padding: 2rem;
+.dayCard {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: all 0.2s;
 }
 
-.blockedItem {
+.dayCard:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(150, 222, 235, 0.2);
+}
+
+.dayHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.dayHeader h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* ===== TOGGLE SWITCH ===== */
+
+.toggleSwitch {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  min-height: 52px;
+  padding: 0.5rem 0;
+}
+
+.toggleSwitch input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSlider {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 32px;
+  background-color: #cbd5e1;
+  border-radius: 34px;
+  transition: 0.3s;
+  flex-shrink: 0;
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .toggleSlider {
+  background-color: #059669;
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .toggleSlider::before {
+  transform: translateX(24px);
+}
+
+.toggleSwitch input[type="checkbox"]:focus + .toggleSlider {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.toggleLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* ===== TIME INPUTS ===== */
+
+.timeInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroupFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.input {
+  width: 100%;
+  padding: 1rem;
+  min-height: 52px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #1e293b;
+  background: white;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(150, 222, 235, 0.2);
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.hint {
+  display: block;
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+.savingIndicator {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ===== BOOKING SETTINGS ===== */
+
+.settingsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 1rem 1.5rem;
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44, 122, 123, 0.3);
+}
+
+.saveButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.saveButton:focus {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ===== BLOCKED DATES ===== */
+
+.blockedDatesLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.blockDateForm,
+.blockedDatesList {
+  flex: 1;
+}
+
+.formTitle,
+.listTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+}
+
+.blockButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 1rem 1.5rem;
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.blockButton:hover:not(:disabled) {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.blockButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.blockButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.blockButton:focus {
+  outline: 3px solid #fca5a5;
+  outline-offset: 2px;
+}
+
+.emptyState {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1rem;
+  padding: 2rem 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.datesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.blockedDateItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   padding: 1rem;
   background: #fff1f2;
-  border: 1px solid #fecdd3;
+  border: 2px solid #fecdd3;
   border-radius: 8px;
+  min-height: 64px;
 }
 
-.blockedDate {
+.dateInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.dateText {
   font-weight: 600;
   color: #9f1239;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  word-wrap: break-word;
 }
 
-.blockedReason {
+.reasonText {
   color: #881337;
   font-size: 0.875rem;
+  word-wrap: break-word;
 }
 
-.deleteBtn {
+.deleteButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   background: transparent;
-  border: none;
+  border: 2px solid #9f1239;
   color: #9f1239;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 0.25rem;
+  transition: all 0.2s;
 }
 
-.deleteBtn:hover {
-  background: rgba(159, 18, 57, 0.1);
-  border-radius: 4px;
+.deleteButton:hover:not(:disabled) {
+  background: #9f1239;
+  color: white;
+  transform: scale(1.05);
 }
 
-@media (max-width: 768px) {
-  .content {
-    grid-template-columns: 1fr;
+.deleteButton:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deleteButton:focus {
+  outline: 3px solid #fca5a5;
+  outline-offset: 2px;
+}
+
+/* ===== TABLET - 640px+ ===== */
+@media (min-width: 640px) {
+  .container {
+    padding: 1.5rem;
   }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .section {
+    padding: 2rem;
+  }
+
+  .timeInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .settingsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .blockedDatesLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ===== DESKTOP - 768px+ ===== */
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .header h1 {
+    font-size: 2.25rem;
+  }
+
+  .section {
+    padding: 2.5rem;
+  }
+
+  .weeklyGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ===== LARGE DESKTOP - 1024px+ ===== */
+@media (min-width: 1024px) {
+  .weeklyGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .saveButton,
+  .blockButton {
+    max-width: 300px;
+  }
+}
+
+/* ===== EXTRA LARGE - 1280px+ ===== */
+@media (min-width: 1280px) {
+  .weeklyGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .toggleSlider,
+  .toggleSlider::before,
+  .dayCard,
+  .input,
+  .saveButton,
+  .blockButton,
+  .deleteButton {
+    transition: none;
+  }
+}
+
+/* ===== FOCUS VISIBLE (for keyboard navigation) ===== */
+.toggleSwitch input[type="checkbox"]:focus-visible + .toggleSlider {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.input:focus-visible,
+.saveButton:focus-visible,
+.blockButton:focus-visible,
+.deleteButton:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }

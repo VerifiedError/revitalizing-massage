@@ -92,6 +92,29 @@ export const blockedDates = pgTable('blocked_dates', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+export const businessHours = pgTable('business_hours', {
+  id: integer('id').primaryKey(), // 0-6 for Sunday-Saturday
+  dayOfWeek: integer('day_of_week').notNull(), // 0=Sunday, 1=Monday, ..., 6=Saturday
+  dayName: varchar('day_name', { length: 20 }).notNull(), // "Sunday", "Monday", etc.
+  isOpen: boolean('is_open').notNull().default(true),
+  openTime: varchar('open_time', { length: 10 }), // "09:00 AM"
+  closeTime: varchar('close_time', { length: 10 }), // "06:00 PM"
+  breakStartTime: varchar('break_start_time', { length: 10 }), // "12:00 PM" (nullable for no break)
+  breakEndTime: varchar('break_end_time', { length: 10 }), // "01:00 PM" (nullable for no break)
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+export const bookingSettings = pgTable('booking_settings', {
+  id: integer('id').primaryKey().default(1), // Singleton pattern
+  bufferMinutes: integer('buffer_minutes').notNull().default(15), // Time between appointments
+  advanceBookingDays: integer('advance_booking_days').notNull().default(60), // How far ahead can book
+  minimumNoticeHours: integer('minimum_notice_hours').notNull().default(24), // Minimum time before appointment
+  allowSameDayBooking: boolean('allow_same_day_booking').notNull().default(false),
+  maxAppointmentsPerDay: integer('max_appointments_per_day').notNull().default(8),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  updatedBy: varchar('updated_by', { length: 100 }),
+});
+
 export const businessSettings = pgTable('business_settings', {
   id: integer('id').primaryKey().default(1), // Singleton pattern - only one record
   businessName: varchar('business_name', { length: 255 }).notNull(),
@@ -122,5 +145,9 @@ export type Setting = typeof settings.$inferSelect;
 export type NewSetting = typeof settings.$inferInsert;
 export type BlockedDate = typeof blockedDates.$inferSelect;
 export type NewBlockedDate = typeof blockedDates.$inferInsert;
+export type BusinessHours = typeof businessHours.$inferSelect;
+export type NewBusinessHours = typeof businessHours.$inferInsert;
+export type BookingSettings = typeof bookingSettings.$inferSelect;
+export type NewBookingSettings = typeof bookingSettings.$inferInsert;
 export type BusinessSettings = typeof businessSettings.$inferSelect;
 export type NewBusinessSettings = typeof businessSettings.$inferInsert;
