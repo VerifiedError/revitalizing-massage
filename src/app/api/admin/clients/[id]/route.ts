@@ -1,0 +1,67 @@
+import { NextResponse } from 'next/server';
+import { db } from '@/db';
+import { appointments, customerNotes } from '@/db/schema';
+import { eq, desc, or } from 'drizzle-orm';
+import { auth } from '@clerk/nextjs/server';
+
+export async function GET(req: Request, { params }: { params: { id: string } }) {
+  try {
+    const { userId } = auth();
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const clientId = decodeURIComponent(params.id);
+
+    // Fetch appointments matching email or customerId or name
+    // We assume ID passed is either an email or a Clerk ID or a Name
+    // Ideally we should be consistent. The list API used "email || name".
+    
+    const clientAppointments = await db.select()
+      .from(appointments)
+      .where(
+        or(
+          eq(appointments.customerEmail, clientId),
+          eq(appointments.customerId, clientId),
+          eq(appointments.customerName, clientId)
+        )
+      )
+      .orderBy(desc(appointments.date));
+
+    if (clientAppointments.length === 0) {
+      return new NextResponse('Client not found', { status: 404 });
+    }
+
+    const firstApt = clientAppointments[0];
+    const clientInfo = {
+      id: clientId,
+      name: firstApt.customerName,
+      email: firstApt.customerEmail,
+      phone: firstApt.customerPhone,
+      totalAppointments: clientAppointments.length,
+      totalSpend: clientAppointments.reduce((sum, apt) => 
+        sum + (parseFloat(apt.servicePrice as unknown as string) || 0) + (parseFloat(apt.addonsTotal as unknown as string) || 0), 0
+      ),
+      appointments: clientAppointments
+    };
+
+    // Fetch notes if we have a customerId (which might be the clientId or found in appointments)
+    let notes = [];
+    // We need a consistent customerId to fetch notes. 
+    // If the clientId passed is an email, we might not find notes if they are keyed by Clerk ID.
+    // We'll search notes by the customerId found in the appointments (if any).
+    const distinctCustomerIds = Array.from(new Set(clientAppointments.map(a => a.customerId).filter(Boolean)));
+    
+    if (distinctCustomerIds.length > 0) {
+       // Fetch notes for all associated IDs (usually just one)
+       // @ts-ignore
+       const notesList = await db.select().from(customerNotes).where(eq(customerNotes.customerId, distinctCustomerIds[0]));
+       notes = notesList;
+    }
+
+    return NextResponse.json({ ...clientInfo, notes });
+  } catch (error) {
+    console.error('[CLIENT_DETAILS_GET]', error);
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}

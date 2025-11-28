@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package, Ban, UserCog } from 'lucide-react';
 import styles from './AdminSidebar.module.css';
 
 interface AdminSidebarProps {
@@ -15,12 +15,13 @@ interface AdminSidebarProps {
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/availability', label: 'Availability', icon: Ban },
+  { href: '/admin/clients', label: 'Clients', icon: Users },
   { href: '/admin/packages', label: 'Packages', icon: Package },
   { href: '/admin/appointments', label: 'Appointments', icon: Calendar },
-  { href: '/admin/users', label: 'Users', icon: Users },
+  { href: '/admin/users', label: 'System Users', icon: UserCog },
   { href: '/admin/changelog', label: 'Changelog', icon: FileText },
-  // Settings page not yet implemented
-  // { href: '/admin/settings', label: 'Settings', icon: Settings },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function AdminSidebar({ user }: AdminSidebarProps) {

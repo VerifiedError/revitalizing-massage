@@ -76,6 +76,22 @@ export const customerNotes = pgTable('customer_notes', {
   customerIdIdx: index('customer_notes_customer_id_idx').on(table.customerId),
 }));
 
+export const settings = pgTable('settings', {
+  key: varchar('key', { length: 100 }).primaryKey(),
+  value: text('value').notNull(), // JSON stringified for complex objects
+  category: varchar('category', { length: 50 }).notNull().default('general'),
+  description: text('description'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+export const blockedDates = pgTable('blocked_dates', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  date: varchar('date', { length: 20 }).notNull().unique(), // YYYY-MM-DD
+  reason: text('reason'),
+  createdBy: varchar('created_by', { length: 100 }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
 export type Package = typeof packages.$inferSelect;
 export type NewPackage = typeof packages.$inferInsert;
 export type Addon = typeof addons.$inferSelect;
@@ -84,3 +100,7 @@ export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
 export type CustomerNote = typeof customerNotes.$inferSelect;
 export type NewCustomerNote = typeof customerNotes.$inferInsert;
+export type Setting = typeof settings.$inferSelect;
+export type NewSetting = typeof settings.$inferInsert;
+export type BlockedDate = typeof blockedDates.$inferSelect;
+export type NewBlockedDate = typeof blockedDates.$inferInsert;

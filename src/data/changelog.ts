@@ -9,6 +9,21 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Major Admin Expansion: CRM, Availability & Settings",
+    description: "Implemented three critical business management features: Availability Management (Block-out dates), Client Relationship Management (CRM), and Global Site Settings.",
+    changes: [
+      "Added /admin/availability to manage blocked dates and time off",
+      "Added /admin/clients (CRM) to track client history, spend, and details",
+      "Added /admin/settings to manage business info (hours, contact, address) dynamically",
+      "Created new database tables: 'settings' and 'blocked_dates'",
+      "Updated Admin Sidebar with new navigation items",
+      "Renamed 'Users' to 'System Users' to distinguish from 'Clients'"
+    ]
+  },
+  {
     version: "1.15.4",
     date: "2025-11-27",
     type: "update",
