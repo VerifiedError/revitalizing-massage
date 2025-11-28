@@ -14,9 +14,40 @@ import {
   Heart,
   Settings as SettingsIcon,
   Clock,
-  FileText
+  FileText,
+  MessageSquare,
+  Send,
+  PhoneCall,
+  Smartphone,
+  Users,
+  Plus,
+  X,
+  Trash2,
+  ArrowDown,
+  ArrowUp
 } from 'lucide-react';
 import styles from './page.module.css';
+
+interface Communication {
+  id: string;
+  customerId: string;
+  type: string;
+  subject: string | null;
+  content: string;
+  direction: string | null;
+  tags: string[];
+  createdBy: string;
+  createdAt: string;
+  metadata: any;
+}
+
+interface NoteTemplate {
+  id: string;
+  name: string;
+  category: string;
+  content: string;
+  tags: string[];
+}
 
 interface CustomerDetails {
   customer: {
@@ -34,28 +65,10 @@ interface CustomerDetails {
     marketingOptIn: boolean;
     createdAt: string;
   };
-  healthInfo: {
-    allergies: string | null;
-    medicalConditions: string | null;
-    medications: string | null;
-    injuries: string | null;
-    pregnancyStatus: boolean | null;
-    pregnancyWeeks: number | null;
-    pressurePreference: string | null;
-    focusAreas: string | null;
-    avoidAreas: string | null;
-    specialRequests: string | null;
-  } | null;
-  preferences: {
-    preferredDay: number | null;
-    preferredTime: string | null;
-    preferredServices: string | null;
-    tableHeatingPreference: string | null;
-    musicPreference: string | null;
-    aromatherapyPreference: boolean | null;
-  } | null;
+  healthInfo: any;
+  preferences: any;
   appointments: any[];
-  notes: any[];
+  communications: Communication[];
 }
 
 type TabType = 'overview' | 'appointments' | 'health' | 'preferences' | 'notes';
@@ -69,10 +82,20 @@ export default function CustomerProfilePage({
   const router = useRouter();
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [activeTab, setActiveTab] = useState<TabType>('notes');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [templates, setTemplates] = useState<NoteTemplate[]>([]);
+  const [formData, setFormData] = useState({
+    type: 'note',
+    subject: '',
+    content: '',
+    direction: '',
+    tags: [] as string[],
+  });
 
   useEffect(() => {
     fetchCustomerDetails();
+    fetchTemplates();
   }, [resolvedParams.id]);
 
   async function fetchCustomerDetails() {
@@ -81,6 +104,11 @@ export default function CustomerProfilePage({
       const response = await fetch(`/api/admin/customers/${resolvedParams.id}`);
       if (response.ok) {
         const data = await response.json();
+        // Fetch communications separately
+        const commResponse = await fetch(`/api/admin/communications?customerId=${resolvedParams.id}`);
+        if (commResponse.ok) {
+          data.communications = await commResponse.json();
+        }
         setCustomerDetails(data);
       } else {
         router.push('/admin/customers');
@@ -91,6 +119,123 @@ export default function CustomerProfilePage({
     } finally {
       setLoading(false);
     }
+  }
+
+  async function fetchTemplates() {
+    try {
+      const response = await fetch('/api/admin/note-templates');
+      if (response.ok) {
+        setTemplates(await response.json());
+      }
+    } catch (error) {
+      console.error('Error fetching templates:', error);
+    }
+  }
+
+  async function handleSubmitCommunication(e: React.FormEvent) {
+    e.preventDefault();
+    if (!formData.content.trim() || !customerDetails) return;
+
+    try {
+      const response = await fetch('/api/admin/communications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: customerDetails.customer.id,
+          type: formData.type,
+          subject: formData.subject || null,
+          content: formData.content,
+          direction: formData.direction || null,
+          tags: formData.tags,
+        }),
+      });
+
+      if (response.ok) {
+        setFormData({ type: 'note', subject: '', content: '', direction: '', tags: [] });
+        setShowAddForm(false);
+        fetchCustomerDetails();
+      }
+    } catch (error) {
+      console.error('Error creating communication:', error);
+    }
+  }
+
+  async function handleDeleteCommunication(id: string) {
+    if (!confirm('Delete this communication?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/communications?id=${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        fetchCustomerDetails();
+      }
+    } catch (error) {
+      console.error('Error deleting communication:', error);
+    }
+  }
+
+  function loadTemplate(templateId: string) {
+    const template = templates.find(t => t.id === templateId);
+    if (template) {
+      setFormData(prev => ({
+        ...prev,
+        content: template.content,
+        tags: [...template.tags],
+      }));
+    }
+  }
+
+  function toggleTag(tag: string) {
+    setFormData(prev => ({
+      ...prev,
+      tags: prev.tags.includes(tag)
+        ? prev.tags.filter(t => t !== tag)
+        : [...prev.tags, tag],
+    }));
+  }
+
+  function getTypeIcon(type: string) {
+    switch (type) {
+      case 'email': return Mail;
+      case 'phone': return PhoneCall;
+      case 'sms': return Smartphone;
+      case 'in-person': return Users;
+      default: return MessageSquare;
+    }
+  }
+
+  function getTypeClass(type: string) {
+    switch (type) {
+      case 'email': return styles.typeEmail;
+      case 'phone': return styles.typePhone;
+      case 'sms': return styles.typeSms;
+      case 'in-person': return styles.typeInPerson;
+      default: return styles.typeNote;
+    }
+  }
+
+  function getTagClass(tag: string) {
+    if (tag === 'important') return styles.tagImportant;
+    if (tag === 'follow-up') return styles.tagFollowUp;
+    if (tag === 'medical') return styles.tagMedical;
+    return styles.tagDefault;
+  }
+
+  function formatTimeAgo(dateString: string) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) !== 1 ? 's' : ''} ago`;
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
   function formatCurrency(amount: string) {
@@ -108,14 +253,10 @@ export default function CustomerProfilePage({
 
   function getStatusColor(status: string) {
     switch (status) {
-      case 'active':
-        return styles.statusActive;
-      case 'inactive':
-        return styles.statusInactive;
-      case 'blocked':
-        return styles.statusBlocked;
-      default:
-        return styles.statusActive;
+      case 'active': return styles.statusActive;
+      case 'inactive': return styles.statusInactive;
+      case 'blocked': return styles.statusBlocked;
+      default: return styles.statusActive;
     }
   }
 
@@ -136,7 +277,7 @@ export default function CustomerProfilePage({
     );
   }
 
-  const { customer, healthInfo, preferences, appointments, notes } = customerDetails;
+  const { customer, healthInfo, preferences, appointments, communications = [] } = customerDetails;
 
   return (
     <div className={styles.container}>
@@ -239,25 +380,230 @@ export default function CustomerProfilePage({
           onClick={() => setActiveTab('notes')}
         >
           <FileText size={18} />
-          <span>Notes</span>
-          {notes.length > 0 && (
-            <span className={styles.badge}>{notes.length}</span>
+          <span>Communications</span>
+          {communications.length > 0 && (
+            <span className={styles.badge}>{communications.length}</span>
           )}
         </button>
       </div>
 
       {/* Tab Content */}
       <div className={styles.tabContent}>
-        {/* Overview Tab */}
+        {/* Notes/Communications Tab */}
+        {activeTab === 'notes' && (
+          <div className={styles.notesTab}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Communication Timeline</h2>
+              <button
+                className={styles.editButton}
+                onClick={() => setShowAddForm(!showAddForm)}
+              >
+                {showAddForm ? <X size={16} /> : <Plus size={16} />}
+                <span>{showAddForm ? 'Cancel' : 'Add'}</span>
+              </button>
+            </div>
+
+            {/* Add Communication Form */}
+            {showAddForm && (
+              <div className={styles.addCommunicationForm}>
+                <h3 className={styles.formTitle}>Add Communication</h3>
+                <form onSubmit={handleSubmitCommunication}>
+                  <div className={styles.formGrid}>
+                    {/* Type Select */}
+                    <div className={styles.formGroup}>
+                      <label htmlFor="type" className={styles.formLabel}>Type</label>
+                      <select
+                        id="type"
+                        value={formData.type}
+                        onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value }))}
+                        className={styles.formSelect}
+                      >
+                        <option value="note">Note</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="sms">SMS</option>
+                        <option value="in-person">In-Person</option>
+                      </select>
+                    </div>
+
+                    {/* Template Select */}
+                    {formData.type === 'note' && templates.length > 0 && (
+                      <div className={`${styles.formGroup} ${styles.templateSelect}`}>
+                        <label htmlFor="template" className={styles.formLabel}>Load Template</label>
+                        <select
+                          id="template"
+                          onChange={(e) => e.target.value && loadTemplate(e.target.value)}
+                          className={styles.formSelect}
+                          defaultValue=""
+                        >
+                          <option value="">Select template...</option>
+                          {templates.map(template => (
+                            <option key={template.id} value={template.id}>
+                              {template.category} - {template.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Direction (for email, phone, sms) */}
+                    {['email', 'phone', 'sms'].includes(formData.type) && (
+                      <div className={styles.formGroup}>
+                        <label htmlFor="direction" className={styles.formLabel}>Direction</label>
+                        <select
+                          id="direction"
+                          value={formData.direction}
+                          onChange={(e) => setFormData(prev => ({ ...prev, direction: e.target.value }))}
+                          className={styles.formSelect}
+                        >
+                          <option value="">None</option>
+                          <option value="inbound">Inbound</option>
+                          <option value="outbound">Outbound</option>
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Subject (for email) */}
+                    {formData.type === 'email' && (
+                      <div className={`${styles.formGroup} ${styles.templateSelect}`}>
+                        <label htmlFor="subject" className={styles.formLabel}>Subject</label>
+                        <input
+                          type="text"
+                          id="subject"
+                          value={formData.subject}
+                          onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
+                          className={styles.formInput}
+                          placeholder="Email subject..."
+                        />
+                      </div>
+                    )}
+
+                    {/* Content */}
+                    <div className={`${styles.formGroup} ${styles.templateSelect}`}>
+                      <label htmlFor="content" className={styles.formLabel}>Content</label>
+                      <textarea
+                        id="content"
+                        value={formData.content}
+                        onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                        className={styles.formTextarea}
+                        placeholder="Enter communication content..."
+                        required
+                      />
+                      <div className={styles.charCount}>{formData.content.length} characters</div>
+                    </div>
+
+                    {/* Quick Tags */}
+                    <div className={`${styles.formGroup} ${styles.templateSelect}`}>
+                      <label className={styles.formLabel}>Tags</label>
+                      <div className={styles.quickTags}>
+                        {['important', 'follow-up', 'medical', 'positive', 'concern'].map(tag => (
+                          <button
+                            key={tag}
+                            type="button"
+                            onClick={() => toggleTag(tag)}
+                            className={`${styles.quickTagButton} ${formData.tags.includes(tag) ? styles.active : ''}`}
+                          >
+                            {tag}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Form Actions */}
+                  <div className={styles.formActions}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAddForm(false);
+                        setFormData({ type: 'note', subject: '', content: '', direction: '', tags: [] });
+                      }}
+                      className={`${styles.formButton} ${styles.cancelButton}`}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className={`${styles.formButton} ${styles.submitButton}`}
+                      disabled={!formData.content.trim()}
+                    >
+                      <Plus size={18} />
+                      Add Communication
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Communications Timeline */}
+            {communications.length === 0 ? (
+              <div className={styles.emptyState}>
+                <FileText size={48} className={styles.emptyIcon} />
+                <p>No communications yet</p>
+              </div>
+            ) : (
+              <div className={styles.communicationTimeline}>
+                {communications.map((comm) => {
+                  const TypeIcon = getTypeIcon(comm.type);
+                  return (
+                    <div key={comm.id} className={styles.communicationCard}>
+                      <div className={styles.communicationHeader}>
+                        <div className={styles.communicationMeta}>
+                          <div className={`${styles.typeIcon} ${getTypeClass(comm.type)}`}>
+                            <TypeIcon size={16} />
+                          </div>
+                          {comm.direction && (
+                            <span className={`${styles.directionBadge} ${comm.direction === 'inbound' ? styles.directionInbound : styles.directionOutbound}`}>
+                              {comm.direction === 'inbound' ? <ArrowDown size={10} /> : <ArrowUp size={10} />}
+                              {comm.direction}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {comm.subject && (
+                        <h4 className={styles.communicationSubject}>{comm.subject}</h4>
+                      )}
+
+                      <p className={styles.communicationContent}>{comm.content}</p>
+
+                      {comm.tags && comm.tags.length > 0 && (
+                        <div className={styles.communicationTags}>
+                          {comm.tags.map((tag, idx) => (
+                            <span key={idx} className={`${styles.tag} ${getTagClass(tag)}`}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className={styles.communicationFooter}>
+                        <div>
+                          <span className={styles.timeAgo}>{formatTimeAgo(comm.createdAt)}</span>
+                          <span className={styles.createdBy}> • by {comm.createdBy}</span>
+                        </div>
+                        <button
+                          onClick={() => handleDeleteCommunication(comm.id)}
+                          className={styles.deleteButton}
+                        >
+                          <Trash2 size={14} />
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Other tabs remain the same */}
         {activeTab === 'overview' && (
           <div className={styles.overviewTab}>
             <div className={styles.section}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Customer Information</h2>
-                <button className={styles.editButton}>
-                  <Edit2 size={16} />
-                  <span>Edit</span>
-                </button>
               </div>
               <div className={styles.infoGrid}>
                 <div className={styles.infoItem}>
@@ -277,14 +623,6 @@ export default function CustomerProfilePage({
                 <div className={styles.infoItem}>
                   <span className={styles.infoLabel}>Referral Source</span>
                   <span className={styles.infoValue}>{customer.referralSource || 'Unknown'}</span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Marketing Opt-in</span>
-                  <span className={styles.infoValue}>{customer.marketingOptIn ? 'Yes' : 'No'}</span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Customer Since</span>
-                  <span className={styles.infoValue}>{formatDate(customer.createdAt)}</span>
                 </div>
               </div>
             </div>
@@ -320,121 +658,6 @@ export default function CustomerProfilePage({
                         {formatCurrency(apt.servicePrice)}
                         {parseFloat(apt.addonsTotal) > 0 && ` + ${formatCurrency(apt.addonsTotal)} add-ons`}
                       </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Health Info Tab */}
-        {activeTab === 'health' && (
-          <div className={styles.healthTab}>
-            <div className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Health Information</h2>
-                <button className={styles.editButton}>
-                  <Edit2 size={16} />
-                  <span>Edit</span>
-                </button>
-              </div>
-              <div className={styles.infoGrid}>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Allergies</span>
-                  <span className={styles.infoValue}>{healthInfo?.allergies || 'None reported'}</span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Medical Conditions</span>
-                  <span className={styles.infoValue}>
-                    {healthInfo?.medicalConditions || 'None reported'}
-                  </span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Medications</span>
-                  <span className={styles.infoValue}>{healthInfo?.medications || 'None reported'}</span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Injuries</span>
-                  <span className={styles.infoValue}>{healthInfo?.injuries || 'None reported'}</span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Pressure Preference</span>
-                  <span className={styles.infoValue}>
-                    {healthInfo?.pressurePreference || 'Not specified'}
-                  </span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Special Requests</span>
-                  <span className={styles.infoValue}>
-                    {healthInfo?.specialRequests || 'None'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Preferences Tab */}
-        {activeTab === 'preferences' && (
-          <div className={styles.preferencesTab}>
-            <div className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Customer Preferences</h2>
-                <button className={styles.editButton}>
-                  <Edit2 size={16} />
-                  <span>Edit</span>
-                </button>
-              </div>
-              <div className={styles.infoGrid}>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Preferred Time</span>
-                  <span className={styles.infoValue}>
-                    {preferences?.preferredTime || 'No preference'}
-                  </span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Table Heating</span>
-                  <span className={styles.infoValue}>
-                    {preferences?.tableHeatingPreference || 'No preference'}
-                  </span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Music</span>
-                  <span className={styles.infoValue}>
-                    {preferences?.musicPreference || 'No preference'}
-                  </span>
-                </div>
-                <div className={styles.infoItem}>
-                  <span className={styles.infoLabel}>Aromatherapy</span>
-                  <span className={styles.infoValue}>
-                    {preferences?.aromatherapyPreference ? 'Yes' : 'No'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Notes Tab */}
-        {activeTab === 'notes' && (
-          <div className={styles.notesTab}>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Customer Notes</h2>
-            </div>
-            {notes.length === 0 ? (
-              <div className={styles.emptyState}>
-                <FileText size={48} className={styles.emptyIcon} />
-                <p>No notes yet</p>
-              </div>
-            ) : (
-              <div className={styles.noteList}>
-                {notes.map((note) => (
-                  <div key={note.id} className={styles.noteCard}>
-                    <p className={styles.noteText}>{note.note}</p>
-                    <div className={styles.noteMeta}>
-                      <span>{formatDate(note.createdAt)}</span>
-                      <span>by {note.createdBy}</span>
                     </div>
                   </div>
                 ))}

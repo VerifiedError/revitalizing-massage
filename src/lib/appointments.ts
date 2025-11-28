@@ -1,7 +1,10 @@
 import { db } from '@/db';
-import { appointments, customerNotes, Appointment, CustomerNote, NewAppointment, NewCustomerNote } from '@/db/schema';
+import { appointments, Appointment, NewAppointment } from '@/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
+
+// Re-export customer note functions from communications lib for backward compatibility
+export { getNotesByCustomerId, createCustomerNote, deleteCustomerNote } from './communications';
 
 // Appointments CRUD using database
 export async function getAllAppointments(): Promise<Appointment[]> {
@@ -132,29 +135,5 @@ export async function deleteAppointment(id: string): Promise<boolean> {
   return result.rowCount !== null && result.rowCount > 0;
 }
 
-// Customer Notes CRUD using database
-export async function getNotesByCustomerId(customerId: string): Promise<CustomerNote[]> {
-  return await db.select()
-    .from(customerNotes)
-    .where(eq(customerNotes.customerId, customerId))
-    .orderBy(desc(customerNotes.createdAt));
-}
-
-export async function createCustomerNote(customerId: string, note: string, createdBy: string): Promise<CustomerNote> {
-  const id = `note_${nanoid(12)}`;
-
-  const newNote: NewCustomerNote = {
-    id,
-    customerId,
-    note,
-    createdBy,
-  };
-
-  const [created] = await db.insert(customerNotes).values(newNote).returning();
-  return created;
-}
-
-export async function deleteCustomerNote(id: string): Promise<boolean> {
-  const result = await db.delete(customerNotes).where(eq(customerNotes.id, id));
-  return result.rowCount !== null && result.rowCount > 0;
-}
+// Customer Notes functions moved to communications.ts
+// See re-export at top of file for backward compatibility

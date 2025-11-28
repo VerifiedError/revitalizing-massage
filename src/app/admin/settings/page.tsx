@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Building2, Clock, Mail, Package, Users, FileText } from 'lucide-react';
+import { Building2, Clock, Mail, Package, Users, FileText, MessageSquare } from 'lucide-react';
 import styles from './page.module.css';
 
 const settingsSections = [
@@ -17,6 +17,13 @@ const settingsSections = [
     description: 'Edit all text content on your website pages',
     icon: FileText,
     href: '/admin/settings/content',
+    available: true,
+  },
+  {
+    title: 'Note Templates',
+    description: 'Manage quick note templates for customer communications',
+    icon: MessageSquare,
+    href: '/admin/settings/note-templates',
     available: true,
   },
   {

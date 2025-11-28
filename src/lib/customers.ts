@@ -4,7 +4,7 @@ import {
   customerHealthInfo,
   customerPreferences,
   appointments,
-  customerNotes,
+  customerCommunications,
   Customer,
   CustomerHealthInfo,
   CustomerPreferences,
@@ -12,7 +12,7 @@ import {
   NewCustomerHealthInfo,
   NewCustomerPreferences,
   Appointment,
-  CustomerNote
+  CustomerCommunication
 } from '@/db/schema';
 import { eq, desc, asc, like, or, and, sql, SQL } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
@@ -26,7 +26,7 @@ export interface CustomerDetails {
   healthInfo: CustomerHealthInfo | null;
   preferences: CustomerPreferences | null;
   appointments: Appointment[];
-  notes: CustomerNote[];
+  notes: CustomerCommunication[];
 }
 
 export interface GetCustomersOptions {
@@ -160,11 +160,11 @@ export async function getCustomerById(id: string): Promise<CustomerDetails | nul
     addons: JSON.parse(apt.addons as string) as string[],
   })) as unknown as Appointment[];
 
-  // Get notes
+  // Get customer communications/notes
   const notes = await db.select()
-    .from(customerNotes)
-    .where(eq(customerNotes.customerId, id))
-    .orderBy(desc(customerNotes.createdAt));
+    .from(customerCommunications)
+    .where(eq(customerCommunications.customerId, id))
+    .orderBy(desc(customerCommunications.createdAt));
 
   return {
     customer,

@@ -120,15 +120,36 @@ export const appointments = pgTable('appointments', {
   dateStatusIdx: index('appointments_date_status_idx').on(table.date, table.status),
 }));
 
-export const customerNotes = pgTable('customer_notes', {
+export const customerCommunications = pgTable('customer_communications', {
   id: varchar('id', { length: 50 }).primaryKey(),
-  customerId: varchar('customer_id', { length: 100 }).notNull(),
-  note: text('note').notNull(),
-  createdBy: varchar('created_by', { length: 100 }).notNull(), // Admin user ID
+  customerId: varchar('customer_id', { length: 50 }).notNull().references(() => customers.id, { onDelete: 'cascade' }),
+  type: varchar('type', { length: 20 }).notNull().default('note'), // 'note', 'email', 'phone', 'sms', 'in-person'
+  subject: varchar('subject', { length: 255 }), // For emails or categorization
+  content: text('content').notNull(),
+  direction: varchar('direction', { length: 10 }), // 'inbound', 'outbound', null for notes
+  tags: text('tags'), // JSON array of tags like ["important", "follow-up", "medical"]
+  createdBy: varchar('created_by', { length: 100 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  metadata: text('metadata'), // JSON for additional data (call duration, email read status, etc.)
 }, (table) => ({
-  // Index for customer lookup
-  customerIdIdx: index('customer_notes_customer_id_idx').on(table.customerId),
+  customerIdx: index('communications_customer_idx').on(table.customerId),
+  typeIdx: index('communications_type_idx').on(table.type),
+  createdAtIdx: index('communications_created_at_idx').on(table.createdAt),
+}));
+
+export const noteTemplates = pgTable('note_templates', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  name: varchar('name', { length: 100 }).notNull(),
+  category: varchar('category', { length: 50 }).notNull(), // "Rescheduling", "No-show", "Follow-up", "Medical", "General"
+  content: text('content').notNull(),
+  tags: text('tags'), // JSON array of default tags
+  isActive: boolean('is_active').notNull().default(true),
+  sortOrder: integer('sort_order').notNull().default(999),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  isActiveIdx: index('templates_is_active_idx').on(table.isActive),
+  categoryIdx: index('templates_category_idx').on(table.category),
 }));
 
 export const settings = pgTable('settings', {
@@ -194,8 +215,10 @@ export type Addon = typeof addons.$inferSelect;
 export type NewAddon = typeof addons.$inferInsert;
 export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
-export type CustomerNote = typeof customerNotes.$inferSelect;
-export type NewCustomerNote = typeof customerNotes.$inferInsert;
+export type CustomerCommunication = typeof customerCommunications.$inferSelect;
+export type NewCustomerCommunication = typeof customerCommunications.$inferInsert;
+export type NoteTemplate = typeof noteTemplates.$inferSelect;
+export type NewNoteTemplate = typeof noteTemplates.$inferInsert;
 export type Setting = typeof settings.$inferSelect;
 export type NewSetting = typeof settings.$inferInsert;
 export type BlockedDate = typeof blockedDates.$inferSelect;

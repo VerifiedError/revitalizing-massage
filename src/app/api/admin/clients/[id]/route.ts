@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/db';
-import { appointments, customerNotes, type CustomerNote } from '@/db/schema';
+import { appointments, customerCommunications, type CustomerCommunication } from '@/db/schema';
 import { eq, desc, or } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
 
@@ -56,7 +56,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     if (distinctCustomerIds.length > 0) {
        // Fetch notes for all associated IDs (usually just one)
        // @ts-ignore
-       const notesList = await db.select().from(customerNotes).where(eq(customerNotes.customerId, distinctCustomerIds[0]));
+       const notesList = await db.select().from(customerCommunications).where(eq(customerCommunications.customerId, distinctCustomerIds[0]));
        notes = notesList.map(n => ({
          ...n,
          type: 'general'

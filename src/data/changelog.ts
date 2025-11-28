@@ -9,6 +9,40 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.18.1",
+    date: "2025-11-28",
+    type: "feature",
+    title: "Customer Communications & Note Templates (Phase 2.2)",
+    description: "Enhanced customer notes system with comprehensive communication tracking, multiple communication types, note templates, and an improved mobile-friendly timeline interface. This completes Phase 2.2 of the Master Implementation Plan.",
+    changes: [
+      "Renamed customer_notes table to customer_communications with enhanced schema",
+      "Added new communication types: note, email, phone, SMS, in-person",
+      "Added communication metadata: type, subject, direction, tags, metadata",
+      "Created note_templates table with 14 default templates across 5 categories",
+      "Built comprehensive template management page at /admin/settings/note-templates",
+      "Template categories: Rescheduling, No-Show, Follow-Up, Medical, General",
+      "Enhanced customer profile with full communication timeline UI",
+      "Added type indicators with color-coded icons for each communication type",
+      "Implemented direction badges (inbound/outbound) for emails, calls, and SMS",
+      "Added tag system with visual chips (important, follow-up, medical, etc.)",
+      "Created template selector in add communication form",
+      "Implemented quick tag buttons for common tags",
+      "Added character count and content validation",
+      "Built mobile-first communication cards with hover effects",
+      "Added relative time display (2 hours ago, 3 days ago, etc.)",
+      "Created new API routes: /api/admin/communications and /api/admin/note-templates",
+      "Built comprehensive lib/communications.ts with helper functions",
+      "Maintained backward compatibility with existing notes API",
+      "Added migration script: npm run db:migrate:communications",
+      "Added seed script: npm run db:seed:note-templates",
+      "Successfully migrated 0 existing notes (table was empty)",
+      "Seeded 14 note templates organized by category",
+      "Updated all references from customerNotes to customerCommunications",
+      "Fixed TypeScript compatibility issues in clients and customers APIs",
+      "Build succeeded with zero errors - all features mobile-optimized"
+    ]
+  },
+  {
     version: "1.16.8",
     date: "2025-11-27",
     type: "feature",

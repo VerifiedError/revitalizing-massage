@@ -47,7 +47,8 @@ interface CustomerNote {
   id: string;
   customerId: string;
   appointmentId?: string;
-  note: string;
+  note?: string; // For backward compatibility
+  content?: string;
   createdAt: string;
 }
 
@@ -848,7 +849,7 @@ export default function AppointmentsPage() {
                   customerNotes.map((note) => (
                     <div key={note.id} className={styles.noteItem}>
                       <div className={styles.noteContent}>
-                        <p>{note.note}</p>
+                        <p>{note.content || note.note}</p>
                         <span className={styles.noteDate}>
                           {new Date(note.createdAt).toLocaleString()}
                         </span>
