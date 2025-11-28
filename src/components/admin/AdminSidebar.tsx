@@ -1,8 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package, Ban, UserCog, TrendingUp, BarChart3, DollarSign, PieChart } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package, Ban, UserCog, TrendingUp, BarChart3, DollarSign, PieChart, Menu, X } from 'lucide-react';
 import styles from './AdminSidebar.module.css';
 
 interface AdminSidebarProps {
@@ -30,40 +31,64 @@ const navItems = [
 
 export default function AdminSidebar({ user }: AdminSidebarProps) {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeSidebar = () => setIsOpen(false);
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.sidebarHeader}>
-        <h2>Admin Panel</h2>
-        <p className={styles.userEmail}>
-          {user.firstName || user.emailAddresses[0]?.emailAddress}
-        </p>
-      </div>
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        className={styles.mobileMenuBtn}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
 
-      <nav className={styles.nav}>
-        {navItems.map((item) => {
-          const isActive = pathname === item.href ||
-            (item.href !== '/admin' && pathname.startsWith(item.href));
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className={styles.overlay}
+          onClick={closeSidebar}
+        />
+      )}
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-            >
-              <item.icon size={20} />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+      {/* Sidebar */}
+      <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
+        <div className={styles.sidebarHeader}>
+          <h2>Admin Panel</h2>
+          <p className={styles.userEmail}>
+            {user.firstName || user.emailAddresses[0]?.emailAddress}
+          </p>
+        </div>
 
-      <div className={styles.sidebarFooter}>
-        <Link href="/" className={styles.backLink}>
-          <ArrowLeft size={18} />
-          <span>Back to Site</span>
-        </Link>
-      </div>
-    </aside>
+        <nav className={styles.nav}>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href ||
+              (item.href !== '/admin' && pathname.startsWith(item.href));
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeSidebar}
+                className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+              >
+                <item.icon size={20} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className={styles.sidebarFooter}>
+          <Link href="/" className={styles.backLink}>
+            <ArrowLeft size={18} />
+            <span>Back to Site</span>
+          </Link>
+        </div>
+      </aside>
+    </>
   );
 }

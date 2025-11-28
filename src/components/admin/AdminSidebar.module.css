@@ -1,3 +1,45 @@
+/* Mobile Menu Button - Hidden on desktop, visible on mobile */
+.mobileMenuBtn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: none;
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMenuBtn:hover {
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mobileMenuBtn:active {
+  transform: scale(0.95);
+}
+
+/* Overlay - Dark backdrop when sidebar is open on mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Sidebar - Desktop first */
 .sidebar {
   width: 260px;
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
@@ -30,6 +72,7 @@
 .nav {
   flex: 1;
   padding: 1rem 0;
+  overflow-y: auto;
 }
 
 .navItem {
@@ -40,6 +83,7 @@
   color: #94a3b8;
   font-size: 0.95rem;
   transition: all 0.2s ease;
+  min-height: 48px;
 }
 
 .navItem:hover {
@@ -69,30 +113,41 @@
   color: #94a3b8;
   font-size: 0.9rem;
   transition: color 0.2s ease;
+  min-height: 48px;
 }
 
 .backLink:hover {
   color: white;
 }
 
-@media (max-width: 768px) {
+/* Mobile Responsive - Below 1024px (tablets and phones) */
+@media (max-width: 1024px) {
+  /* Show mobile menu button */
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  /* Show overlay when sidebar is open */
+  .overlay {
+    display: block;
+  }
+
+  /* Hide sidebar by default on mobile */
   .sidebar {
-    width: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
   }
 
-  .sidebarHeader h2,
-  .userEmail,
-  .navItem span,
-  .backLink span {
-    display: none;
-  }
-
-  .navItem {
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .backLink {
-    justify-content: center;
+  /* Show sidebar when open */
+  .sidebar.sidebarOpen {
+    transform: translateX(0);
   }
 }

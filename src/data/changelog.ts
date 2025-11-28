@@ -9,6 +9,29 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.21.1",
+    date: "2025-11-28",
+    type: "update",
+    title: "Mobile-Optimized Admin Sidebar",
+    description: "Complete redesign of admin sidebar navigation for mobile devices, implementing a hamburger menu that allows full-width content on small screens while maintaining easy access to navigation.",
+    changes: [
+      "Converted admin sidebar from persistent 70px width to hidden-by-default hamburger menu on mobile",
+      "Added 52px touch-optimized hamburger menu button (Menu/X icons) fixed in top-left corner",
+      "Implemented slide-in animation for sidebar with smooth 0.3s transitions",
+      "Created semi-transparent overlay that closes menu when clicked outside",
+      "Set mobile breakpoint at 1024px (tablets and phones get hamburger, desktop keeps persistent sidebar)",
+      "Sidebar slides in from left at 280px width (max 85vw) when opened on mobile",
+      "Added z-index layering: button (1001), sidebar (1000), overlay (999)",
+      "Implemented closeSidebar handler that closes menu when any nav link is clicked",
+      "Mobile content now uses 100% screen width when sidebar is closed",
+      "Maintained all desktop functionality: persistent 260px sidebar, always visible",
+      "Updated AdminSidebar.module.css with mobile-first responsive design",
+      "Added hover effects and active state scaling for hamburger button",
+      "Fixed JSX structure with proper fragment closing tags",
+      "Build verified: 48 routes compiled successfully"
+    ]
+  },
+  {
     version: "1.21.0",
     date: "2025-11-28",
     type: "feature",

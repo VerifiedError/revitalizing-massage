@@ -529,9 +529,10 @@ git push origin master
 
 ## Current Version
 
-**v1.21.0** - Financial Reports & Expense Tracking (Phase 3.3)
+**v1.21.1** - Mobile-Optimized Admin Sidebar
 
 ### Recent Updates
+- v1.21.1: Mobile-first admin sidebar with hamburger menu for full-width content on small screens
 - v1.21.0: Complete financial management with expense tracking, P&L statements, 3 charts, tax-deductible tracking, and 9 expense categories
 - v1.20.1: Comprehensive appointment analytics with 20+ metrics, 4 charts, performance tracking, and mobile-first dashboard (Phase 3.2)
 - v1.20.0: Revenue analytics with forecasting, multiple chart types, CSV export, and automatic tracking (Phase 3.1)
