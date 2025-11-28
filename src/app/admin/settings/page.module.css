@@ -1,7 +1,9 @@
+/* Mobile-first settings landing page */
+
 .container {
-  max-width: 800px;
+  padding: 1.5rem 1rem;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem;
 }
 
 .header {
@@ -9,126 +11,158 @@
 }
 
 .header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin: 0 0 0.5rem 0;
   font-family: var(--font-primary);
-  font-size: 2rem;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
 }
 
 .header p {
-  color: #64748b;
-}
-
-.section {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.sectionTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.formGroup {
-  margin-bottom: 1.5rem;
-}
-
-.label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #64748b;
-  margin-bottom: 0.5rem;
-}
-
-.input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
   font-size: 1rem;
-  transition: all 0.2s;
+  color: #64748b;
+  margin: 0;
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-light);
-}
-
+/* Mobile-first grid - stacked on mobile */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
-.button {
-  background: var(--primary);
-  color: var(--secondary);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
+/* Settings cards */
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  min-height: 120px;
 }
 
-.button:hover {
-  background: var(--primary-dark);
+.card:active {
+  transform: scale(0.98);
+  border-color: var(--primary);
+  background: #f8fafc;
 }
 
-.button:disabled {
-  opacity: 0.7;
+.card.disabled {
+  opacity: 0.6;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
-.successMessage {
-  background: #dcfce7;
-  color: #166534;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
+.card.disabled:active {
+  transform: none;
+}
+
+.cardIcon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  background: var(--primary-light);
+  color: var(--accent);
+  border-radius: 12px;
 }
 
-.errorMessage {
-  background: #fee2e2;
-  border: 1px solid #ef4444;
-  color: #dc2626;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
+.cardContent {
+  flex: 1;
+  min-width: 0;
 }
 
-.helpText {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.8rem;
-  color: #94a3b8;
+.cardContent h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-secondary);
 }
 
-.saveSection {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  justify-content: flex-end;
+.cardContent p {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
 }
 
-.button svg {
+.comingSoon {
   display: inline-block;
-  margin-right: 0.5rem;
-  vertical-align: middle;
+  margin-top: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tablet breakpoint */
+@media (min-width: 640px) {
+  .container {
+    padding: 2rem 1.5rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header p {
+    font-size: 1.0625rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card:hover {
+    border-color: var(--primary);
+    background: #f8fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card:active {
+    transform: translateY(0);
+  }
+
+  .cardIcon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cardContent h3 {
+    font-size: 1.25rem;
+  }
+
+  .cardContent p {
+    font-size: 1rem;
+  }
+}
+
+/* Desktop breakpoint */
+@media (min-width: 1024px) {
+  .container {
+    padding: 2.5rem 2rem;
+  }
+
+  .header h1 {
+    font-size: 2.25rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
 }

@@ -4,27 +4,53 @@ import { db } from '@/db';
 import { businessSettings } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-// GET - Fetch business settings
+// GET - Fetch business settings (public endpoint for website display)
 export async function GET() {
   try {
-    const session = await auth();
-    const role = (session.sessionClaims?.metadata as { role?: string })?.role;
-
-    // Admin-only endpoint
-    if (role !== 'admin') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
     const settings = await db.select().from(businessSettings).where(eq(businessSettings.id, 1));
 
     if (settings.length === 0) {
-      return NextResponse.json({ error: 'Business settings not found' }, { status: 404 });
+      // Return fallback values if no settings in database
+      return NextResponse.json({
+        id: 1,
+        businessName: 'Revitalizing Massage',
+        phone: '+1 785-250-4599',
+        phoneDisplay: '(785) 250-4599',
+        email: 'alannahsrevitalizingmassage@gmail.com',
+        addressStreet: '2900 SW Atwood',
+        addressCity: 'Topeka',
+        addressState: 'KS',
+        addressZip: '66614',
+        addressFull: '2900 SW Atwood, Topeka, KS 66614',
+        timezone: 'America/Chicago',
+        taxRate: '0',
+        currency: 'USD',
+        updatedAt: new Date(),
+        updatedBy: null,
+      });
     }
 
     return NextResponse.json(settings[0]);
   } catch (error) {
     console.error('Error fetching business settings:', error);
-    return NextResponse.json({ error: 'Failed to fetch business settings' }, { status: 500 });
+    // Return fallback on error to ensure site doesn't break
+    return NextResponse.json({
+      id: 1,
+      businessName: 'Revitalizing Massage',
+      phone: '+1 785-250-4599',
+      phoneDisplay: '(785) 250-4599',
+      email: 'alannahsrevitalizingmassage@gmail.com',
+      addressStreet: '2900 SW Atwood',
+      addressCity: 'Topeka',
+      addressState: 'KS',
+      addressZip: '66614',
+      addressFull: '2900 SW Atwood, Topeka, KS 66614',
+      timezone: 'America/Chicago',
+      taxRate: '0',
+      currency: 'USD',
+      updatedAt: new Date(),
+      updatedBy: null,
+    });
   }
 }
 
