@@ -529,10 +529,11 @@ git push origin master
 
 ## Current Version
 
-**v1.20.1** - Appointment Analytics & Business Intelligence (Phase 3.2)
+**v1.21.0** - Financial Reports & Expense Tracking (Phase 3.3)
 
 ### Recent Updates
-- v1.20.1: Comprehensive appointment analytics with 20+ metrics, 4 charts, performance tracking, and mobile-first dashboard
+- v1.21.0: Complete financial management with expense tracking, P&L statements, 3 charts, tax-deductible tracking, and 9 expense categories
+- v1.20.1: Comprehensive appointment analytics with 20+ metrics, 4 charts, performance tracking, and mobile-first dashboard (Phase 3.2)
 - v1.20.0: Revenue analytics with forecasting, multiple chart types, CSV export, and automatic tracking (Phase 3.1)
 - v1.18.1: Customer communications system with note templates, timeline UI, and 5 communication types (Phase 2.2)
 - v1.18.0: Customer database with health info, preferences, and comprehensive CRM features (Phase 2.1)
@@ -2018,7 +2019,7 @@ git push origin feature/business-settings
 ---
 
 *Last Updated: 2025-11-28*
-*Current Version: 1.20.1*
+*Current Version: 1.21.0*
 
 ---
 

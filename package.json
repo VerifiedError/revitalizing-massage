@@ -18,7 +18,8 @@
     "db:seed:customers": "tsx --env-file=.env.local src/db/seed-customers.ts",
     "db:migrate:communications": "tsx --env-file=.env.local src/db/migrate-notes-to-communications.ts",
     "db:seed:note-templates": "tsx --env-file=.env.local src/db/seed-note-templates.ts",
-    "db:seed:revenue": "tsx --env-file=.env.local src/db/seed-revenue.ts"
+    "db:seed:revenue": "tsx --env-file=.env.local src/db/seed-revenue.ts",
+    "db:seed:expenses": "tsx --env-file=.env.local src/db/seed-expenses.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.35.5",

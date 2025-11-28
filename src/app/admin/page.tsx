@@ -26,6 +26,14 @@ interface AppointmentStats {
   utilizationRate: number;
 }
 
+interface FinancialStats {
+  monthRevenue: number;
+  monthExpenses: number;
+  monthProfit: number;
+  profitMargin: number;
+  taxDeductibleYTD: number;
+}
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     totalUsers: 0,
@@ -46,18 +54,26 @@ export default function AdminDashboard() {
     noShowRate: 0,
     utilizationRate: 0,
   });
+  const [financialStats, setFinancialStats] = useState<FinancialStats>({
+    monthRevenue: 0,
+    monthExpenses: 0,
+    monthProfit: 0,
+    profitMargin: 0,
+    taxDeductibleYTD: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [usersRes, todayRes, weekRes, monthRes, yearRes, apptStatsRes] = await Promise.all([
+        const [usersRes, todayRes, weekRes, monthRes, yearRes, apptStatsRes, financialStatsRes] = await Promise.all([
           fetch('/api/admin/users'),
           fetch('/api/admin/revenue/stats?period=today'),
           fetch('/api/admin/revenue/stats?period=week'),
           fetch('/api/admin/revenue/stats?period=month'),
           fetch('/api/admin/revenue/stats?period=year'),
           fetch('/api/admin/reports/appointments/stats'),
+          fetch('/api/admin/finances/reports/stats'),
         ]);
 
         if (usersRes.ok) {
@@ -93,6 +109,17 @@ export default function AdminDashboard() {
             completionRate: apptData.completionRate || 0,
             noShowRate: apptData.noShowRate || 0,
             utilizationRate: apptData.utilizationRate || 0,
+          });
+        }
+
+        if (financialStatsRes.ok) {
+          const finData = await financialStatsRes.json();
+          setFinancialStats({
+            monthRevenue: finData.monthRevenue || 0,
+            monthExpenses: finData.monthExpenses || 0,
+            monthProfit: finData.monthProfit || 0,
+            profitMargin: finData.profitMargin || 0,
+            taxDeductibleYTD: finData.taxDeductibleYTD || 0,
           });
         }
       } catch (error) {
@@ -289,6 +316,72 @@ export default function AdminDashboard() {
               <h3>Utilization Rate</h3>
               <p className={styles.statValue}>
                 {loading ? '...' : `${appointmentStats.utilizationRate.toFixed(1)}%`}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.appointmentSection}>
+        <h2>Financial Performance</h2>
+        <div className={styles.statsGrid}>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon} style={{ backgroundColor: '#ef444415', color: '#ef4444' }}>
+              <DollarSign size={24} />
+            </div>
+            <div className={styles.statContent}>
+              <h3>This Month's Expenses</h3>
+              <p className={styles.statValue}>
+                {loading ? '...' : formatCurrency(financialStats.monthExpenses)}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.statCard}>
+            <div className={styles.statIcon} style={{
+              backgroundColor: financialStats.monthProfit >= 0 ? '#10b98115' : '#ef444415',
+              color: financialStats.monthProfit >= 0 ? '#10b981' : '#ef4444'
+            }}>
+              <TrendingUp size={24} />
+            </div>
+            <div className={styles.statContent}>
+              <h3>This Month's Profit</h3>
+              <p className={styles.statValue} style={{
+                color: financialStats.monthProfit >= 0 ? '#10b981' : '#ef4444'
+              }}>
+                {loading ? '...' : formatCurrency(financialStats.monthProfit)}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.statCard}>
+            <div className={styles.statIcon} style={{
+              backgroundColor: financialStats.profitMargin >= 30 ? '#10b98115' :
+                              financialStats.profitMargin >= 10 ? '#f59e0b15' : '#ef444415',
+              color: financialStats.profitMargin >= 30 ? '#10b981' :
+                     financialStats.profitMargin >= 10 ? '#f59e0b' : '#ef4444'
+            }}>
+              <TrendingUp size={24} />
+            </div>
+            <div className={styles.statContent}>
+              <h3>Profit Margin</h3>
+              <p className={styles.statValue} style={{
+                color: financialStats.profitMargin >= 30 ? '#10b981' :
+                       financialStats.profitMargin >= 10 ? '#f59e0b' : '#ef4444'
+              }}>
+                {loading ? '...' : `${financialStats.profitMargin.toFixed(1)}%`}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.statCard}>
+            <div className={styles.statIcon} style={{ backgroundColor: '#10b98115', color: '#10b981' }}>
+              <DollarSign size={24} />
+            </div>
+            <div className={styles.statContent}>
+              <h3>Tax Deductible (YTD)</h3>
+              <p className={styles.statValue}>
+                {loading ? '...' : formatCurrency(financialStats.taxDeductibleYTD)}
               </p>
             </div>
           </div>

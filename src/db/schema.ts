@@ -273,3 +273,28 @@ export type CustomerPreferences = typeof customerPreferences.$inferSelect;
 export type NewCustomerPreferences = typeof customerPreferences.$inferInsert;
 export type RevenueRecord = typeof revenueRecords.$inferSelect;
 export type NewRevenueRecord = typeof revenueRecords.$inferInsert;
+
+// Expenses table for financial tracking
+export const expenses = pgTable('expenses', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  date: varchar('date', { length: 20 }).notNull(), // YYYY-MM-DD
+  category: varchar('category', { length: 50 }).notNull(), // 'supplies', 'rent', 'utilities', 'marketing', 'insurance', 'professional-services', 'equipment', 'software', 'other'
+  subcategory: varchar('subcategory', { length: 100 }), // e.g., "massage oils", "lotions", "linens", "advertising", etc.
+  amount: decimal('amount', { precision: 10, scale: 2 }).notNull(),
+  vendor: varchar('vendor', { length: 255 }),
+  description: text('description'),
+  receiptUrl: varchar('receipt_url', { length: 500 }), // URL to receipt image/PDF
+  paymentMethod: varchar('payment_method', { length: 50 }), // 'cash', 'card', 'check', 'bank-transfer', 'other'
+  taxDeductible: boolean('tax_deductible').notNull().default(true),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  createdBy: varchar('created_by', { length: 100 }).notNull(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  dateIdx: index('expenses_date_idx').on(table.date),
+  categoryIdx: index('expenses_category_idx').on(table.category),
+  createdByIdx: index('expenses_created_by_idx').on(table.createdBy),
+}));
+
+export type Expense = typeof expenses.$inferSelect;
+export type NewExpense = typeof expenses.$inferInsert;
