@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/db';
-import { appointments, customerNotes } from '@/db/schema';
+import { appointments, customerNotes, type CustomerNote } from '@/db/schema';
 import { eq, desc, or } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
 
 export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -47,7 +47,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     };
 
     // Fetch notes if we have a customerId (which might be the clientId or found in appointments)
-    let notes = [];
+    let notes: CustomerNote[] = [];
     // We need a consistent customerId to fetch notes. 
     // If the clientId passed is an email, we might not find notes if they are keyed by Clerk ID.
     // We'll search notes by the customerId found in the appointments (if any).
