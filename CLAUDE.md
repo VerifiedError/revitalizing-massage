@@ -513,9 +513,10 @@ git push origin master
 
 ## Current Version
 
-**v1.13.0** - Homepage Personalization & Visual Enhancements
+**v1.14.0** - Professional Images Across All Pages
 
 ### Recent Updates
+- v1.14.0: Added professional photography to all public pages (services, about, contact)
 - v1.13.0: Updated homepage to reflect individual therapist, enhanced visual appeal with images and modern icons
 - v1.12.0: Added calendar view for appointments with month and week display modes
 - v1.11.1: Removed settings link from admin sidebar (page not yet implemented)
@@ -564,7 +565,7 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.13.0*
+*Current Version: 1.14.0*
 
 ---
 

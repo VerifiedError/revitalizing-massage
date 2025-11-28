@@ -19,10 +19,11 @@ export default async function ServicesPage() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
+        <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <h1 className={styles.title}>Our Services</h1>
+          <h1 className={styles.title}>Massage Services</h1>
           <p className={styles.subtitle}>
-            Professional massage therapy tailored to your needs. Choose from our range of services designed to help you relax, recover, and revitalize.
+            Professional massage therapy tailored to your needs. Choose from a range of services designed to help you relax, recover, and revitalize.
           </p>
         </div>
       </section>
@@ -118,33 +119,57 @@ export default async function ServicesPage() {
         <div className={styles.container}>
           <div className={styles.infoGrid}>
             <div className={styles.infoCard}>
-              <h3>First Time Visit?</h3>
-              <p>
-                Welcome! We recommend starting with a 60 or 90-minute massage to experience the full benefits of our therapeutic approach.
-              </p>
-              <Link href="/book" className={styles.infoLink}>
-                Schedule Your First Visit →
-              </Link>
+              <div className={styles.infoCardImage}>
+                <img
+                  src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=400&h=300&fit=crop"
+                  alt="First time massage therapy visit"
+                />
+              </div>
+              <div className={styles.infoCardContent}>
+                <h3>First Time Visit?</h3>
+                <p>
+                  Welcome! Starting with a 60 or 90-minute massage is recommended to experience the full benefits of therapeutic massage.
+                </p>
+                <Link href="/book" className={styles.infoLink}>
+                  Schedule Your First Visit →
+                </Link>
+              </div>
             </div>
 
             <div className={styles.infoCard}>
-              <h3>Custom Sessions</h3>
-              <p>
-                Not sure which service is right for you? We can customize any session to focus on your specific needs and problem areas.
-              </p>
-              <Link href="/contact" className={styles.infoLink}>
-                Contact Us →
-              </Link>
+              <div className={styles.infoCardImage}>
+                <img
+                  src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop"
+                  alt="Custom massage therapy session"
+                />
+              </div>
+              <div className={styles.infoCardContent}>
+                <h3>Custom Sessions</h3>
+                <p>
+                  Not sure which service is right for you? Each session can be customized to focus on your specific needs and problem areas.
+                </p>
+                <Link href="/contact" className={styles.infoLink}>
+                  Contact Us →
+                </Link>
+              </div>
             </div>
 
             <div className={styles.infoCard}>
-              <h3>Gift Certificates</h3>
-              <p>
-                Give the gift of relaxation! Gift certificates are available for any service and make the perfect present.
-              </p>
-              <Link href="/contact" className={styles.infoLink}>
-                Inquire About Gifts →
-              </Link>
+              <div className={styles.infoCardImage}>
+                <img
+                  src="https://images.unsplash.com/photo-1607627000458-210e8d2bdb1d?w=400&h=300&fit=crop"
+                  alt="Gift certificate for massage"
+                />
+              </div>
+              <div className={styles.infoCardContent}>
+                <h3>Gift Certificates</h3>
+                <p>
+                  Give the gift of relaxation! Gift certificates are available for any service and make the perfect present.
+                </p>
+                <Link href="/contact" className={styles.infoLink}>
+                  Inquire About Gifts →
+                </Link>
+              </div>
             </div>
           </div>
         </div>

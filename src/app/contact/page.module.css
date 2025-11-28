@@ -3,12 +3,26 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-  padding: 4rem 1.5rem;
+  position: relative;
+  background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&h=600&fit=crop');
+  background-size: cover;
+  background-position: center;
+  padding: 5rem 1.5rem;
   text-align: center;
 }
 
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(150, 222, 235, 0.85) 0%, rgba(44, 122, 123, 0.85) 100%);
+}
+
 .heroContent {
+  position: relative;
+  z-index: 1;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -16,13 +30,15 @@
 .title {
   font-family: var(--font-primary);
   font-size: 2.5rem;
-  color: var(--secondary);
+  color: white;
   margin-bottom: 0.75rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
-  color: var(--text);
+  color: white;
   line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .contact {
@@ -39,6 +55,21 @@
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 4rem;
+}
+
+.infoImage {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.infoImage img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
 }
 
 .info h2 {
@@ -175,29 +206,47 @@
 
 .map {
   height: 400px;
-  background: #f9fafb;
+  position: relative;
+  overflow: hidden;
 }
 
-.mapPlaceholder {
+.mapContainer {
+  position: relative;
   height: 100%;
+  width: 100%;
+}
+
+.mapImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(150, 222, 235, 0.75) 0%, rgba(44, 122, 123, 0.75) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-light);
-  gap: 0.5rem;
+  color: white;
+  gap: 1rem;
 }
 
-.mapPlaceholder svg {
-  color: var(--primary);
+.mapOverlay svg {
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.mapPlaceholder p {
+.mapOverlay p {
   font-weight: 500;
-}
-
-.mapPlaceholder span {
-  font-size: 0.9rem;
+  font-size: 1.125rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0;
 }
 
 @media (max-width: 900px) {

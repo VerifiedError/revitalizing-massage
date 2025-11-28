@@ -9,6 +9,28 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.14.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Professional Images Across All Pages",
+    description: "Added professional photography and visual enhancements to all public pages. Every page now features high-quality images with hero backgrounds, section images, and improved visual hierarchy.",
+    changes: [
+      "Services page: Added spa background hero image with overlay",
+      "Services page: Added images to First Time Visit, Custom Sessions, and Gift Certificates cards",
+      "Services page: Enhanced info cards with image headers and improved hover effects",
+      "About page: Added spa background hero image with overlay",
+      "About page: Replaced placeholder with professional massage therapy room image",
+      "About page: Updated copy to use 'I' instead of 'we' for individual therapist focus",
+      "Contact page: Added massage therapy background hero image",
+      "Contact page: Added welcoming contact image above contact information",
+      "Contact page: Replaced map placeholder with Topeka cityscape image with address overlay",
+      "Contact page: Updated language from 'we' to 'I' for personal touch",
+      "All hero sections now feature professional photography with brand-colored overlays",
+      "Consistent white text with subtle shadows for readability on hero images",
+      "Improved visual flow and professional appearance across entire site"
+    ]
+  },
+  {
     version: "1.13.0",
     date: "2025-11-27",
     type: "update",

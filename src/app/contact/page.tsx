@@ -26,10 +26,11 @@ export default function ContactPage() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
+        <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <h1 className={styles.title}>Contact Us</h1>
+          <h1 className={styles.title}>Get in Touch</h1>
           <p className={styles.subtitle}>
-            Have questions? We&apos;d love to hear from you. Reach out and we&apos;ll respond as soon as we can.
+            Have questions? I&apos;d love to hear from you. Reach out and I&apos;ll respond as soon as possible.
           </p>
         </div>
       </section>
@@ -38,9 +39,15 @@ export default function ContactPage() {
         <div className={styles.container}>
           <div className={styles.grid}>
             <div className={styles.info}>
-              <h2>Get in Touch</h2>
+              <div className={styles.infoImage}>
+                <img
+                  src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=600&h=400&fit=crop"
+                  alt="Contact Revitalizing Massage"
+                />
+              </div>
+              <h2>Contact Information</h2>
               <p className={styles.infoText}>
-                Whether you have a question about our services, need to reschedule an appointment, or want to share feedback, we&apos;re here to help.
+                Whether you have a question about services, need to reschedule an appointment, or want to share feedback, I&apos;m here to help.
               </p>
 
               <div className={styles.infoCards}>
@@ -172,10 +179,16 @@ export default function ContactPage() {
       </section>
 
       <section className={styles.map}>
-        <div className={styles.mapPlaceholder}>
-          <MapPin size={48} />
-          <p>Map will be displayed here</p>
-          <span>{businessInfo.address.full}</span>
+        <div className={styles.mapContainer}>
+          <img
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&h=400&fit=crop"
+            alt="Topeka, Kansas location"
+            className={styles.mapImage}
+          />
+          <div className={styles.mapOverlay}>
+            <MapPin size={48} />
+            <p>{businessInfo.address.full}</p>
+          </div>
         </div>
       </section>
     </div>

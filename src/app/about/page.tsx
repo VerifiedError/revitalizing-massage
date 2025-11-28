@@ -30,6 +30,7 @@ export default function AboutPage() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
+        <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <h1 className={styles.title}>About Revitalizing Massage</h1>
           <p className={styles.subtitle}>
@@ -44,19 +45,20 @@ export default function AboutPage() {
             <div className={styles.storyText}>
               <h2>Our Story</h2>
               <p>
-                Revitalizing Massage was founded with a simple mission: to provide exceptional massage therapy services that help our clients feel their best. We believe that everyone deserves access to quality bodywork that addresses their unique needs.
+                Revitalizing Massage was founded with a simple mission: to provide exceptional massage therapy services that help clients feel their best. Everyone deserves access to quality bodywork that addresses their unique needs.
               </p>
               <p>
-                What started as a single treatment room has grown into a full-service wellness practice, but our core values remain the same. We're committed to creating a peaceful sanctuary where you can escape the stresses of daily life and focus on your well-being.
+                What started as a passion for healing has grown into a dedicated wellness practice, built on core values of compassion, excellence, and personalized care. The focus is on creating a peaceful sanctuary where you can escape the stresses of daily life and focus on your well-being.
               </p>
               <p>
-                Our certified massage therapist brings together diverse training and specializations, ensuring we can address a wide range of conditions and preferences. Whether you're seeking relief from chronic pain, recovering from an injury, or simply want to relax, we have the expertise to help.
+                As a certified massage therapist, I bring together diverse training and specializations, ensuring I can address a wide range of conditions and preferences. Whether you're seeking relief from chronic pain, recovering from an injury, or simply want to relax, I have the expertise to help.
               </p>
             </div>
             <div className={styles.storyImage}>
-              <div className={styles.imagePlaceholder}>
-                <span>Our Relaxing Space</span>
-              </div>
+              <img
+                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&h=800&fit=crop"
+                alt="Peaceful massage therapy room"
+              />
             </div>
           </div>
         </div>
