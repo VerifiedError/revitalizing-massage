@@ -529,23 +529,21 @@ git push origin master
 
 ## Current Version
 
-**v1.14.1** - Default Date Values for All Date Inputs
+**v1.20.1** - Appointment Analytics & Business Intelligence (Phase 3.2)
 
 ### Recent Updates
+- v1.20.1: Comprehensive appointment analytics with 20+ metrics, 4 charts, performance tracking, and mobile-first dashboard
+- v1.20.0: Revenue analytics with forecasting, multiple chart types, CSV export, and automatic tracking (Phase 3.1)
+- v1.18.1: Customer communications system with note templates, timeline UI, and 5 communication types (Phase 2.2)
+- v1.18.0: Customer database with health info, preferences, and comprehensive CRM features (Phase 2.1)
+- v1.17.0: Website content management system with 12 editable sections (Phase 1.3)
+- v1.16.1: Business hours, availability, and booking settings management (Phase 1.2)
+- v1.16.0: Business information settings page with full admin control (Phase 1.1)
 - v1.14.1: Date inputs now default to today's date with minimum date validation
 - v1.14.0: Added professional photography to all public pages (services, about, contact)
 - v1.13.0: Updated homepage to reflect individual therapist, enhanced visual appeal with images and modern icons
 - v1.12.0: Added calendar view for appointments with month and week display modes
-- v1.11.1: Removed settings link from admin sidebar (page not yet implemented)
 - v1.11.0: Migrated appointments system from JSON to Neon PostgreSQL database for production
-- v1.10.1: Fixed appointment creation by creating missing data directory (temporary local fix)
-- v1.10.0: Updated therapist credentials to 'Certified' and added comprehensive Privacy Policy
-- v1.9.0: Facebook and Google reviews integration with dedicated reviews page
-- v1.8.0: Complete mobile-first redesign of homepage and navigation with extreme mobile optimization
-- v1.7.4: Removed temporary visibility controls from package management
-- v1.7.3: Fixed appointments creation 500 error by migrating to database packages
-- v1.7.2: Show/hide hidden packages toggle in admin panel
-- v1.7.1: Mobile-friendly appointments date filtering with quick buttons
 
 ---
 
@@ -2019,8 +2017,8 @@ git push origin feature/business-settings
 
 ---
 
-*Last Updated: 2025-11-27*
-*Current Version: 1.14.1*
+*Last Updated: 2025-11-28*
+*Current Version: 1.20.1*
 
 ---
 

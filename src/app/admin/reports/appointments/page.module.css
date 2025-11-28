@@ -1,0 +1,486 @@
+/* ============================================================================
+   APPOINTMENT ANALYTICS - EXTREME MOBILE-FIRST DESIGN
+   Touch targets: 48-52px minimum
+   Font sizes: 16px+ minimum on all inputs
+   Responsive breakpoints: 375px → 640px → 768px → 1024px
+   ============================================================================ */
+
+.container {
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  color: #ef4444;
+}
+
+/* ============================================================================
+   HEADER SECTION
+   ============================================================================ */
+
+.header {
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+}
+
+/* ============================================================================
+   DATE RANGE SELECTOR
+   ============================================================================ */
+
+.dateRangeSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dateRangeSelector button {
+  flex: 1;
+  min-width: calc(50% - 4px);
+  padding: 12px 16px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  min-height: 48px;
+  transition: all 0.2s;
+}
+
+.dateRangeSelector button:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.dateRangeSelector button.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.customDateRange {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.dateInput {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dateInput label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.dateInput input {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  min-height: 48px;
+}
+
+.dateInput input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* ============================================================================
+   STATS CARDS
+   ============================================================================ */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.statCard {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.statIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statContent h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+}
+
+.statValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.statSubtext {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.statTrend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.trendUp,
+.trendDown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.trendUp {
+  color: #10b981;
+}
+
+.trendDown {
+  color: #ef4444;
+}
+
+.trendLabel {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ============================================================================
+   CHARTS SECTION
+   ============================================================================ */
+
+.chartsSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.chartCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chartCard h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+}
+
+/* ============================================================================
+   DISTRIBUTION SECTION
+   ============================================================================ */
+
+.distributionSection {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.distributionSection h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+}
+
+.distributionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.distributionCard {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.distributionCard h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+}
+
+/* Peak Times List */
+.peakTimesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.peakItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.peakLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.peakValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Time Distribution */
+.timeDistribution {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeSlot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.timeLabel {
+  font-size: 16px;
+  color: #374151;
+}
+
+.timeCount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+/* Service Ranking */
+.serviceRanking {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rankItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.serviceName {
+  flex: 1;
+  font-size: 16px;
+  color: #374151;
+}
+
+.serviceCount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+/* Comparisons */
+.comparisonsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comparisonItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.comparisonLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.comparisonValue {
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.positive {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.negative {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* ============================================================================
+   TABLET (640px+)
+   ============================================================================ */
+
+@media (min-width: 640px) {
+  .container {
+    padding: 24px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .dateRangeSelector button {
+    min-width: auto;
+  }
+
+  .customDateRange {
+    flex-direction: row;
+  }
+
+  .dateInput {
+    flex: 1;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .distributionGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================================
+   DESKTOP (768px+)
+   ============================================================================ */
+
+@media (min-width: 768px) {
+  .container {
+    padding: 32px;
+  }
+
+  .chartsSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .peakItem {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .comparisonItem {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ============================================================================
+   LARGE DESKTOP (1024px+)
+   ============================================================================ */
+
+@media (min-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dateRangeSelector {
+    flex-wrap: nowrap;
+  }
+}
+
+/* ============================================================================
+   EXTRA LARGE DESKTOP (1280px+)
+   ============================================================================ */
+
+@media (min-width: 1280px) {
+  .statsGrid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+.container button:focus-visible,
+.container input:focus-visible,
+.container select:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
