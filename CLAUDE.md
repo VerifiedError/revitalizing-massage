@@ -61,6 +61,8 @@ Discounts are prominently displayed on the website:
 #### Current Database Contents
 - **10 Massage Packages**: 8 standard + 2 specialty
 - **4 Add-on Services**: Essential Oils, CBD Oil, Exfoliation, Hot Stones
+- **Appointments System**: Fully migrated to database (v1.11.0)
+- **Customer Notes**: Admin notes linked to customer IDs
 - **Organized Structure**: Logical sort ordering (gaps of 10)
 - **Semantic IDs**: pkg_60min, addon_cbd_oil (descriptive naming)
 
@@ -506,9 +508,10 @@ git push origin master
 
 ## Current Version
 
-**v1.11.0** - Database Migration for Appointments
+**v1.11.1** - Remove Settings Link
 
 ### Recent Updates
+- v1.11.1: Removed settings link from admin sidebar (page not yet implemented)
 - v1.11.0: Migrated appointments system from JSON to Neon PostgreSQL database for production
 - v1.10.1: Fixed appointment creation by creating missing data directory (temporary local fix)
 - v1.10.0: Updated therapist credentials to 'Certified' and added comprehensive Privacy Policy
@@ -518,7 +521,6 @@ git push origin master
 - v1.7.3: Fixed appointments creation 500 error by migrating to database packages
 - v1.7.2: Show/hide hidden packages toggle in admin panel
 - v1.7.1: Mobile-friendly appointments date filtering with quick buttons
-- v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
 
 ---
 
@@ -552,4 +554,17 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.11.0*
+*Current Version: 1.11.1*
+
+---
+
+## Known Issues
+
+### Clerk Development Keys in Production (Action Required)
+- **Issue**: Production site is using development/test Clerk keys
+- **Impact**: Rate limiting warnings in console, potential auth issues under high traffic
+- **Fix**: See `PRODUCTION-SETUP.md` for step-by-step instructions to update to production keys
+- **Files**:
+  - Local: `.env.local` has test keys (correct for development)
+  - Production: Vercel environment variables need production keys (`pk_live_...` and `sk_live_...`)
+- **Status**: Waiting for production keys to be configured in Vercel
