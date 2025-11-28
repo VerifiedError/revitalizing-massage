@@ -16,7 +16,7 @@ interface AdminSidebarProps {
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/availability', label: 'Availability', icon: Ban },
-  { href: '/admin/clients', label: 'Clients', icon: Users },
+  { href: '/admin/customers', label: 'Customers', icon: Users },
   { href: '/admin/packages', label: 'Packages', icon: Package },
   { href: '/admin/appointments', label: 'Appointments', icon: Calendar },
   { href: '/admin/users', label: 'System Users', icon: UserCog },

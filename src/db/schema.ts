@@ -37,9 +37,64 @@ export const addons = pgTable('addons', {
   sortOrderIdx: index('addons_sort_order_idx').on(table.sortOrder),
 }));
 
+// Customer tables (defined before appointments to allow foreign key reference)
+export const customers = pgTable('customers', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  clerkUserId: varchar('clerk_user_id', { length: 100 }).unique(), // nullable - if they have an account
+  firstName: varchar('first_name', { length: 100 }).notNull(),
+  lastName: varchar('last_name', { length: 100 }).notNull(),
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  phone: varchar('phone', { length: 50 }),
+  dateOfBirth: varchar('date_of_birth', { length: 20 }), // YYYY-MM-DD
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  lastVisit: varchar('last_visit', { length: 20 }), // YYYY-MM-DD - computed from appointments
+  totalVisits: integer('total_visits').notNull().default(0), // computed
+  totalSpent: decimal('total_spent', { precision: 10, scale: 2 }).notNull().default('0'), // computed
+  status: varchar('status', { length: 20 }).notNull().default('active'), // 'active', 'inactive', 'blocked'
+  referralSource: varchar('referral_source', { length: 100 }), // "Google", "Facebook", "Friend", etc.
+  marketingOptIn: boolean('marketing_opt_in').notNull().default(false),
+}, (table) => ({
+  emailIdx: index('customers_email_idx').on(table.email),
+  statusIdx: index('customers_status_idx').on(table.status),
+  lastVisitIdx: index('customers_last_visit_idx').on(table.lastVisit),
+}));
+
+export const customerHealthInfo = pgTable('customer_health_info', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  customerId: varchar('customer_id', { length: 50 }).notNull().references(() => customers.id, { onDelete: 'cascade' }),
+  allergies: text('allergies'),
+  medicalConditions: text('medical_conditions'),
+  medications: text('medications'),
+  injuries: text('injuries'),
+  pregnancyStatus: boolean('pregnancy_status'),
+  pregnancyWeeks: integer('pregnancy_weeks'),
+  pressurePreference: varchar('pressure_preference', { length: 20 }), // 'light', 'medium', 'firm', 'deep'
+  focusAreas: text('focus_areas'), // JSON array of areas
+  avoidAreas: text('avoid_areas'), // JSON array of areas
+  specialRequests: text('special_requests'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  customerIdx: index('health_info_customer_idx').on(table.customerId),
+}));
+
+export const customerPreferences = pgTable('customer_preferences', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  customerId: varchar('customer_id', { length: 50 }).notNull().references(() => customers.id, { onDelete: 'cascade' }),
+  preferredDay: integer('preferred_day'), // 0-6, null for no preference
+  preferredTime: varchar('preferred_time', { length: 20 }), // 'morning', 'afternoon', 'evening', 'any'
+  preferredServices: text('preferred_services'), // JSON array of service IDs
+  tableHeatingPreference: varchar('table_heating_preference', { length: 20 }), // 'warm', 'cool', 'no-preference'
+  musicPreference: varchar('music_preference', { length: 100 }),
+  aromatherapyPreference: boolean('aromatherapy_preference'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  customerIdx: index('preferences_customer_idx').on(table.customerId),
+}));
+
 export const appointments = pgTable('appointments', {
   id: varchar('id', { length: 50 }).primaryKey(),
-  customerId: varchar('customer_id', { length: 100 }),
+  customerId: varchar('customer_id', { length: 50 }).references(() => customers.id), // References customers table
   customerName: varchar('customer_name', { length: 255 }).notNull(),
   customerEmail: varchar('customer_email', { length: 255 }),
   customerPhone: varchar('customer_phone', { length: 50 }),
@@ -161,3 +216,9 @@ export type BusinessSettings = typeof businessSettings.$inferSelect;
 export type NewBusinessSettings = typeof businessSettings.$inferInsert;
 export type WebsiteContent = typeof websiteContent.$inferSelect;
 export type NewWebsiteContent = typeof websiteContent.$inferInsert;
+export type Customer = typeof customers.$inferSelect;
+export type NewCustomer = typeof customers.$inferInsert;
+export type CustomerHealthInfo = typeof customerHealthInfo.$inferSelect;
+export type NewCustomerHealthInfo = typeof customerHealthInfo.$inferInsert;
+export type CustomerPreferences = typeof customerPreferences.$inferSelect;
+export type NewCustomerPreferences = typeof customerPreferences.$inferInsert;
