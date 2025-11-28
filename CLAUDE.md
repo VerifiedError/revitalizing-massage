@@ -513,9 +513,10 @@ git push origin master
 
 ## Current Version
 
-**v1.11.1** - Remove Settings Link
+**v1.12.0** - Calendar View for Appointments
 
 ### Recent Updates
+- v1.12.0: Added calendar view for appointments with month and week display modes
 - v1.11.1: Removed settings link from admin sidebar (page not yet implemented)
 - v1.11.0: Migrated appointments system from JSON to Neon PostgreSQL database for production
 - v1.10.1: Fixed appointment creation by creating missing data directory (temporary local fix)
@@ -562,7 +563,7 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.11.1*
+*Current Version: 1.12.0*
 
 ---
 
@@ -597,6 +598,28 @@ git push origin master
 - Removed Settings link from admin sidebar (page doesn't exist yet)
 - Created `PRODUCTION-SETUP.md` guide for Clerk production keys setup
 - Documented known issues in CLAUDE.md
+
+### Calendar View for Appointments (v1.12.0)
+**Feature**: Added comprehensive calendar view to appointments management page with month and week display modes.
+
+**Implementation**:
+- Created `CalendarView` component with hybrid month/week view toggle
+- Month view displays traditional calendar grid with appointments shown on each day
+- Week view shows time-slot based schedule with hourly breakdown (9 AM - 6 PM)
+- View toggle buttons (List/Calendar) in appointments page header
+- Calendar navigation with Previous/Next/Today buttons
+- Appointment color coding by status (scheduled=blue, confirmed=green, completed=gray, cancelled=red, no-show=orange)
+- Click appointments in calendar to open edit modal
+- Responsive design optimized for both desktop and mobile
+- Integrated with existing filters (search, status, date)
+
+**Files Created**:
+- `src/components/admin/CalendarView.tsx` - Main calendar component
+- `src/components/admin/CalendarView.module.css` - Calendar styling
+
+**Files Modified**:
+- `src/app/admin/appointments/page.tsx` - Added calendar view integration and toggle
+- `src/app/admin/appointments/page.module.css` - Added view toggle button styles
 
 ---
 

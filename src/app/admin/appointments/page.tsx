@@ -16,8 +16,11 @@ import {
   Trash2,
   RefreshCw,
   Filter,
+  List,
+  CalendarDays,
 } from 'lucide-react';
 import { Package, AddOnService } from '@/types/packages';
+import CalendarView from '@/components/admin/CalendarView';
 import styles from './page.module.css';
 
 interface Appointment {
@@ -79,6 +82,7 @@ export default function AppointmentsPage() {
   const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
   const [customerNotes, setCustomerNotes] = useState<CustomerNote[]>([]);
   const [newNote, setNewNote] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('calendar');
 
   const [formData, setFormData] = useState({
     customerId: '',
@@ -417,6 +421,22 @@ export default function AppointmentsPage() {
           <p>Manage all customer appointments</p>
         </div>
         <div className={styles.headerActions}>
+          <div className={styles.viewToggle}>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`${styles.viewBtn} ${viewMode === 'list' ? styles.active : ''}`}
+              title="List View"
+            >
+              <List size={18} />
+            </button>
+            <button
+              onClick={() => setViewMode('calendar')}
+              className={`${styles.viewBtn} ${viewMode === 'calendar' ? styles.active : ''}`}
+              title="Calendar View"
+            >
+              <CalendarDays size={18} />
+            </button>
+          </div>
           <button onClick={fetchAppointments} className={styles.refreshBtn} disabled={loading}>
             <RefreshCw size={18} className={loading ? styles.spinning : ''} />
           </button>
@@ -497,21 +517,33 @@ export default function AppointmentsPage() {
         </button>
       </div>
 
-      <div className={styles.stats}>
-        <span>{filteredAppointments.length} appointment{filteredAppointments.length !== 1 ? 's' : ''}</span>
-      </div>
+      {viewMode === 'list' && (
+        <div className={styles.stats}>
+          <span>{filteredAppointments.length} appointment{filteredAppointments.length !== 1 ? 's' : ''}</span>
+        </div>
+      )}
 
-      <div className={styles.appointmentsList}>
-        {loading ? (
+      {viewMode === 'calendar' ? (
+        loading ? (
           <div className={styles.loading}>Loading appointments...</div>
-        ) : filteredAppointments.length === 0 ? (
-          <div className={styles.empty}>
-            {searchTerm || statusFilter !== 'all' || dateFilter
-              ? 'No appointments match your filters'
-              : 'No appointments yet. Create your first appointment!'}
-          </div>
         ) : (
-          filteredAppointments.map((appointment) => (
+          <CalendarView
+            appointments={filteredAppointments}
+            onAppointmentClick={openEditModal}
+          />
+        )
+      ) : (
+        <div className={styles.appointmentsList}>
+          {loading ? (
+            <div className={styles.loading}>Loading appointments...</div>
+          ) : filteredAppointments.length === 0 ? (
+            <div className={styles.empty}>
+              {searchTerm || statusFilter !== 'all' || dateFilter
+                ? 'No appointments match your filters'
+                : 'No appointments yet. Create your first appointment!'}
+            </div>
+          ) : (
+            filteredAppointments.map((appointment) => (
             <div key={appointment.id} className={styles.appointmentCard}>
               <div className={styles.cardHeader}>
                 <div className={styles.customerInfo}>
@@ -609,7 +641,8 @@ export default function AppointmentsPage() {
             </div>
           ))
         )}
-      </div>
+        </div>
+      )}
 
       {/* Create/Edit Appointment Modal */}
       {showModal && (

@@ -24,6 +24,40 @@
 .headerActions {
   display: flex;
   gap: 0.75rem;
+  align-items: center;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 0.25rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewBtn:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.viewBtn.active {
+  background: var(--primary);
+  color: #1e293b;
 }
 
 .refreshBtn {

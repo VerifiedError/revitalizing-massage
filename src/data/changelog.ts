@@ -9,6 +9,25 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.12.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Calendar View for Appointments",
+    description: "Added comprehensive calendar view to appointments management with month and week views. Users can now visualize appointments in a calendar format with easy navigation and appointment details.",
+    changes: [
+      "Created CalendarView component with month and week display modes",
+      "Month view shows appointments in traditional calendar grid",
+      "Week view displays time-slot based schedule with hourly breakdown",
+      "View toggle button in header to switch between List and Calendar views",
+      "Calendar navigation with Previous/Next/Today buttons",
+      "Appointment color coding by status (scheduled, confirmed, completed, etc.)",
+      "Click appointments in calendar to open edit modal",
+      "Responsive design for both desktop and mobile",
+      "Integrated with existing appointment filters (search, status, date)",
+      "Smooth transitions and hover effects for better UX"
+    ]
+  },
+  {
     version: "1.11.1",
     date: "2025-11-27",
     type: "fix",
