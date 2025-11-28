@@ -8,7 +8,7 @@ import { eq } from 'drizzle-orm';
 export async function GET() {
   try {
     const session = await auth();
-    const role = session.sessionClaims?.metadata?.role;
+    const role = (session.sessionClaims?.metadata as { role?: string })?.role;
 
     // Admin-only endpoint
     if (role !== 'admin') {
@@ -32,7 +32,7 @@ export async function GET() {
 export async function PATCH(request: NextRequest) {
   try {
     const session = await auth();
-    const role = session.sessionClaims?.metadata?.role;
+    const role = (session.sessionClaims?.metadata as { role?: string })?.role;
     const userId = session.userId;
 
     // Admin-only endpoint

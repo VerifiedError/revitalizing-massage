@@ -9,6 +9,31 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.6",
+    date: "2025-11-28",
+    type: "feature",
+    title: "Business Settings Management (Phase 1.1 Complete)",
+    description: "Implemented comprehensive business settings management system, allowing Alannah to update all business contact information directly from the admin panel without code changes. This is the first feature of Phase 1: Business Settings & Configuration from the Master Implementation Plan.",
+    changes: [
+      "Created business_settings database table with comprehensive fields (name, phone, email, address, timezone, tax rate, currency)",
+      "Built admin API route at /api/admin/settings/business for GET and PATCH operations",
+      "Redesigned /admin/settings page with new business settings UI",
+      "Added business information form (name, email, phone, address fields)",
+      "Added business configuration section (timezone, currency, tax rate)",
+      "Created helper library at src/lib/business-settings.ts for fetching settings",
+      "Added getBusinessSettings() and getBusinessSettingsWithFallback() functions",
+      "Seeded database with current hardcoded business information",
+      "Created seed script at src/db/seed-business-settings.ts",
+      "Added phone number formatting utility function",
+      "Implemented save functionality with success/error messaging",
+      "Added form validation for required fields",
+      "Updated CSS with error message, help text, and save section styles",
+      "Successfully tested build with zero TypeScript errors",
+      "Fixed Clerk metadata type annotations for role checking",
+      "NEXT STEP: Update components (Header, Footer, Contact) to use database settings"
+    ]
+  },
+  {
     version: "1.16.5",
     date: "2025-11-27",
     type: "update",
