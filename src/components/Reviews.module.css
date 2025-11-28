@@ -1,0 +1,264 @@
+/* Mobile-First Reviews Section */
+
+.reviewsSection {
+  padding: 2.5rem 0;
+  background: #fafafa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sectionHeader h2 {
+  font-family: var(--font-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 0.5rem 0;
+}
+
+.sectionHeader p {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Reviews Grid */
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.reviewsCarousel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Review Widget */
+.reviewWidget {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.widgetHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.platformIcon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.widgetHeader h3 {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.widgetContent {
+  min-height: 400px;
+  margin-bottom: 1rem;
+}
+
+/* Facebook widget styling */
+.widgetContent :global(.fb-page) {
+  width: 100% !important;
+}
+
+.widgetContent :global(.fb-page) > span {
+  width: 100% !important;
+}
+
+.widgetContent :global(.fb-page) iframe {
+  width: 100% !important;
+}
+
+/* Google Reviews Placeholder */
+.googlePlaceholder {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.setupNote {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 1rem 0;
+}
+
+.setupSteps {
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto 1.5rem auto;
+  padding-left: 1.5rem;
+}
+
+.setupSteps li {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.helpText {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+/* View All Link */
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+.viewAllLink:active {
+  color: var(--primary-dark);
+}
+
+/* Review CTA */
+.reviewCta {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.reviewCta h3 {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 0.5rem 0;
+}
+
+.reviewCta p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 1.5rem 0;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.reviewButton {
+  display: block;
+  padding: 1rem 2rem;
+  background: white;
+  color: var(--secondary);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.reviewButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet Breakpoint - 768px */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2rem;
+  }
+
+  .reviewsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .reviewWidget {
+    padding: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+  }
+
+  .reviewButton {
+    padding: 1rem 2.5rem;
+  }
+}
+
+/* Desktop Breakpoint - 1024px */
+@media (min-width: 1024px) {
+  .reviewsSection {
+    padding: 3.5rem 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2.25rem;
+  }
+
+  .widgetContent {
+    min-height: 500px;
+  }
+
+  .googlePlaceholder {
+    min-height: 500px;
+  }
+
+  .viewAllLink:hover {
+    color: var(--primary-dark);
+  }
+
+  .reviewButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .reviewCta h3 {
+    font-size: 1.75rem;
+  }
+
+  .reviewCta p {
+    font-size: 1.1rem;
+  }
+}

@@ -9,6 +9,26 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.9.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Facebook & Google Reviews Integration",
+    description: "Added comprehensive reviews integration displaying customer feedback from both Facebook and Google. Created dedicated reviews page and embedded reviews section on homepage.",
+    changes: [
+      "Created Reviews component with Facebook Page Plugin integration",
+      "Added Google Reviews placeholder with setup instructions",
+      "Replaced single testimonial with full reviews section on homepage",
+      "Created dedicated /reviews page with hero banner",
+      "Added Reviews link to main navigation menu",
+      "Implemented mobile-first responsive design for reviews widgets",
+      "Added call-to-action buttons for leaving reviews on both platforms",
+      "Configured Facebook SDK for dynamic review loading",
+      "Created grid layout for side-by-side platform comparison",
+      "Added platform icons and branding for Facebook and Google",
+      "Included setup guide for Google Places API integration"
+    ]
+  },
+  {
     version: "1.8.0",
     date: "2025-11-27",
     type: "feature",

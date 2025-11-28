@@ -1,0 +1,100 @@
+/* Reviews Page Styles - Mobile First */
+
+.ctaSection {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, var(--secondary) 0%, #2c2c2c 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.ctaContent {
+  text-align: center;
+  color: white;
+}
+
+.ctaContent h2 {
+  font-family: var(--font-primary);
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+}
+
+.ctaContent p {
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  opacity: 0.9;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: block;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ctaPrimary {
+  background: var(--primary);
+  color: var(--secondary);
+}
+
+.ctaPrimary:active {
+  background: var(--primary-dark);
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.ctaSecondary:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tablet Breakpoint - 768px */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .ctaButtons {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+  }
+}
+
+/* Desktop Breakpoint - 1024px */
+@media (min-width: 1024px) {
+  .ctaContent h2 {
+    font-size: 2.25rem;
+  }
+
+  .ctaContent p {
+    font-size: 1.125rem;
+  }
+
+  .ctaPrimary:hover {
+    background: var(--primary-dark);
+  }
+
+  .ctaSecondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

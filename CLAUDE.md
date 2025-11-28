@@ -501,9 +501,10 @@ git push origin master
 
 ## Current Version
 
-**v1.8.0** - Mobile-First Redesign
+**v1.9.0** - Facebook & Google Reviews Integration
 
 ### Recent Updates
+- v1.9.0: Facebook and Google reviews integration with dedicated reviews page
 - v1.8.0: Complete mobile-first redesign of homepage and navigation with extreme mobile optimization
 - v1.7.4: Removed temporary visibility controls from package management
 - v1.7.3: Fixed appointments creation 500 error by migrating to database packages
@@ -544,4 +545,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.8.0*
+*Current Version: 1.9.0*

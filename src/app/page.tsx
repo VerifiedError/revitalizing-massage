@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Hero from '@/components/Hero';
+import Reviews from '@/components/Reviews';
 import { businessInfo } from '@/data/services';
 import { getAllPackages } from '@/lib/packages';
 import styles from './page.module.css';
@@ -134,22 +135,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Testimonial Section - Mobile Friendly */}
-      <section className={styles.testimonial}>
-        <div className={styles.container}>
-          <div className={styles.testimonialCard}>
-            <div className={styles.stars}>
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={20} fill="var(--primary)" stroke="var(--primary)" />
-              ))}
-            </div>
-            <p className={styles.testimonialText}>
-              "Alannah provides the best massage experience in Topeka. Professional, relaxing, and exactly what I needed!"
-            </p>
-            <p className={styles.testimonialAuthor}>- Satisfied Client</p>
-          </div>
-        </div>
-      </section>
+      {/* Reviews Section - Facebook & Google */}
+      <Reviews />
 
       {/* Location - Mobile Optimized */}
       <section className={styles.location}>
