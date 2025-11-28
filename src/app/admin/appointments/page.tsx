@@ -334,13 +334,15 @@ export default function AppointmentsPage() {
 
   function openCreateModal() {
     setEditingAppointment(null);
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
     setFormData({
       customerId: '',
       customerName: '',
       customerEmail: '',
       customerPhone: '',
       serviceId: '',
-      date: '',
+      date: today,
       time: '',
       status: 'scheduled',
       notes: '',
@@ -740,6 +742,7 @@ export default function AppointmentsPage() {
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      min={new Date().toISOString().split('T')[0]}
                     />
                   </div>
                   <div className={styles.formGroup}>

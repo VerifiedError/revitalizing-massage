@@ -10,11 +10,17 @@ const timeSlots = [
   '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
 ];
 
+// Get today's date in YYYY-MM-DD format
+const getTodayDate = () => {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+};
+
 export default function BookPage() {
   const [formData, setFormData] = useState({
     service: '',
     selectedAddons: [] as string[],
-    date: '',
+    date: getTodayDate(),
     time: '',
     name: '',
     email: '',

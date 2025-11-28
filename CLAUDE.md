@@ -513,9 +513,10 @@ git push origin master
 
 ## Current Version
 
-**v1.14.0** - Professional Images Across All Pages
+**v1.14.1** - Default Date Values for All Date Inputs
 
 ### Recent Updates
+- v1.14.1: Date inputs now default to today's date with minimum date validation
 - v1.14.0: Added professional photography to all public pages (services, about, contact)
 - v1.13.0: Updated homepage to reflect individual therapist, enhanced visual appeal with images and modern icons
 - v1.12.0: Added calendar view for appointments with month and week display modes
@@ -565,7 +566,7 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.14.0*
+*Current Version: 1.14.1*
 
 ---
 

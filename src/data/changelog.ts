@@ -9,6 +9,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.14.1",
+    date: "2025-11-27",
+    type: "update",
+    title: "Default Date Values for All Date Inputs",
+    description: "Updated all date input fields to automatically populate with today's date, improving user experience by eliminating the need to manually select the current date.",
+    changes: [
+      "Booking page: Date input now defaults to today's date",
+      "Admin appointments: New appointment date defaults to today",
+      "Added minimum date validation (prevents selecting past dates)",
+      "Improved user experience with pre-populated date fields",
+      "Calendar inputs are now immediately usable without extra clicks"
+    ]
+  },
+  {
     version: "1.14.0",
     date: "2025-11-27",
     type: "feature",
