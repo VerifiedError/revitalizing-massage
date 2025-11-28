@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.15.4",
+    date: "2025-11-27",
+    type: "update",
+    title: "Removed Metrics Dashboard Tab",
+    description: "Removed the recently added 'Metrics' tab from the admin dashboard per user request.",
+    changes: [
+      "Deleted /admin/metrics page",
+      "Removed Metrics link from AdminSidebar",
+      "Cleaned up associated styles"
+    ]
+  },
+  {
     version: "1.15.3",
     date: "2025-11-27",
     type: "feature",
