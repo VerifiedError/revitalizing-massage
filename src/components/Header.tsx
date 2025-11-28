@@ -6,14 +6,24 @@ import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@cl
 import { Menu, X, Phone } from 'lucide-react';
 import styles from './Header.module.css';
 
-export default function Header() {
+interface BusinessSettings {
+  businessName: string;
+  phone: string;
+  phoneDisplay: string;
+}
+
+interface HeaderProps {
+  businessSettings: BusinessSettings;
+}
+
+export default function Header({ businessSettings }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoText}>Revitalizing Massage</span>
+          <span className={styles.logoText}>{businessSettings.businessName}</span>
         </Link>
 
         <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
@@ -97,7 +107,7 @@ export default function Header() {
               />
             </div>
           </SignedIn>
-          <a href="tel:+17852504599" className={styles.phoneLink} title="(785) 250-4599">
+          <a href={`tel:${businessSettings.phone.replace(/\D/g, '')}`} className={styles.phoneLink} title={businessSettings.phoneDisplay}>
             <Phone size={20} />
           </a>
           <button

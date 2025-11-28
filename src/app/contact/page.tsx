@@ -1,9 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
-import { businessInfo } from '@/data/services';
 import styles from './page.module.css';
+
+interface BusinessSettings {
+  businessName: string;
+  phone: string;
+  phoneDisplay: string;
+  email: string;
+  addressStreet: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  addressFull: string;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -13,6 +24,29 @@ export default function ContactPage() {
     subject: '',
     message: '',
   });
+
+  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>({
+    businessName: 'Revitalizing Massage',
+    phone: '+1 785-250-4599',
+    phoneDisplay: '(785) 250-4599',
+    email: 'alannahsrevitalizingmassage@gmail.com',
+    addressStreet: '2900 SW Atwood',
+    addressCity: 'Topeka',
+    addressState: 'KS',
+    addressZip: '66614',
+    addressFull: '2900 SW Atwood, Topeka, KS 66614',
+  });
+
+  useEffect(() => {
+    fetch('/api/admin/settings/business')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data) setBusinessSettings(data);
+      })
+      .catch(() => {
+        // Keep default fallback values on error
+      });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

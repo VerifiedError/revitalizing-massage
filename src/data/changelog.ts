@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.7",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Build Fix: Proxy File Convention",
+    description: "Renamed middleware.ts back to proxy.ts to comply with Next.js 16 conventions and resolve build warnings/errors, while maintaining the admin route protection added in v1.16.4.",
+    changes: [
+      "Renamed src/middleware.ts to src/proxy.ts",
+      "Resolved 'middleware file convention is deprecated' warning",
+      "Maintained authentication protection for /admin routes"
+    ]
+  },
+  {
     version: "1.16.6",
     date: "2025-11-28",
     type: "feature",
