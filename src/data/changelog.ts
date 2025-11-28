@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.11.1",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Remove Settings Link",
+    description: "Temporarily removed Settings page link from admin sidebar as the page hasn't been implemented yet. This prevents 404 errors in console.",
+    changes: [
+      "Commented out Settings navigation item in admin sidebar",
+      "Prevents 404 console errors on production",
+      "Settings page will be re-added when implemented"
+    ]
+  },
+  {
     version: "1.11.0",
     date: "2025-11-27",
     type: "feature",

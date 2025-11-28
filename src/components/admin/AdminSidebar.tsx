@@ -19,7 +19,8 @@ const navItems = [
   { href: '/admin/appointments', label: 'Appointments', icon: Calendar },
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/changelog', label: 'Changelog', icon: FileText },
-  { href: '/admin/settings', label: 'Settings', icon: Settings },
+  // Settings page not yet implemented
+  // { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function AdminSidebar({ user }: AdminSidebarProps) {
