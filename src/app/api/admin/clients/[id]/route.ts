@@ -47,7 +47,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     };
 
     // Fetch notes if we have a customerId (which might be the clientId or found in appointments)
-    let notes: CustomerNote[] = [];
+    let notes: any[] = [];
     // We need a consistent customerId to fetch notes. 
     // If the clientId passed is an email, we might not find notes if they are keyed by Clerk ID.
     // We'll search notes by the customerId found in the appointments (if any).
@@ -57,8 +57,27 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
        // Fetch notes for all associated IDs (usually just one)
        // @ts-ignore
        const notesList = await db.select().from(customerNotes).where(eq(customerNotes.customerId, distinctCustomerIds[0]));
-       notes = notesList;
+       notes = notesList.map(n => ({
+         ...n,
+         type: 'general'
+       }));
     }
+
+    // Also include notes from appointments
+    clientAppointments.forEach(apt => {
+      if (apt.notes) {
+        notes.push({
+          id: `apt_${apt.id}`,
+          customerId: apt.customerId || clientId,
+          note: `[Appointment ${apt.date}] ${apt.notes}`,
+          createdAt: apt.updatedAt || apt.createdAt,
+          type: 'appointment'
+        });
+      }
+    });
+
+    // Sort all notes by date descending
+    notes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     return NextResponse.json({ ...clientInfo, notes });
   } catch (error) {

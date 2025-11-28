@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.5",
+    date: "2025-11-27",
+    type: "update",
+    title: "Unified Client Notes",
+    description: "Updated the Client Details view to include notes from specific appointments in the main 'Admin Notes' timeline. Now, both general customer notes and appointment-specific notes appear in one chronological list.",
+    changes: [
+      "Modified /api/admin/clients/[id] to aggregate notes from appointments table",
+      "Added source indicator [Appointment YYYY-MM-DD] to appointment notes",
+      "Sorted all notes chronologically for better history tracking"
+    ]
+  },
+  {
     version: "1.16.4",
     date: "2025-11-27",
     type: "fix",

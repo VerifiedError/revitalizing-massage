@@ -1,20 +1,31 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, CheckCircle, Building2, Clock, Globe } from 'lucide-react';
+import { Save, CheckCircle, Building2, DollarSign, Globe } from 'lucide-react';
 import styles from './page.module.css';
 
-interface Setting {
-  key: string;
-  value: string;
-  category: string;
+interface BusinessSettings {
+  id: number;
+  businessName: string;
+  phone: string;
+  phoneDisplay: string;
+  email: string;
+  addressStreet: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  addressFull: string;
+  timezone: string;
+  taxRate: string;
+  currency: string;
 }
 
 export default function SettingsPage() {
-  const [settings, setSettings] = useState<Record<string, string>>({});
+  const [settings, setSettings] = useState<Partial<BusinessSettings>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchSettings();
@@ -22,49 +33,49 @@ export default function SettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch('/api/admin/settings');
+      const res = await fetch('/api/admin/settings/business');
       if (res.ok) {
-        const data: Setting[] = await res.json();
-        const settingsMap: Record<string, string> = {};
-        data.forEach(s => {
-          settingsMap[s.key] = s.value;
-        });
-        setSettings(settingsMap);
+        const data = await res.json();
+        setSettings(data);
+      } else {
+        setError('Failed to load business settings');
       }
     } catch (error) {
       console.error('Failed to load settings', error);
+      setError('Failed to load business settings');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleChange = (key: string, value: string) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+  const handleChange = (field: keyof BusinessSettings, value: string) => {
+    setSettings(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = async (category: string, keys: string[]) => {
+  const handleSave = async () => {
     setSaving(true);
     setMessage('');
-    
-    try {
-      const promises = keys.map(key => 
-        fetch('/api/admin/settings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            key,
-            value: settings[key],
-            category
-          })
-        })
-      );
+    setError('');
 
-      await Promise.all(promises);
-      setMessage('Settings saved successfully!');
-      setTimeout(() => setMessage(''), 3000);
+    try {
+      const res = await fetch('/api/admin/settings/business', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      });
+
+      if (res.ok) {
+        const updated = await res.json();
+        setSettings(updated);
+        setMessage('Business settings saved successfully!');
+        setTimeout(() => setMessage(''), 3000);
+      } else {
+        const errorData = await res.json();
+        setError(errorData.error || 'Failed to save settings');
+      }
     } catch (error) {
       console.error('Failed to save settings', error);
-      setMessage('Error saving settings');
+      setError('Failed to save settings');
     } finally {
       setSaving(false);
     }
@@ -75,8 +86,8 @@ export default function SettingsPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Global Settings</h1>
-        <p>Manage business information, hours, and site configuration.</p>
+        <h1>Business Settings</h1>
+        <p>Manage your business contact information and configuration</p>
       </div>
 
       {message && (
@@ -86,144 +97,180 @@ export default function SettingsPage() {
         </div>
       )}
 
+      {error && (
+        <div className={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+
       {/* Business Information */}
       <section className={styles.section}>
         <div className={styles.sectionTitle}>
-          <Building2 className="inline-block mr-2 mb-1" size={20} />
-          Business Information
+          <Building2 size={20} />
+          <span>Business Information</span>
         </div>
-        
+
         <div className={styles.grid}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Business Name</label>
+            <label className={styles.label}>Business Name *</label>
             <input
+              type="text"
               className={styles.input}
-              value={settings['business_name'] || ''}
-              onChange={e => handleChange('business_name', e.target.value)}
-            />
-          </div>
-          
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Email Address</label>
-            <input
-              className={styles.input}
-              value={settings['business_email'] || ''}
-              onChange={e => handleChange('business_email', e.target.value)}
+              value={settings.businessName || ''}
+              onChange={e => handleChange('businessName', e.target.value)}
+              placeholder="Revitalizing Massage"
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Phone Number (Internal)</label>
+            <label className={styles.label}>Email Address *</label>
             <input
+              type="email"
               className={styles.input}
-              value={settings['business_phone'] || ''}
-              onChange={e => handleChange('business_phone', e.target.value)}
+              value={settings.email || ''}
+              onChange={e => handleChange('email', e.target.value)}
+              placeholder="contact@example.com"
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Phone Display</label>
+            <label className={styles.label}>Phone Number (Full) *</label>
             <input
+              type="tel"
               className={styles.input}
-              value={settings['business_phone_display'] || ''}
-              onChange={e => handleChange('business_phone_display', e.target.value)}
+              value={settings.phone || ''}
+              onChange={e => handleChange('phone', e.target.value)}
+              placeholder="+1 785-250-4599"
             />
+            <small className={styles.helpText}>Include country code and area code</small>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Phone Display Format *</label>
+            <input
+              type="text"
+              className={styles.input}
+              value={settings.phoneDisplay || ''}
+              onChange={e => handleChange('phoneDisplay', e.target.value)}
+              placeholder="(785) 250-4599"
+            />
+            <small className={styles.helpText}>How the phone number appears on the website</small>
           </div>
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>Street Address</label>
+          <label className={styles.label}>Street Address *</label>
           <input
+            type="text"
             className={styles.input}
-            value={settings['business_address_street'] || ''}
-            onChange={e => handleChange('business_address_street', e.target.value)}
+            value={settings.addressStreet || ''}
+            onChange={e => handleChange('addressStreet', e.target.value)}
+            placeholder="2900 SW Atwood"
           />
         </div>
 
         <div className={styles.grid}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>City</label>
+            <label className={styles.label}>City *</label>
             <input
+              type="text"
               className={styles.input}
-              value={settings['business_address_city'] || ''}
-              onChange={e => handleChange('business_address_city', e.target.value)}
+              value={settings.addressCity || ''}
+              onChange={e => handleChange('addressCity', e.target.value)}
+              placeholder="Topeka"
             />
           </div>
+
           <div className={styles.formGroup}>
-            <label className={styles.label}>State</label>
+            <label className={styles.label}>State *</label>
             <input
+              type="text"
               className={styles.input}
-              value={settings['business_address_state'] || ''}
-              onChange={e => handleChange('business_address_state', e.target.value)}
+              value={settings.addressState || ''}
+              onChange={e => handleChange('addressState', e.target.value)}
+              placeholder="KS"
+              maxLength={2}
             />
           </div>
+
           <div className={styles.formGroup}>
-            <label className={styles.label}>Zip Code</label>
+            <label className={styles.label}>Zip Code *</label>
             <input
+              type="text"
               className={styles.input}
-              value={settings['business_address_zip'] || ''}
-              onChange={e => handleChange('business_address_zip', e.target.value)}
+              value={settings.addressZip || ''}
+              onChange={e => handleChange('addressZip', e.target.value)}
+              placeholder="66614"
             />
           </div>
         </div>
-
-        <button 
-          className={styles.button}
-          onClick={() => handleSave('business', [
-            'business_name', 'business_email', 'business_phone', 
-            'business_phone_display', 'business_address_street',
-            'business_address_city', 'business_address_state', 'business_address_zip'
-          ])}
-          disabled={saving}
-        >
-          {saving ? 'Saving...' : 'Save Business Info'}
-        </button>
       </section>
 
-      {/* Hours of Operation */}
+      {/* Business Configuration */}
       <section className={styles.section}>
         <div className={styles.sectionTitle}>
-          <Clock className="inline-block mr-2 mb-1" size={20} />
-          Hours of Operation (Display Text)
-        </div>
-        
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Weekdays</label>
-          <input
-            className={styles.input}
-            value={settings['business_hours_weekdays'] || ''}
-            onChange={e => handleChange('business_hours_weekdays', e.target.value)}
-          />
+          <Globe size={20} />
+          <span>Business Configuration</span>
         </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Saturday</label>
-          <input
-            className={styles.input}
-            value={settings['business_hours_saturday'] || ''}
-            onChange={e => handleChange('business_hours_saturday', e.target.value)}
-          />
-        </div>
+        <div className={styles.grid}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Timezone</label>
+            <select
+              className={styles.input}
+              value={settings.timezone || 'America/Chicago'}
+              onChange={e => handleChange('timezone', e.target.value)}
+            >
+              <option value="America/New_York">Eastern Time</option>
+              <option value="America/Chicago">Central Time</option>
+              <option value="America/Denver">Mountain Time</option>
+              <option value="America/Los_Angeles">Pacific Time</option>
+              <option value="America/Anchorage">Alaska Time</option>
+              <option value="Pacific/Honolulu">Hawaii Time</option>
+            </select>
+          </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Sunday</label>
-          <input
-            className={styles.input}
-            value={settings['business_hours_sunday'] || ''}
-            onChange={e => handleChange('business_hours_sunday', e.target.value)}
-          />
-        </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Currency</label>
+            <select
+              className={styles.input}
+              value={settings.currency || 'USD'}
+              onChange={e => handleChange('currency', e.target.value)}
+            >
+              <option value="USD">USD ($)</option>
+              <option value="CAD">CAD (C$)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+            </select>
+          </div>
 
-        <button 
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Tax Rate (%)</label>
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              max="100"
+              className={styles.input}
+              value={settings.taxRate || '0'}
+              onChange={e => handleChange('taxRate', e.target.value)}
+              placeholder="0.00"
+            />
+            <small className={styles.helpText}>For future invoicing features</small>
+          </div>
+        </div>
+      </section>
+
+      <div className={styles.saveSection}>
+        <button
           className={styles.button}
-          onClick={() => handleSave('business', [
-            'business_hours_weekdays', 'business_hours_saturday', 'business_hours_sunday'
-          ])}
+          onClick={handleSave}
           disabled={saving}
         >
-          {saving ? 'Saving...' : 'Save Hours'}
+          <Save size={18} />
+          {saving ? 'Saving...' : 'Save All Settings'}
         </button>
-      </section>
+      </div>
     </div>
   );
 }

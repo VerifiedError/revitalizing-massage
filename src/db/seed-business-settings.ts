@@ -1,4 +1,8 @@
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
+
+// Load environment variables FIRST before importing db
+dotenv.config({ path: '.env.local' });
+
 import { db } from './index';
 import { businessSettings } from './schema';
 
