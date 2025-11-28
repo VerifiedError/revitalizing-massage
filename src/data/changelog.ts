@@ -9,17 +9,33 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.11.0",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Database Migration for Appointments",
+    description: "Migrated appointments system from JSON file storage to Neon PostgreSQL database for production compatibility. Vercel's read-only filesystem prevented JSON file writes, causing 500 errors on production.",
+    changes: [
+      "Created appointments and customer_notes tables in Neon database",
+      "Added strategic indexes for optimized query performance (customerId, date, status)",
+      "Migrated all appointment CRUD operations to use Drizzle ORM",
+      "Updated API routes to handle async database operations",
+      "Fixed production 500 errors when creating appointments",
+      "Appointments now stored in cloud PostgreSQL instead of local JSON files",
+      "Maintains data persistence across deployments",
+      "JSON addons field properly serialized/deserialized for database storage"
+    ]
+  },
+  {
     version: "1.10.1",
     date: "2025-11-27",
     type: "fix",
-    title: "Fix Appointment Creation",
-    description: "Fixed 500 error on admin appointments page caused by missing data directory. Created necessary data directory and JSON files for appointment storage.",
+    title: "Fix Appointment Creation (Local)",
+    description: "Fixed 500 error on admin appointments page in local development caused by missing data directory. This was a temporary fix before database migration.",
     changes: [
       "Created /data directory for local JSON storage",
       "Initialized appointments.json with empty array",
       "Initialized customer-notes.json with empty array",
-      "Fixed 500 error when loading /admin/appointments page",
-      "Appointments can now be created and stored successfully"
+      "Fixed 500 error when loading /admin/appointments page locally"
     ]
   },
   {

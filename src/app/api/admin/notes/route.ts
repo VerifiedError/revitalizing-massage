@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
-import { getNotesByCustomerId, createNote, deleteNote } from '@/lib/appointments';
+import { getNotesByCustomerId, createCustomerNote, deleteCustomerNote } from '@/lib/appointments';
 
 async function verifyAdmin() {
   const user = await currentUser();
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Missing customerId' }, { status: 400 });
     }
 
-    const notes = getNotesByCustomerId(customerId);
+    const notes = await getNotesByCustomerId(customerId);
     return NextResponse.json(notes);
   } catch (error) {
     console.error('Failed to fetch notes:', error);
@@ -49,12 +49,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing customerId or note' }, { status: 400 });
     }
 
-    const note = createNote({
-      customerId: body.customerId,
-      appointmentId: body.appointmentId,
-      note: body.note,
-      createdBy: auth.user.id,
-    });
+    const note = await createCustomerNote(
+      body.customerId,
+      body.note,
+      auth.user.id
+    );
 
     return NextResponse.json(note, { status: 201 });
   } catch (error) {
@@ -78,7 +77,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Missing note id' }, { status: 400 });
     }
 
-    const success = deleteNote(id);
+    const success = await deleteCustomerNote(id);
 
     if (!success) {
       return NextResponse.json({ error: 'Note not found' }, { status: 404 });

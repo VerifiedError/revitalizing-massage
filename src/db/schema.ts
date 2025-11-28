@@ -37,7 +37,50 @@ export const addons = pgTable('addons', {
   sortOrderIdx: index('addons_sort_order_idx').on(table.sortOrder),
 }));
 
+export const appointments = pgTable('appointments', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  customerId: varchar('customer_id', { length: 100 }),
+  customerName: varchar('customer_name', { length: 255 }).notNull(),
+  customerEmail: varchar('customer_email', { length: 255 }),
+  customerPhone: varchar('customer_phone', { length: 50 }),
+  serviceId: varchar('service_id', { length: 50 }).notNull(),
+  serviceName: varchar('service_name', { length: 255 }).notNull(),
+  servicePrice: decimal('service_price', { precision: 10, scale: 2 }).notNull(),
+  addons: text('addons').notNull().default('[]'), // JSON array of addon IDs
+  addonsTotal: decimal('addons_total', { precision: 10, scale: 2 }).notNull().default('0'),
+  date: varchar('date', { length: 20 }).notNull(), // YYYY-MM-DD format
+  time: varchar('time', { length: 20 }).notNull(), // HH:MM AM/PM format
+  duration: varchar('duration', { length: 50 }).notNull(),
+  status: varchar('status', { length: 20 }).notNull().default('scheduled'), // scheduled, confirmed, completed, cancelled, no-show
+  notes: text('notes'),
+  createdBy: varchar('created_by', { length: 50 }).notNull(), // 'admin', 'customer', 'system'
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  // Indexes for optimized queries
+  customerIdIdx: index('appointments_customer_id_idx').on(table.customerId),
+  dateIdx: index('appointments_date_idx').on(table.date),
+  statusIdx: index('appointments_status_idx').on(table.status),
+  // Composite index for common query pattern (date + status)
+  dateStatusIdx: index('appointments_date_status_idx').on(table.date, table.status),
+}));
+
+export const customerNotes = pgTable('customer_notes', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  customerId: varchar('customer_id', { length: 100 }).notNull(),
+  note: text('note').notNull(),
+  createdBy: varchar('created_by', { length: 100 }).notNull(), // Admin user ID
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  // Index for customer lookup
+  customerIdIdx: index('customer_notes_customer_id_idx').on(table.customerId),
+}));
+
 export type Package = typeof packages.$inferSelect;
 export type NewPackage = typeof packages.$inferInsert;
 export type Addon = typeof addons.$inferSelect;
 export type NewAddon = typeof addons.$inferInsert;
+export type Appointment = typeof appointments.$inferSelect;
+export type NewAppointment = typeof appointments.$inferInsert;
+export type CustomerNote = typeof customerNotes.$inferSelect;
+export type NewCustomerNote = typeof customerNotes.$inferInsert;

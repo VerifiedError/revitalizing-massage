@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     const customerId = searchParams.get('customerId');
     const date = searchParams.get('date');
 
-    let appointments = getAllAppointments();
+    let appointments = await getAllAppointments();
 
     if (customerId) {
       appointments = appointments.filter(a => a.customerId === customerId);
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const appointment = createAppointment({
+    const appointment = await createAppointment({
       customerId: body.customerId || null,
       customerName: body.customerName,
       customerEmail: body.customerEmail || '',
@@ -110,7 +110,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { id, ...updates } = body;
-    const appointment = updateAppointment(id, updates);
+    const appointment = await updateAppointment(id, updates);
 
     if (!appointment) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
@@ -138,7 +138,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Missing appointment id' }, { status: 400 });
     }
 
-    const success = deleteAppointment(id);
+    const success = await deleteAppointment(id);
 
     if (!success) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });

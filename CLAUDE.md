@@ -379,18 +379,23 @@ revitalizing-massage/
 
 ## Data Storage
 
-### Local JSON Storage (Development)
-Appointments and notes are stored in `/data` folder:
-- `appointments.json` - All appointment records
-- `customer-notes.json` - Customer notes
+### Neon PostgreSQL (Production)
+All appointments and customer notes are stored in Neon PostgreSQL database:
+- **appointments** table - All appointment records with customer info, service details, and status
+- **customer_notes** table - Customer notes linked to customer IDs
+- Database managed via Drizzle ORM with type-safe queries
+- Strategic indexes for optimized performance
 
-**Note**: This folder is gitignored. For production, integrate a database.
+### Database Tables
+#### Packages & Add-ons
+- **packages** table - Massage service packages with pricing and discounts
+- **addons** table - Add-on services available for packages
 
-### Recommended Production Databases
-- Supabase (PostgreSQL)
-- PlanetScale (MySQL)
-- MongoDB Atlas
-- Vercel Postgres
+#### Appointments & Notes
+- **appointments** table - Appointment bookings with customer and service data
+- **customer_notes** table - Admin notes about customers
+
+See `DATABASE.md` for complete schema documentation.
 
 ---
 
@@ -501,10 +506,11 @@ git push origin master
 
 ## Current Version
 
-**v1.10.1** - Fix Appointment Creation
+**v1.11.0** - Database Migration for Appointments
 
 ### Recent Updates
-- v1.10.1: Fixed appointment creation by creating missing data directory
+- v1.11.0: Migrated appointments system from JSON to Neon PostgreSQL database for production
+- v1.10.1: Fixed appointment creation by creating missing data directory (temporary local fix)
 - v1.10.0: Updated therapist credentials to 'Certified' and added comprehensive Privacy Policy
 - v1.9.0: Facebook and Google reviews integration with dedicated reviews page
 - v1.8.0: Complete mobile-first redesign of homepage and navigation with extreme mobile optimization
@@ -513,7 +519,6 @@ git push origin master
 - v1.7.2: Show/hide hidden packages toggle in admin panel
 - v1.7.1: Mobile-friendly appointments date filtering with quick buttons
 - v1.7.0: Next.js 16 upgrade with Turbopack & build fixes
-- v1.6.1: Database optimization & comprehensive package seed
 
 ---
 
@@ -547,4 +552,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.10.1*
+*Current Version: 1.11.0*
