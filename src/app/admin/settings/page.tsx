@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Building2, Clock, Mail, Package, Users } from 'lucide-react';
+import { Building2, Clock, Mail, Package, Users, FileText } from 'lucide-react';
 import styles from './page.module.css';
 
 const settingsSections = [
@@ -10,6 +10,13 @@ const settingsSections = [
     description: 'Manage business name, contact details, and address',
     icon: Building2,
     href: '/admin/settings/business',
+    available: true,
+  },
+  {
+    title: 'Website Content',
+    description: 'Edit all text content on your website pages',
+    icon: FileText,
+    href: '/admin/settings/content',
     available: true,
   },
   {

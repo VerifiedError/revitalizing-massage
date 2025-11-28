@@ -13,7 +13,8 @@
     "db:seed": "tsx --env-file=.env.local src/db/seed-complete.ts",
     "db:seed:basic": "tsx --env-file=.env.local src/db/seed.ts",
     "db:seed:business": "tsx --env-file=.env.local src/db/seed-business.ts",
-    "db:seed:availability": "tsx --env-file=.env.local src/db/seed-availability.ts"
+    "db:seed:availability": "tsx --env-file=.env.local src/db/seed-availability.ts",
+    "db:seed:content": "tsx --env-file=.env.local src/db/seed-content.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.35.5",

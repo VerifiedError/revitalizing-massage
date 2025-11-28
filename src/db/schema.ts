@@ -149,5 +149,15 @@ export type BusinessHours = typeof businessHours.$inferSelect;
 export type NewBusinessHours = typeof businessHours.$inferInsert;
 export type BookingSettings = typeof bookingSettings.$inferSelect;
 export type NewBookingSettings = typeof bookingSettings.$inferInsert;
+export const websiteContent = pgTable('website_content', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  section: varchar('section', { length: 100 }).notNull().unique(), // "homepage_hero", "homepage_benefits", "about_story", etc.
+  content: text('content').notNull(), // JSON stringified content
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  updatedBy: varchar('updated_by', { length: 100 }),
+});
+
 export type BusinessSettings = typeof businessSettings.$inferSelect;
 export type NewBusinessSettings = typeof businessSettings.$inferInsert;
+export type WebsiteContent = typeof websiteContent.$inferSelect;
+export type NewWebsiteContent = typeof websiteContent.$inferInsert;
