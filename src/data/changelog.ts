@@ -9,6 +9,27 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.10.0",
+    date: "2025-11-27",
+    type: "update",
+    title: "Credential Clarification & Privacy Policy",
+    description: "Updated all references to clarify Alannah is a certified (not licensed) massage therapist. Added comprehensive Privacy Policy page covering data collection, usage, and user rights.",
+    changes: [
+      "Updated homepage benefits section from 'Licensed' to 'Certified' therapist",
+      "Updated About page to reference 'certified massage therapist'",
+      "Changed plural references to singular (one therapist, not a team)",
+      "Created comprehensive Privacy Policy page at /privacy",
+      "Covered HIPAA-compliant health information handling",
+      "Included third-party service disclosures (Clerk, Facebook, Google)",
+      "Added data security measures and retention policies",
+      "Documented user privacy rights (access, correction, deletion, opt-out)",
+      "Included California Privacy Rights (CCPA) section",
+      "Added children's privacy protection notice",
+      "Privacy Policy link already exists in footer legal section",
+      "Updated Facebook link in footer to actual business page"
+    ]
+  },
+  {
     version: "1.9.0",
     date: "2025-11-27",
     type: "feature",

@@ -17,7 +17,7 @@ export default function Footer() {
               <a href="#" aria-label="Instagram" className={styles.socialLink}>
                 <Instagram size={20} />
               </a>
-              <a href="#" aria-label="Facebook" className={styles.socialLink}>
+              <a href="https://www.facebook.com/alannahsrevitalizingmassage" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={styles.socialLink}>
                 <Facebook size={20} />
               </a>
             </div>

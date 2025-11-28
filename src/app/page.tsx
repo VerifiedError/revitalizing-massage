@@ -14,8 +14,8 @@ const benefits = [
   },
   {
     icon: Award,
-    title: 'Licensed Therapist',
-    description: 'Professional with years of experience',
+    title: 'Certified Therapist',
+    description: 'Certified professional with years of experience',
   },
   {
     icon: Heart,

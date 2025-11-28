@@ -501,9 +501,10 @@ git push origin master
 
 ## Current Version
 
-**v1.9.0** - Facebook & Google Reviews Integration
+**v1.10.0** - Credential Clarification & Privacy Policy
 
 ### Recent Updates
+- v1.10.0: Updated therapist credentials to 'Certified' and added comprehensive Privacy Policy
 - v1.9.0: Facebook and Google reviews integration with dedicated reviews page
 - v1.8.0: Complete mobile-first redesign of homepage and navigation with extreme mobile optimization
 - v1.7.4: Removed temporary visibility controls from package management
@@ -545,4 +546,4 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.9.0*
+*Current Version: 1.10.0*

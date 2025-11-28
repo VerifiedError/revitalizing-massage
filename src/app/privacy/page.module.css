@@ -1,0 +1,126 @@
+/* Privacy Policy Page - Mobile First */
+
+.privacyContent {
+  padding: 2rem 0 3rem 0;
+  background: white;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.lastUpdated {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 0 0 1rem 0;
+}
+
+.section h3 {
+  font-family: var(--font-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 1.5rem 0 0.75rem 0;
+}
+
+.section p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.section ul {
+  margin: 0.75rem 0 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.section li {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.section li strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contactInfo {
+  background: #f8f9fa;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+  margin-top: 1rem;
+}
+
+.contactInfo p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.contactInfo strong {
+  color: var(--accent);
+}
+
+/* Tablet Breakpoint - 768px */
+@media (min-width: 768px) {
+  .privacyContent {
+    padding: 3rem 0 4rem 0;
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.75rem;
+  }
+
+  .section h3 {
+    font-size: 1.25rem;
+  }
+
+  .section p,
+  .section li {
+    font-size: 1rem;
+  }
+}
+
+/* Desktop Breakpoint - 1024px */
+@media (min-width: 1024px) {
+  .privacyContent {
+    padding: 3.5rem 0 5rem 0;
+  }
+
+  .section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section h3 {
+    font-size: 1.35rem;
+  }
+
+  .contactInfo {
+    padding: 1.5rem;
+  }
+}

@@ -50,7 +50,7 @@ export default function AboutPage() {
                 What started as a single treatment room has grown into a full-service wellness practice, but our core values remain the same. We're committed to creating a peaceful sanctuary where you can escape the stresses of daily life and focus on your well-being.
               </p>
               <p>
-                Our team of licensed massage therapists brings together diverse training backgrounds and specializations, ensuring we can address a wide range of conditions and preferences. Whether you're seeking relief from chronic pain, recovering from an injury, or simply want to relax, we have the expertise to help.
+                Our certified massage therapist brings together diverse training and specializations, ensuring we can address a wide range of conditions and preferences. Whether you're seeking relief from chronic pain, recovering from an injury, or simply want to relax, we have the expertise to help.
               </p>
             </div>
             <div className={styles.storyImage}>
@@ -87,8 +87,8 @@ export default function AboutPage() {
               <li>
                 <CheckCircle size={24} />
                 <div>
-                  <strong>Licensed Professionals</strong>
-                  <p>All our massage therapists are fully licensed, insured, and undergo regular continuing education.</p>
+                  <strong>Certified Professional</strong>
+                  <p>Our massage therapist is fully certified, insured, and undergoes regular continuing education.</p>
                 </div>
               </li>
               <li>
