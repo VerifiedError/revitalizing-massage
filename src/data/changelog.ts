@@ -9,6 +9,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.8",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Mobile-First Admin Clients",
+    description: "Redesigned the Admin Client Management and Client Details pages to be extremely mobile-friendly. Replaced tabular data with responsive card layouts on small screens for better usability.",
+    changes: [
+      "Converted Client List table to card view on mobile",
+      "Optimized Client Details layout for single-column stacking",
+      "Improved appointment history cards for mobile readability",
+      "Adjusted stats grid to stack vertically on small screens",
+      "Enhanced touch targets and spacing for mobile interactions"
+    ]
+  },
+  {
     version: "1.16.7",
     date: "2025-11-27",
     type: "fix",

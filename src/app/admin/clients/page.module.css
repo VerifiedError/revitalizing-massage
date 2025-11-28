@@ -90,9 +90,45 @@
   background: #f8fafc;
 }
 
+.mobileList {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.clientCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.clientCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.clientCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.clientCardRow strong {
+  color: #1e293b;
+  font-weight: 500;
+}
+
 .clientName {
   font-weight: 600;
   color: var(--accent);
+  font-size: 1.1rem;
 }
 
 .email {
@@ -121,6 +157,23 @@
 
 @media (max-width: 768px) {
   .tableContainer {
-    overflow-x: auto;
+    display: none;
+  }
+
+  .mobileList {
+    display: flex;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .statCard {
+    padding: 1.25rem;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
   }
 }

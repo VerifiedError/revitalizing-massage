@@ -155,6 +155,53 @@ export default function ClientsPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Mobile Card List */}
+      <div className={styles.mobileList}>
+        {loading ? (
+          <div className="text-center p-8 text-gray-500">Loading clients...</div>
+        ) : filteredClients.length === 0 ? (
+          <div className="text-center p-8 text-gray-500">No clients found.</div>
+        ) : (
+          filteredClients.map((client) => (
+            <div 
+              key={client.id} 
+              className={styles.clientCard}
+              onClick={() => window.location.href = `/admin/clients/${encodeURIComponent(client.id)}`}
+            >
+              <div className={styles.clientCardHeader}>
+                <div>
+                  <div className={styles.clientName}>{client.name}</div>
+                  <div className={styles.email}>{client.email}</div>
+                  <div className="text-sm text-gray-500">{client.phone}</div>
+                </div>
+                <div>
+                  {client.totalSpend > 500 ? (
+                    <span className={`${styles.badge} ${styles.badgeGold}`}>VIP</span>
+                  ) : (
+                    <span className={`${styles.badge} ${styles.badgeSilver}`}>Regular</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className={styles.clientCardRow}>
+                <span>Last Visit</span>
+                <strong>{new Date(client.lastVisit + 'T12:00:00').toLocaleDateString()}</strong>
+              </div>
+              
+              <div className={styles.clientCardRow}>
+                <span>Total Visits</span>
+                <strong>{client.totalAppointments}</strong>
+              </div>
+              
+              <div className={styles.clientCardRow}>
+                <span>Lifetime Spend</span>
+                <strong style={{ color: '#10b981' }}>${client.totalSpend.toFixed(2)}</strong>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
