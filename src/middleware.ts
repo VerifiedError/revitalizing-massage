@@ -1,9 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-// Only require authentication for checkout/payment routes
+// Only require authentication for checkout/payment routes and admin
 const isProtectedRoute = createRouteMatcher([
   '/checkout(.*)',
   '/book/confirm(.*)',
+  '/admin(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

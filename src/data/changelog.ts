@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.4",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Authentication Middleware Fix",
+    description: "Fixed an issue where authentication was not being enforced on the /admin route. Restored the middleware file to its correct name and added explicit route protection.",
+    changes: [
+      "Renamed src/proxy.ts to src/middleware.ts (Next.js requirement)",
+      "Added /admin(.*) to the list of protected routes in middleware",
+      "Ensures unauthenticated users are immediately redirected to sign-in when accessing admin pages"
+    ]
+  },
+  {
     version: "1.16.3",
     date: "2025-11-27",
     type: "fix",

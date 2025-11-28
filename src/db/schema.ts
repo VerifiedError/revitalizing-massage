@@ -92,6 +92,24 @@ export const blockedDates = pgTable('blocked_dates', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+export const businessSettings = pgTable('business_settings', {
+  id: integer('id').primaryKey().default(1), // Singleton pattern - only one record
+  businessName: varchar('business_name', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 50 }).notNull(),
+  phoneDisplay: varchar('phone_display', { length: 50 }).notNull(), // Formatted version like "(785) 250-4599"
+  email: varchar('email', { length: 255 }).notNull(),
+  addressStreet: varchar('address_street', { length: 255 }).notNull(),
+  addressCity: varchar('address_city', { length: 100 }).notNull(),
+  addressState: varchar('address_state', { length: 50 }).notNull(),
+  addressZip: varchar('address_zip', { length: 20 }).notNull(),
+  addressFull: text('address_full').notNull(), // Computed full address
+  timezone: varchar('timezone', { length: 100 }).notNull().default('America/Chicago'),
+  taxRate: decimal('tax_rate', { precision: 5, scale: 2 }).notNull().default('0'),
+  currency: varchar('currency', { length: 10 }).notNull().default('USD'),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  updatedBy: varchar('updated_by', { length: 100 }), // Admin user ID who last updated
+});
+
 export type Package = typeof packages.$inferSelect;
 export type NewPackage = typeof packages.$inferInsert;
 export type Addon = typeof addons.$inferSelect;
@@ -104,3 +122,5 @@ export type Setting = typeof settings.$inferSelect;
 export type NewSetting = typeof settings.$inferInsert;
 export type BlockedDate = typeof blockedDates.$inferSelect;
 export type NewBlockedDate = typeof blockedDates.$inferInsert;
+export type BusinessSettings = typeof businessSettings.$inferSelect;
+export type NewBusinessSettings = typeof businessSettings.$inferInsert;
