@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package, Ban, UserCog } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Settings, ArrowLeft, Calendar, Package, Ban, UserCog, TrendingUp } from 'lucide-react';
 import styles from './AdminSidebar.module.css';
 
 interface AdminSidebarProps {
@@ -19,6 +19,7 @@ const navItems = [
   { href: '/admin/customers', label: 'Customers', icon: Users },
   { href: '/admin/packages', label: 'Packages', icon: Package },
   { href: '/admin/appointments', label: 'Appointments', icon: Calendar },
+  { href: '/admin/reports/revenue', label: 'Revenue Reports', icon: TrendingUp },
   { href: '/admin/users', label: 'System Users', icon: UserCog },
   { href: '/admin/changelog', label: 'Changelog', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },

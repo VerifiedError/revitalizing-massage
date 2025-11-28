@@ -239,9 +239,37 @@ export type BusinessSettings = typeof businessSettings.$inferSelect;
 export type NewBusinessSettings = typeof businessSettings.$inferInsert;
 export type WebsiteContent = typeof websiteContent.$inferSelect;
 export type NewWebsiteContent = typeof websiteContent.$inferInsert;
+export const revenueRecords = pgTable('revenue_records', {
+  id: varchar('id', { length: 50 }).primaryKey(),
+  appointmentId: varchar('appointment_id', { length: 50 }).references(() => appointments.id, { onDelete: 'cascade' }),
+  customerId: varchar('customer_id', { length: 50 }).references(() => customers.id, { onDelete: 'set null' }),
+  date: varchar('date', { length: 20 }).notNull(), // YYYY-MM-DD
+  serviceId: varchar('service_id', { length: 50 }),
+  serviceName: varchar('service_name', { length: 255 }).notNull(),
+  servicePrice: decimal('service_price', { precision: 10, scale: 2 }).notNull(),
+  addonsTotal: decimal('addons_total', { precision: 10, scale: 2 }).notNull().default('0'),
+  discountAmount: decimal('discount_amount', { precision: 10, scale: 2 }).notNull().default('0'),
+  subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(), // servicePrice + addonsTotal
+  taxAmount: decimal('tax_amount', { precision: 10, scale: 2 }).notNull().default('0'),
+  totalAmount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(), // subtotal - discount + tax
+  paymentStatus: varchar('payment_status', { length: 20 }).notNull().default('pending'), // 'pending', 'paid', 'refunded', 'cancelled'
+  paymentMethod: varchar('payment_method', { length: 50 }), // 'cash', 'card', 'check', 'venmo', 'other'
+  paidAt: timestamp('paid_at'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  createdBy: varchar('created_by', { length: 100 }),
+}, (table) => ({
+  dateIdx: index('revenue_date_idx').on(table.date),
+  paymentStatusIdx: index('revenue_payment_status_idx').on(table.paymentStatus),
+  customerIdx: index('revenue_customer_idx').on(table.customerId),
+  appointmentIdx: index('revenue_appointment_idx').on(table.appointmentId),
+}));
+
 export type Customer = typeof customers.$inferSelect;
 export type NewCustomer = typeof customers.$inferInsert;
 export type CustomerHealthInfo = typeof customerHealthInfo.$inferSelect;
 export type NewCustomerHealthInfo = typeof customerHealthInfo.$inferInsert;
 export type CustomerPreferences = typeof customerPreferences.$inferSelect;
 export type NewCustomerPreferences = typeof customerPreferences.$inferInsert;
+export type RevenueRecord = typeof revenueRecords.$inferSelect;
+export type NewRevenueRecord = typeof revenueRecords.$inferInsert;

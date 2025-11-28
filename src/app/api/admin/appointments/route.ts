@@ -5,7 +5,11 @@ import {
   createAppointment,
   updateAppointment,
   deleteAppointment,
+  getAppointmentById,
 } from '@/lib/appointments';
+import { db } from '@/db';
+import { revenueRecords } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 async function verifyAdmin() {
   const user = await currentUser();
@@ -110,10 +114,66 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { id, ...updates } = body;
+
+    // Get the old appointment to check status change
+    const oldAppointment = await getAppointmentById(id);
+
+    if (!oldAppointment) {
+      return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
+    }
+
+    // Update appointment
     const appointment = await updateAppointment(id, updates);
 
     if (!appointment) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
+    }
+
+    // If status changed to 'completed', create revenue record
+    if (updates.status === 'completed' && oldAppointment.status !== 'completed') {
+      try {
+        // Check if revenue record already exists
+        const existing = await db
+          .select()
+          .from(revenueRecords)
+          .where(eq(revenueRecords.appointmentId, id));
+
+        if (existing.length === 0) {
+          // Calculate totals
+          const servicePrice = parseFloat(appointment.servicePrice);
+          const addonsTotal = parseFloat(appointment.addonsTotal || '0');
+          const subtotal = servicePrice + addonsTotal;
+          const totalAmount = subtotal;
+
+          // Create revenue record
+          const revenueRecord = {
+            id: `rev_${id}`,
+            appointmentId: id,
+            customerId: appointment.customerId,
+            date: appointment.date,
+            serviceId: appointment.serviceId,
+            serviceName: appointment.serviceName,
+            servicePrice: appointment.servicePrice,
+            addonsTotal: appointment.addonsTotal,
+            discountAmount: '0',
+            subtotal: subtotal.toString(),
+            taxAmount: '0',
+            totalAmount: totalAmount.toString(),
+            paymentStatus: 'paid' as const,
+            paymentMethod: null,
+            paidAt: new Date(),
+            notes: appointment.notes,
+            createdBy: 'admin',
+          };
+
+          await db.insert(revenueRecords).values(revenueRecord);
+
+          console.log(`✅ Created revenue record for appointment ${id} - $${totalAmount.toFixed(2)}`);
+        }
+      } catch (revenueError) {
+        console.error('Failed to create revenue record:', revenueError);
+        // Don't fail the appointment update if revenue creation fails
+      }
     }
 
     return NextResponse.json(appointment);
