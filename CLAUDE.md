@@ -46,17 +46,20 @@ Discounts are prominently displayed on the website:
 #### Database Stack
 - **Database**: Neon PostgreSQL (serverless PostgreSQL on AWS)
 - **ORM**: Drizzle ORM with `@neondatabase/serverless`
-- **Schema**: `src/db/schema.ts` (packages and addons tables with indexes)
+- **Schema**: `src/db/schema.ts` (packages, addons, appointments, customer_notes tables with indexes)
 - **Client**: `src/db/index.ts`
 - **Migrations**: Drizzle Kit (`npm run db:push`)
 - **Seed Data**: `src/db/seed-complete.ts` (`npm run db:seed`)
 - **Documentation**: `DATABASE.md` (complete schema reference)
+- **Appointments Management**: `src/lib/appointments.ts` (all CRUD operations)
 
 #### Database Performance
-- **Indexes**: Strategic indexes on isActive, sortOrder, category
-- **Composite Index**: (isActive, sortOrder) for optimal query performance
+- **Packages Indexes**: isActive, sortOrder, category, composite (isActive, sortOrder)
+- **Appointments Indexes**: customerId, date, status, composite (date, status)
+- **Customer Notes Indexes**: customerId for efficient lookup
 - **Query Optimization**: All common queries use indexed columns
 - **Connection Pooling**: Neon serverless with automatic scaling
+- **JSON Handling**: Addons array stored as text, parsed/stringified in application layer
 
 #### Current Database Contents
 - **10 Massage Packages**: 8 standard + 2 specialty
@@ -235,6 +238,8 @@ revitalizing-massage/
 - Status management (Scheduled, Confirmed, Completed, Cancelled, No-Show)
 - Customer notes integration
 - Price calculation with add-ons
+- **Database-backed**: All data stored in Neon PostgreSQL (v1.11.0)
+- Works on production (Vercel's read-only filesystem compatible)
 
 #### User Management (`/admin/users`)
 - User list with search
@@ -530,6 +535,10 @@ git push origin master
 - [x] User management
 - [x] Appointments management
 - [x] Customer notes system
+- [x] Database integration (Neon PostgreSQL)
+- [x] Appointments database migration
+- [ ] Admin settings page (removed link in v1.11.1, awaiting implementation)
+- [ ] Clerk production keys setup (see Known Issues)
 - [ ] Square booking integration
 - [ ] Payment processing
 - [ ] Email notifications
@@ -538,7 +547,6 @@ git push origin master
 - [ ] Image gallery
 - [ ] Gift card purchasing
 - [ ] Newsletter signup
-- [ ] Database integration (Supabase/PlanetScale)
 - [ ] Analytics dashboard
 
 ---
@@ -555,6 +563,40 @@ git push origin master
 
 *Last Updated: 2025-11-27*
 *Current Version: 1.11.1*
+
+---
+
+## Recent Major Work (2025-11-27)
+
+### Appointments Database Migration (v1.11.0)
+**Problem**: Production appointments were failing with 500 errors because Vercel's filesystem is read-only and ephemeral. The previous JSON file-based storage (`/data/appointments.json`) couldn't write files on production.
+
+**Solution**: Complete migration to Neon PostgreSQL database
+- Created `appointments` table with full appointment data schema
+- Created `customer_notes` table for admin notes
+- Added strategic indexes: customerId, date, status, composite (date, status)
+- Rewrote all CRUD operations in `src/lib/appointments.ts` to use Drizzle ORM
+- Changed from synchronous (file I/O) to async (database) operations
+- Updated API routes (`/api/admin/appointments`, `/api/admin/notes`) to await async functions
+- JSON addons array stored as text field, parsed/stringified in application layer
+- Fixed type compatibility with `as unknown as Appointment` casting
+
+**Impact**:
+- ✅ Appointments now work on production
+- ✅ Data persists across deployments
+- ✅ No more 500 errors when creating appointments
+- ✅ Professional database-backed system
+
+**Files Changed**:
+- `src/db/schema.ts` - Added appointments and customer_notes tables
+- `src/lib/appointments.ts` - Complete rewrite for database operations
+- `src/app/api/admin/appointments/route.ts` - Added await to all function calls
+- `src/app/api/admin/notes/route.ts` - Updated function names and added await
+
+### Console Errors Cleanup (v1.11.1)
+- Removed Settings link from admin sidebar (page doesn't exist yet)
+- Created `PRODUCTION-SETUP.md` guide for Clerk production keys setup
+- Documented known issues in CLAUDE.md
 
 ---
 
