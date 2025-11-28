@@ -91,7 +91,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Phone</h3>
-                    <a href={`tel:${businessInfo.phone.replace(/\s/g, '')}`}>{businessInfo.phoneDisplay}</a>
+                    <a href={`tel:${businessSettings.phone.replace(/\D/g, '')}`}>{businessSettings.phoneDisplay}</a>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Email</h3>
-                    <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
+                    <a href={`mailto:${businessSettings.email}`}>{businessSettings.email}</a>
                   </div>
                 </div>
 
@@ -111,7 +111,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3>Location</h3>
-                    <p>{businessInfo.address.street}<br />{businessInfo.address.city}, {businessInfo.address.state} {businessInfo.address.zip}</p>
+                    <p>{businessSettings.addressStreet}<br />{businessSettings.addressCity}, {businessSettings.addressState} {businessSettings.addressZip}</p>
                   </div>
                 </div>
 
@@ -221,7 +221,7 @@ export default function ContactPage() {
           />
           <div className={styles.mapOverlay}>
             <MapPin size={48} />
-            <p>{businessInfo.address.full}</p>
+            <p>{businessSettings.addressFull}</p>
           </div>
         </div>
       </section>

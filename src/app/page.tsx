@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Hero from '@/components/Hero';
 import Reviews from '@/components/Reviews';
-import { businessInfo } from '@/data/services';
 import { getAllPackages } from '@/lib/packages';
+import { getBusinessSettingsWithFallback } from '@/lib/business-settings';
 import styles from './page.module.css';
 import { Clock, Award, Heart, CheckCircle, Phone, MapPin, Star, Sparkles, HandHeart, CircleUserRound, CalendarCheck } from 'lucide-react';
 
@@ -33,6 +33,7 @@ export default async function Home() {
   const allPackages = await getAllPackages();
   const activePackages = allPackages.filter(pkg => pkg.isActive);
   const featuredPackages = activePackages.slice(0, 3);
+  const businessSettings = await getBusinessSettingsWithFallback();
 
   return (
     <>
@@ -45,15 +46,15 @@ export default async function Home() {
       {/* Quick Contact Strip - Mobile Optimized */}
       <section className={styles.quickContact}>
         <div className={styles.contactStrip}>
-          <a href="tel:+17852504599" className={styles.quickContactBtn}>
+          <a href={`tel:${businessSettings.phone.replace(/\D/g, '')}`} className={styles.quickContactBtn}>
             <Phone size={20} />
             <div>
               <span className={styles.quickLabel}>Call Now</span>
-              <span className={styles.quickValue}>(785) 250-4599</span>
+              <span className={styles.quickValue}>{businessSettings.phoneDisplay}</span>
             </div>
           </a>
           <Link href="/book" className={styles.quickContactBtn}>
-            <Calendar size={20} />
+            <CalendarCheck size={20} />
             <div>
               <span className={styles.quickLabel}>Book</span>
               <span className={styles.quickValue}>Appointment</span>
@@ -157,7 +158,7 @@ export default async function Home() {
                   <MapPin size={24} />
                   <div>
                     <strong>Address</strong>
-                    <p>{businessInfo.address.full}</p>
+                    <p>{businessSettings.addressFull}</p>
                   </div>
                 </div>
                 <div className={styles.locationItem}>
@@ -173,8 +174,8 @@ export default async function Home() {
                   <div>
                     <strong>Phone</strong>
                     <p>
-                      <a href={`tel:${businessInfo.phone.replace(/\D/g, '')}`} className={styles.phoneNumber}>
-                        {businessInfo.phone}
+                      <a href={`tel:${businessSettings.phone.replace(/\D/g, '')}`} className={styles.phoneNumber}>
+                        {businessSettings.phoneDisplay}
                       </a>
                     </p>
                   </div>
