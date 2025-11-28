@@ -39,7 +39,7 @@ export default async function Home() {
       <Hero
         title="Relax. Restore. Revitalize."
         subtitle="Experience professional massage therapy in Topeka, KS. Release tension, reduce stress, and restore balance."
-        backgroundImage="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&h=900&fit=crop"
+        backgroundImage="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=2400&h=1350&fit=crop"
       />
 
       {/* Quick Contact Strip - Mobile Optimized */}
@@ -183,7 +183,7 @@ export default async function Home() {
             </div>
             <div className={styles.locationImage}>
               <img
-                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&h=400&fit=crop"
+                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=1200&h=800&fit=crop"
                 alt="Massage therapy room"
                 className={styles.image}
               />

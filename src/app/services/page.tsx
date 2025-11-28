@@ -121,7 +121,7 @@ export default async function ServicesPage() {
             <div className={styles.infoCard}>
               <div className={styles.infoCardImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=400&h=300&fit=crop"
+                  src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=800&h=600&fit=crop"
                   alt="First time massage therapy visit"
                 />
               </div>
@@ -139,7 +139,7 @@ export default async function ServicesPage() {
             <div className={styles.infoCard}>
               <div className={styles.infoCardImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop"
+                  src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop"
                   alt="Custom massage therapy session"
                 />
               </div>
@@ -157,7 +157,7 @@ export default async function ServicesPage() {
             <div className={styles.infoCard}>
               <div className={styles.infoCardImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1607627000458-210e8d2bdb1d?w=400&h=300&fit=crop"
+                  src="https://images.unsplash.com/photo-1607627000458-210e8d2bdb1d?w=800&h=600&fit=crop"
                   alt="Gift certificate for massage"
                 />
               </div>

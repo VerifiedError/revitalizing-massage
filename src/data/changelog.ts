@@ -9,6 +9,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.15.0",
+    date: "2025-11-27",
+    type: "update",
+    title: "High-Resolution Image Updates",
+    description: "Updated all static images across the site to significantly higher resolutions for improved visual quality on high-density displays.",
+    changes: [
+      "Updated Hero image resolution on Home, About, Contact, and Services pages",
+      "Increased resolution of location, story, and contact section images",
+      "Enhanced quality of info card images on Services page",
+      "Optimized Unsplash URLs with higher width and height parameters",
+      "Improved visual crispness on 4K and Retina displays"
+    ]
+  },
+  {
     version: "1.14.1",
     date: "2025-11-27",
     type: "update",

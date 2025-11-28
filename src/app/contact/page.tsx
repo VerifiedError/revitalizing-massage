@@ -41,7 +41,7 @@ export default function ContactPage() {
             <div className={styles.info}>
               <div className={styles.infoImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=600&h=400&fit=crop"
+                  src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=1200&h=800&fit=crop"
                   alt="Contact Revitalizing Massage"
                 />
               </div>
@@ -181,7 +181,7 @@ export default function ContactPage() {
       <section className={styles.map}>
         <div className={styles.mapContainer}>
           <img
-            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&h=400&fit=crop"
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=2400&h=800&fit=crop"
             alt="Topeka, Kansas location"
             className={styles.mapImage}
           />

@@ -56,7 +56,7 @@ export default function AboutPage() {
             </div>
             <div className={styles.storyImage}>
               <img
-                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&h=800&fit=crop"
+                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=1200&h=1600&fit=crop"
                 alt="Peaceful massage therapy room"
               />
             </div>
