@@ -218,6 +218,13 @@ export default function AppointmentsPage() {
     }
   }
 
+  function calculateAddonsTotal(addonNames: string[]): number {
+    return addonNames.reduce((total, addonName) => {
+      const addon = addons.find(a => a.name === addonName);
+      return total + (addon?.price || 0);
+    }, 0);
+  }
+
   async function handleSaveAppointment() {
     const selectedPackage = packages.find(p => p.id === formData.serviceId);
     if (!selectedPackage) {
@@ -225,7 +232,7 @@ export default function AppointmentsPage() {
       return;
     }
 
-    const addonsTotal = formData.addons.length * 10; // Each addon is $10
+    const addonsTotal = calculateAddonsTotal(formData.addons);
 
     const appointmentData = {
       ...formData,
@@ -795,12 +802,12 @@ export default function AppointmentsPage() {
                   {formData.addons.length > 0 && (
                     <div className={styles.priceRow}>
                       <span>Add-ons ({formData.addons.length}):</span>
-                      <span>${formData.addons.length * 10}</span>
+                      <span>${calculateAddonsTotal(formData.addons).toFixed(2)}</span>
                     </div>
                   )}
                   <div className={`${styles.priceRow} ${styles.total}`}>
                     <span>Total:</span>
-                    <span>${selectedPackage.currentPrice + (formData.addons.length * 10)}</span>
+                    <span>${(selectedPackage.currentPrice + calculateAddonsTotal(formData.addons)).toFixed(2)}</span>
                   </div>
                 </div>
               )}

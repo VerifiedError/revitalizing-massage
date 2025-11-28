@@ -158,10 +158,6 @@ export default function AppointmentAnalyticsPage() {
   }
 
   const totalAppointments = analytics.metrics.completionRate.total;
-  const previousPeriodTotal = totalAppointments * 0.9; // Mock comparison
-  const totalChange = previousPeriodTotal > 0
-    ? ((totalAppointments - previousPeriodTotal) / previousPeriodTotal) * 100
-    : 0;
 
   return (
     <div className={styles.container}>
@@ -235,20 +231,6 @@ export default function AppointmentAnalyticsPage() {
           <div className={styles.statContent}>
             <h3>Total Appointments</h3>
             <p className={styles.statValue}>{totalAppointments}</p>
-            <div className={styles.statTrend}>
-              {totalChange >= 0 ? (
-                <span className={styles.trendUp}>
-                  <ArrowUp size={16} />
-                  {totalChange.toFixed(1)}%
-                </span>
-              ) : (
-                <span className={styles.trendDown}>
-                  <ArrowDown size={16} />
-                  {Math.abs(totalChange).toFixed(1)}%
-                </span>
-              )}
-              <span className={styles.trendLabel}>vs previous period</span>
-            </div>
           </div>
         </div>
 

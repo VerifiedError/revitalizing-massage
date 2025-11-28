@@ -136,12 +136,6 @@ export default function RevenueReportsPage() {
   const transactionCount = filteredRecords.length;
   const averageValue = transactionCount > 0 ? totalRevenue / transactionCount : 0;
 
-  // Calculate comparison with previous period (mock for now)
-  const previousPeriodRevenue = stats ? stats.revenue * 0.9 : 0;
-  const revenueChange = previousPeriodRevenue > 0
-    ? ((stats?.revenue || 0) - previousPeriodRevenue) / previousPeriodRevenue * 100
-    : 0;
-
   if (loading) {
     return (
       <div className={styles.container}>
@@ -227,20 +221,6 @@ export default function RevenueReportsPage() {
           <div className={styles.statContent}>
             <h3>Total Revenue</h3>
             <p className={styles.statValue}>{formatCurrency(totalRevenue)}</p>
-            <div className={styles.statTrend}>
-              {revenueChange >= 0 ? (
-                <span className={styles.trendUp}>
-                  <ArrowUp size={16} />
-                  {revenueChange.toFixed(1)}%
-                </span>
-              ) : (
-                <span className={styles.trendDown}>
-                  <ArrowDown size={16} />
-                  {Math.abs(revenueChange).toFixed(1)}%
-                </span>
-              )}
-              <span className={styles.trendLabel}>vs previous period</span>
-            </div>
           </div>
         </div>
 

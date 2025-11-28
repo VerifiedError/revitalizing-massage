@@ -9,6 +9,29 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.21.2",
+    date: "2025-11-28",
+    type: "fix",
+    title: "Remove All Demo/Mock Data - 100% Real Database KPIs",
+    description: "Comprehensive audit and removal of all hardcoded demo data, mock statistics, and placeholder KPIs. All metrics now pull exclusively from real database data with no fake comparisons or hardcoded pricing.",
+    changes: [
+      "Fixed appointments page hardcoded add-on pricing ($10 each) - now uses actual prices from database",
+      "Created calculateAddonsTotal() function that sums real addon prices from addons table",
+      "Updated 3 instances of hardcoded $10 pricing with dynamic price calculations",
+      "Appointment save function now calculates correct addonsTotal based on real addon prices",
+      "Appointment modal summary now displays accurate addon costs and total price",
+      "Removed mock previous period comparison from Appointment Analytics (lines 161-164)",
+      "Deleted fake previousPeriodTotal calculation (totalAppointments * 0.9)",
+      "Removed fake totalChange percentage display and trend arrows",
+      "Removed mock previous period comparison from Revenue Reports (lines 139-143)",
+      "Deleted fake previousPeriodRevenue calculation (stats.revenue * 0.9)",
+      "Removed fake revenueChange percentage display and trend indicators",
+      "All dashboard stats now initialize to 0 and fetch exclusively from database APIs",
+      "Verified no other mock data exists in admin dashboard, analytics, or reporting pages",
+      "Build verified: 48 routes compiled successfully with no errors"
+    ]
+  },
+  {
     version: "1.21.1",
     date: "2025-11-28",
     type: "update",
