@@ -1,10 +1,26 @@
 # Revitalizing Massage - Project Documentation
 
-## **⚠️ CRITICAL: ADMIN-CENTRIC DESIGN PHILOSOPHY**
+## **⚠️ CRITICAL: DESIGN PHILOSOPHY - READ THIS FIRST**
 
-**THIS IS THE MOST IMPORTANT SECTION OF THIS DOCUMENT. READ THIS FIRST.**
+**THESE ARE THE MOST IMPORTANT PRINCIPLES FOR THIS PROJECT.**
 
-### Non-Technical Admin User
+### 1. EXTREME MOBILE-FIRST PRIORITY
+**THIS WEBSITE MUST BE EXTREMELY MOBILE-FRIENDLY AT ALL TIMES.**
+
+The admin (Alannah) manages her business primarily from her phone. EVERY feature, page, and component MUST be:
+- **Mobile-first designed**: Start with mobile (375px), then enhance for desktop
+- **Touch-optimized**: All interactive elements minimum 44px (prefer 48-52px)
+- **Readable without zoom**: Minimum 16px font size to prevent iOS auto-zoom
+- **Easy to use one-handed**: Important actions within thumb reach
+- **Fast on mobile networks**: Optimize images, minimize bundle size
+
+**CONTINUOUS MOBILE OPTIMIZATION DIRECTIVE:**
+- When making ANY change to ANY file, proactively check if mobile optimizations can be improved
+- If you see an opportunity to enhance mobile UX while working on another task, DO IT
+- Always test responsive behavior at 375px, 640px, 768px, and 1024px breakpoints
+- Question: "Can Alannah easily use this on her phone?" for every feature
+
+### 2. Non-Technical Admin User
 The admin user for this website **DOES NOT CODE** and **HAS NO TECHNICAL KNOWLEDGE**. All website content, pricing, and settings MUST be manageable through the admin panel UI.
 
 ### Global Settings & Content Management
