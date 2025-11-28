@@ -9,6 +9,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.15.1",
+    date: "2025-11-27",
+    type: "update",
+    title: "Homepage Image Refresh",
+    description: "Updated the homepage hero and location images to fresh, high-quality alternatives to provide a new visual look.",
+    changes: [
+      "Replaced homepage hero image with a more serene spa environment photo",
+      "Updated location section image to a new professional interior shot",
+      "Maintained high resolution (2400x1350 for hero) for optimal display"
+    ]
+  },
+  {
     version: "1.15.0",
     date: "2025-11-27",
     type: "update",
