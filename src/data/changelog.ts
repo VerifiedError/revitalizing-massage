@@ -9,6 +9,22 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.15.2",
+    date: "2025-11-27",
+    type: "update",
+    title: "Comprehensive Image Refresh",
+    description: "Refreshed and redistributed images across Contact, Services, About, and Reviews pages to create a more varied and cohesive visual experience.",
+    changes: [
+      "Updated Contact page Hero to a serene zen theme",
+      "Updated Contact page Info image to a welcoming handshake/consultation visual",
+      "Updated Services page Hero to a high-impact spa portrait",
+      "Updated Services page info cards with fresh interior and detail shots",
+      "Updated About page Hero to a warm interior background",
+      "Updated About page Story image to a professional therapist portrait",
+      "Added dedicated Hero background image to Reviews page"
+    ]
+  },
+  {
     version: "1.15.1",
     date: "2025-11-27",
     type: "update",

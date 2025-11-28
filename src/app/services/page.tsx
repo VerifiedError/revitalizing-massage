@@ -121,7 +121,7 @@ export default async function ServicesPage() {
             <div className={styles.infoCard}>
               <div className={styles.infoCardImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=800&h=600&fit=crop"
+                  src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&h=600&fit=crop"
                   alt="First time massage therapy visit"
                 />
               </div>
@@ -139,7 +139,7 @@ export default async function ServicesPage() {
             <div className={styles.infoCard}>
               <div className={styles.infoCardImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop"
+                  src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=800&h=600&fit=crop"
                   alt="Custom massage therapy session"
                 />
               </div>

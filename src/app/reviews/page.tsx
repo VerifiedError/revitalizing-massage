@@ -14,6 +14,7 @@ export default function ReviewsPage() {
       <Hero
         title="Client Reviews"
         subtitle="See what people are saying about their experience with Revitalizing Massage"
+        backgroundImage="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=2400&h=900&fit=crop"
       />
 
       <Reviews showTitle={false} maxReviews={12} layout="grid" />

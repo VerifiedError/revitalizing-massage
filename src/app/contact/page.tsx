@@ -41,7 +41,7 @@ export default function ContactPage() {
             <div className={styles.info}>
               <div className={styles.infoImage}>
                 <img
-                  src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=1200&h=800&fit=crop"
+                  src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=1200&h=800&fit=crop"
                   alt="Contact Revitalizing Massage"
                 />
               </div>
