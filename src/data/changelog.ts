@@ -9,6 +9,19 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.15.3",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Metrics Dashboard Tab",
+    description: "Added a new 'Metrics' tab to the admin dashboard. This section will serve as the hub for business analytics, currently displaying placeholder data for revenue and appointments.",
+    changes: [
+      "Created /admin/metrics page with responsive stats grid",
+      "Added Metrics link to AdminSidebar with icon",
+      "Implemented basic placeholder UI for future chart integrations",
+      "Consistent styling with existing admin dashboard"
+    ]
+  },
+  {
     version: "1.15.2",
     date: "2025-11-27",
     type: "update",
