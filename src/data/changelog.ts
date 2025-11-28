@@ -9,6 +9,19 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.16.1",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Mobile Navigation Fix",
+    description: "Fixed an issue where the mobile navigation menu was not displaying correctly when opened. Adjusted positioning and z-index to ensure accessibility.",
+    changes: [
+      "Updated mobile menu CSS to cover full screen height",
+      "Added top padding to mobile menu to account for fixed header",
+      "Adjusted z-index stacking to ensure menu appears correctly below header but above content",
+      "Improved transition animation for smoother opening/closing"
+    ]
+  },
+  {
     version: "1.16.0",
     date: "2025-11-27",
     type: "feature",
