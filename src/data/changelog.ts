@@ -9,6 +9,20 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.10.1",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Fix Appointment Creation",
+    description: "Fixed 500 error on admin appointments page caused by missing data directory. Created necessary data directory and JSON files for appointment storage.",
+    changes: [
+      "Created /data directory for local JSON storage",
+      "Initialized appointments.json with empty array",
+      "Initialized customer-notes.json with empty array",
+      "Fixed 500 error when loading /admin/appointments page",
+      "Appointments can now be created and stored successfully"
+    ]
+  },
+  {
     version: "1.10.0",
     date: "2025-11-27",
     type: "update",
