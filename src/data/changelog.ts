@@ -9,6 +9,28 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.13.0",
+    date: "2025-11-27",
+    type: "update",
+    title: "Homepage Personalization & Visual Enhancements",
+    description: "Updated homepage to reflect individual therapist focus instead of 'us/we' language. Enhanced visual appeal with professional images and improved modern icons throughout the page.",
+    changes: [
+      "Changed 'Why Choose Us' to 'Why Revitalizing Massage?' to reflect individual business",
+      "Updated 'Visit Us' to 'Location & Hours' for clarity",
+      "Replaced all benefit icons with modern, rich alternatives (CalendarCheck, HandHeart, Sparkles)",
+      "Added fourth benefit card: 'Relaxing Atmosphere'",
+      "Enhanced benefit descriptions to be more personal and specific",
+      "Added professional massage therapy background image to hero section",
+      "Added location image showing massage therapy room",
+      "Improved benefit cards with gradient icons and hover effects",
+      "Enhanced location section with 2-column layout on desktop",
+      "Increased icon sizes for better visibility (24px → 32px for benefits)",
+      "Updated responsive grid: 4 columns on desktop, 2 on tablet for benefits",
+      "Added subtle background gradients to benefits section",
+      "Improved spacing and padding throughout for better visual hierarchy"
+    ]
+  },
+  {
     version: "1.12.0",
     date: "2025-11-27",
     type: "feature",

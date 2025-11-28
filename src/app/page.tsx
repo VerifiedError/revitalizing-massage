@@ -4,23 +4,28 @@ import Reviews from '@/components/Reviews';
 import { businessInfo } from '@/data/services';
 import { getAllPackages } from '@/lib/packages';
 import styles from './page.module.css';
-import { Clock, Award, Heart, CheckCircle, Phone, MapPin, Star } from 'lucide-react';
+import { Clock, Award, Heart, CheckCircle, Phone, MapPin, Star, Sparkles, HandHeart, CircleUserRound, CalendarCheck } from 'lucide-react';
 
 const benefits = [
   {
-    icon: Clock,
+    icon: CalendarCheck,
     title: 'Flexible Scheduling',
-    description: 'Book appointments that fit your busy lifestyle',
+    description: 'Book appointments that work with your schedule, day or evening',
   },
   {
     icon: Award,
-    title: 'Certified Therapist',
-    description: 'Certified professional with years of experience',
+    title: 'Certified Professional',
+    description: 'Licensed and certified with extensive training and experience',
   },
   {
-    icon: Heart,
+    icon: HandHeart,
     title: 'Personalized Care',
-    description: 'Every session tailored to your needs',
+    description: 'Each session is customized to address your specific needs and concerns',
+  },
+  {
+    icon: Sparkles,
+    title: 'Relaxing Atmosphere',
+    description: 'A peaceful, welcoming environment designed for your comfort',
   },
 ];
 
@@ -34,6 +39,7 @@ export default async function Home() {
       <Hero
         title="Relax. Restore. Revitalize."
         subtitle="Experience professional massage therapy in Topeka, KS. Release tension, reduce stress, and restore balance."
+        backgroundImage="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&h=900&fit=crop"
       />
 
       {/* Quick Contact Strip - Mobile Optimized */}
@@ -117,13 +123,14 @@ export default async function Home() {
       <section className={styles.benefits}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
-            <h2>Why Choose Us</h2>
+            <h2>Why Revitalizing Massage?</h2>
+            <p>Experience the difference of personalized, professional care</p>
           </div>
           <div className={styles.benefitsGrid}>
             {benefits.map((benefit) => (
               <div key={benefit.title} className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>
-                  <benefit.icon size={28} />
+                  <benefit.icon size={32} />
                 </div>
                 <div className={styles.benefitContent}>
                   <h3>{benefit.title}</h3>
@@ -143,17 +150,18 @@ export default async function Home() {
         <div className={styles.container}>
           <div className={styles.locationContent}>
             <div className={styles.locationInfo}>
-              <h2>Visit Us</h2>
+              <h2>Location & Hours</h2>
+              <p className={styles.locationSubtitle}>Conveniently located in Topeka, KS</p>
               <div className={styles.locationDetails}>
                 <div className={styles.locationItem}>
-                  <MapPin size={20} />
+                  <MapPin size={24} />
                   <div>
                     <strong>Address</strong>
                     <p>{businessInfo.address.full}</p>
                   </div>
                 </div>
                 <div className={styles.locationItem}>
-                  <Clock size={20} />
+                  <Clock size={24} />
                   <div>
                     <strong>Hours</strong>
                     <p>By Appointment</p>
@@ -161,7 +169,7 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className={styles.locationItem}>
-                  <Phone size={20} />
+                  <Phone size={24} />
                   <div>
                     <strong>Phone</strong>
                     <p>
@@ -172,6 +180,13 @@ export default async function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className={styles.locationImage}>
+              <img
+                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&h=400&fit=crop"
+                alt="Massage therapy room"
+                className={styles.image}
+              />
             </div>
           </div>
         </div>

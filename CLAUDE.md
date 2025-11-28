@@ -513,9 +513,10 @@ git push origin master
 
 ## Current Version
 
-**v1.12.0** - Calendar View for Appointments
+**v1.13.0** - Homepage Personalization & Visual Enhancements
 
 ### Recent Updates
+- v1.13.0: Updated homepage to reflect individual therapist, enhanced visual appeal with images and modern icons
 - v1.12.0: Added calendar view for appointments with month and week display modes
 - v1.11.1: Removed settings link from admin sidebar (page not yet implemented)
 - v1.11.0: Migrated appointments system from JSON to Neon PostgreSQL database for production
@@ -563,7 +564,7 @@ git push origin master
 ---
 
 *Last Updated: 2025-11-27*
-*Current Version: 1.12.0*
+*Current Version: 1.13.0*
 
 ---
 
