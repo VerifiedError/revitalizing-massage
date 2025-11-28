@@ -4,14 +4,15 @@ import { appointments, customerNotes } from '@/db/schema';
 import { eq, desc, or } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const { userId } = auth();
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const clientId = decodeURIComponent(params.id);
+    const { id } = await context.params;
+    const clientId = decodeURIComponent(id);
 
     // Fetch appointments matching email or customerId or name
     // We assume ID passed is either an email or a Clerk ID or a Name

@@ -9,6 +9,42 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.17.0-PLAN",
+    date: "2025-11-27",
+    type: "feature",
+    title: "Master Implementation Plan Created",
+    description: "Created comprehensive 10-phase implementation roadmap to transform Revitalizing Massage into a fully self-service business management platform. Plan includes 80+ features across 10 phases, with detailed database schemas, file structures, and implementation strategies for each feature.",
+    changes: [
+      "Phase 1: Business Settings & Configuration (v1.16.0-1.17.1) - Foundation features for admin control",
+      "Phase 2: Customer Relationship Management (v1.18.0-1.20.0) - Comprehensive customer tracking",
+      "Phase 3: Enhanced Dashboard & Reporting (v1.20.0-1.22.0) - Business intelligence and analytics",
+      "Phase 4: Communication & Automation (v1.22.0-1.24.0) - Email notifications and marketing campaigns",
+      "Phase 5: Gift Certificates & Promotions (v1.24.0-1.25.0) - Revenue generation features",
+      "Phase 6: Payment Processing (v1.25.0-1.26.0) - Online payment acceptance and invoicing",
+      "Phase 7: Reviews & Testimonials (v1.26.0-1.27.0) - Social proof and reputation management",
+      "Phase 8: Advanced Features (v1.27.0-1.30.0) - Intake forms, inventory, waitlist, referrals",
+      "Phase 9: Mobile Optimization & PWA (v1.31.0-1.32.0) - Progressive web app and mobile features",
+      "Phase 10: Integrations & Extensions (v1.32.0-1.35.0) - Google Calendar, QuickBooks, Maps",
+      "Detailed database schemas for all 30+ new tables",
+      "Complete file structure for 100+ new files to be created",
+      "Development principles, testing checklists, and git workflow guidelines",
+      "Timeline estimate: 20-30 weeks for complete implementation",
+      "Success metrics defined for both business owner and customers",
+      "Added MASTER IMPLEMENTATION PLAN section to CLAUDE.md (1,400+ lines of detailed specifications)"
+    ]
+  },
+  {
+    version: "1.16.2",
+    date: "2025-11-27",
+    type: "fix",
+    title: "Build Fix: Async Route Params",
+    description: "Fixed a build error caused by Next.js 15+ breaking change where route parameters are now Promises. Updated client details API route to await params.",
+    changes: [
+      "Updated /api/admin/clients/[id]/route.ts to handle async params",
+      "Resolved Type error in production build"
+    ]
+  },
+  {
     version: "1.16.1",
     date: "2025-11-27",
     type: "fix",
